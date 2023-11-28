@@ -1,19 +1,19 @@
 const router = require("express").Router();
-const Customer = require("../models/Customer");
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { verifyToken } = require("./middleWare");
 
-router.post("/register/customer", async (req, res) => {
+router.post("/register/User", async (req, res) => {
   try {
-    const user = await Customer.findOne({
+    const user = await User.findOne({
       $or: [{ phone: req.body.phone }, { email: req.body.email }],
     });
     if (user) {
       res.status(400).json({ error: "Email or Phone exist" });
       return;
     } else {
-      const newUser = new Customer({
+      const newUser = new User({
         phone: req.body.phone,
         email: req.body.email,
         address: req.body.address,
@@ -30,10 +30,10 @@ router.post("/register/customer", async (req, res) => {
 });
 
 
-router.post("/login/customer", async (req, res) => {
+router.post("/login/User", async (req, res) => {
   try {
     console.log(req.body);
-    const user = await Customer.findOne({
+    const user = await User.findOne({
       $or: [{ phone: req.body.username }, { email: req.body.username }],
     });
     console.log(user);
@@ -41,7 +41,7 @@ router.post("/login/customer", async (req, res) => {
       return res.status(401).json("Wrong credentials!");
 
     const token = jwt.sign(
-      { id: user._id, role: "customer" },
+      { id: user._id, role: "User" },
       process.env.TOKEN_SC,
       {
         expiresIn: "1d",
