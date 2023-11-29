@@ -11,17 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Change color for visited links */
-a:visited {
-  color: inherit;
-}
-
-/* Change color on hover */
-a:hover {
-  color: #007bff; /* Change to your preferred hover color */
-}
