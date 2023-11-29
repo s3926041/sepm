@@ -1,3 +1,5 @@
+import "./output.css";
+
 const links = [
     { name: 'Open roles', href: '#' },
     { name: 'Internship program', href: '#' },
@@ -10,7 +12,7 @@ const stats = [
     { name: 'Hours per week', value: '40' },
     { name: 'Paid time off', value: 'Unlimited' },
 ]
-import "./../dist/output.css";
+
 export default function Example() {
     return (
         <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
