@@ -27,14 +27,14 @@ import {
     TreeSelect,
 } from 'antd';
 import { Avatar } from 'antd';
-import Sliderr from './Slider';
+import Sliderr from './Sliderr';
 const { Option } = Select;
 const UserList = ['U', 'Lucy', 'Tom', 'Edward'];
 const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 const GapList = [4, 3, 2, 1];
 
 
-export default function Register() {
+export default function EditProfile() {
     const [componentSize, setComponentSize] = useState('default');
     const onFormLayoutChange = ({ size }) => {
         setComponentSize(size);
