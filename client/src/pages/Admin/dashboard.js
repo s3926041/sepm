@@ -1,13 +1,13 @@
 import React from 'react';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Statistic } from 'antd';
-const Dashboard = () => (
+const Dashboard = (number) => (
     <Row gutter={16}>
         <Col span={12}>
             <Card bordered={false}>
                 <Statistic
                     title="Active"
-                    value={11.28}
+                    value={number.number}
                     precision={2}
                     valueStyle={{
                         color: '#3f8600',

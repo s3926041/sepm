@@ -12,7 +12,6 @@
   }
   ```
 */
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import React, { useState } from 'react';
 import {
     Button,
@@ -42,38 +41,43 @@ export default function EditProfile() {
 
     const [user, setUser] = useState(UserList[0]);
     const [color, setColor] = useState(ColorList[0]);
-    const [gap, setGap] = useState(GapList[0]);
-    const changeUser = () => {
-        const index = UserList.indexOf(user);
-        setUser(index < UserList.length - 1 ? UserList[index + 1] : UserList[0]);
-        setColor(index < ColorList.length - 1 ? ColorList[index + 1] : ColorList[0]);
-    };
+    // const [gap, setGap] = useState(GapList[0]);
+    // const changeUser = () => {
+    //     const index = UserList.indexOf(user);
+    //     setUser(index < UserList.length - 1 ? UserList[index + 1] : UserList[0]);
+    //     setColor(index < ColorList.length - 1 ? ColorList[index + 1] : ColorList[0]);
+    // };
+    const [src, setSrc] = useState(null);
+    function importData() {
+        let input = document.createElement('input');
+        input.type = 'file';
+
+        input.onchange = _ => {
+            // you can use this method to get file and perform respective operations
+            let files = Array.from(input.files);
+            const imagePath = URL.createObjectURL(files[0]);
+
+            setSrc(imagePath)
+
+            console.log(files);
+        };
+        input.click();
+
+    }
 
 
     return (
     <>
-        <div className='flex flex-col w-full'>
-                <Avatar
-                    style={{
-                        backgroundColor: color,
-                        verticalAlign: 'middle',
-                        margin: '1rem auto',
-                    }}
-                    size="large"
-                    gap={gap}
+        <div className='flex flex-col mx-auto mb-3' style={{width: "50%"}}>
+                <Avatar className="mt-5 mx-auto" size={250} src={src} />
+                <button
+                    type="button"
+                    className="rounded-md mx-auto mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    onClick={() => importData()}
+                    style={{width:"50%"}}
                 >
-                    {user}
-                </Avatar>
-                <Button
-                    size="small"
-                    style={{
-                        margin: '1rem auto',
-                        verticalAlign: 'middle',
-                    }}
-                    onClick={changeUser}
-                >
-                    ChangeUser
-                </Button>
+                    Change
+                </button>
         </div>
 
         <Form
@@ -90,7 +94,8 @@ export default function EditProfile() {
             // onValuesChange={onFormLayoutChange}
             // size={componentSize}
             style={{
-                maxWidth: "100%",
+                maxWidth: "80%",
+                margin: "2rem auto",
                 textAlign: '!important left',
             }}
         >
@@ -103,7 +108,7 @@ export default function EditProfile() {
             </Form.Item> */}
 
            
-            <Form.Item label="Name" >
+            <Form.Item label="Name">
                 <Input />
             </Form.Item>
             <Form.Item label="Gender">
@@ -165,14 +170,15 @@ export default function EditProfile() {
                     <Option value="2">222</Option>
                 </Select>
             </Form.Item>
+
+                <Form.Item label="Distance" initialValue="1">
+                    <Sliderr style={{ margin: "1rem auto" }} />
+                </Form.Item>
             
-            <div style={{width: "75%", margin:"1rem auto"}}>
-                    <Sliderr style={{margin: "1rem auto" }} />
-            </div>
                 <button
                     type="submit"
-                    className=" mt-2 flex w-80 mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    
+                    className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    style={{width:"50%"}}
                 >
                     Done
                 </button>
