@@ -21,7 +21,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <LobbyPage/>,
+      element: <HomePage/>,
       children: [    
       ],
       errorElement: <Error/>,
@@ -55,6 +55,11 @@ function App() {
       path: "/user/editprofile",
       element: <EditProfilePage />,
     },
+    {
+      path: "/lobby",
+      element: <LobbyPage />,
+
+    }, 
   ]);
   return <RouterProvider router={router}></RouterProvider>;
 // return(
