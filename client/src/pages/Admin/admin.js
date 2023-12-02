@@ -19,8 +19,8 @@ function getItem(label, key, icon, children) {
 const items = [
     // getItem('Option 1', '1', <PieChartOutlined />),
     // getItem('Option 2', '2', <DesktopOutlined />),
-    getItem('User', 'sub1', <UserOutlined />, [
-        getItem('You', '3', <SmileTwoTone />),
+    getItem('Admin', 'sub1', <UserOutlined />, [
+        getItem('User', '3', <SmileTwoTone />),
         // getItem('Bill', '4'),
         // getItem('Alex', '5'),
     ]),

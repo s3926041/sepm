@@ -60,6 +60,7 @@ function App() {
       element: <LobbyPage />,
 
     }, 
+    
   ]);
   return <RouterProvider router={router}></RouterProvider>;
 // return(

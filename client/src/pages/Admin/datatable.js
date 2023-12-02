@@ -13,9 +13,9 @@ const columns = [
         key: 'age',
     },
     {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
+        title: 'Game',
+        dataIndex: 'game',
+        key: 'game',
     },
     // {
     //     title: 'Tags',
@@ -47,7 +47,7 @@ const columns = [
             // </Space>
             <div className='flex flex-row'>
                 <Button onClick={() => console.log(record.name)}>
-                <a>Invite {record.name}</a>
+                <a>Accept {record.name}</a>
             </Button>
                 <Button onClick={ () => console.log(record.name)}>
                 <a>Delete</a>
@@ -61,21 +61,21 @@ const data = [
         key: '1',
         name: 'John Brown',
         age: 32,
-        address: 'New York No. 1 Lake Park',
+        game: '8XBet',
         tags: ['goo', 'developer'],
     },
     {
         key: '2',
         name: 'Jim Green',
         age: 42,
-        address: 'London No. 1 Lake Park',
+        game: 'LoL',
         tags: ['beginner', 'gangster'],
     },
     {
         key: '3',
         name: 'Joe Black',
         age: 32,
-        address: 'Sydney No. 1 Lake Park',
+        game: 'CSGO',
         tags: ['middle', 'teacher'],
     },
 ];
