@@ -33,7 +33,7 @@ export default function Payment() {
                     Make new friends and build a strong gaming community
                 </p>
             </div>
-            <form action="#" method="POST" className="mx-auto mt-6 max-w-xl sm:mt-6">
+            <div  className="mx-auto mt-6 max-w-xl sm:mt-6">
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                     <div className="sm:col-span-2">
                         <label htmlFor="company" className="block text-sm font-semibold leading-6 text-gray-900">
@@ -156,7 +156,7 @@ export default function Payment() {
                         Let's pay
                     </button>
                 </div>
-            </form>
+            </div>
         </div>
     )
 }

@@ -35,18 +35,8 @@ const GapList = [4, 3, 2, 1];
 
 export default function EditProfile() {
     const [componentSize, setComponentSize] = useState('default');
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
-    };
 
-    const [user, setUser] = useState(UserList[0]);
-    const [color, setColor] = useState(ColorList[0]);
-    // const [gap, setGap] = useState(GapList[0]);
-    // const changeUser = () => {
-    //     const index = UserList.indexOf(user);
-    //     setUser(index < UserList.length - 1 ? UserList[index + 1] : UserList[0]);
-    //     setColor(index < ColorList.length - 1 ? ColorList[index + 1] : ColorList[0]);
-    // };
+
     const [src, setSrc] = useState(null);
     function importData() {
         let input = document.createElement('input');

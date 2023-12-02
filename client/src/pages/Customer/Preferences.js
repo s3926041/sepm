@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import {
-    Button,
+    
     Cascader,
     DatePicker,
     Form,
     Input,
     InputNumber,
-    Radio,
+    
     Select,
     Switch,
     TreeSelect,
 } from 'antd';
-const Preferences = () => {
+const Preferences = ({setGame,setAge,setLevel,setPhone,setGender, setWith,setName, preferences}) => {
     const [componentSize, setComponentSize] = useState('default');
-    const onFormLayoutChange = ({ size }) => {
-        setComponentSize(size);
-    };
+    const validator = () => {
+
+    }
+
+
+    
     return (
         <Form
             labelCol={{
@@ -28,32 +31,29 @@ const Preferences = () => {
             initialValues={{
                 size: componentSize,
             }}
-            // onValuesChange={onFormLayoutChange}
-            // size={componentSize}
+            
             style={{
                 maxWidth: 600,
                 textAlign: '!important left',
             }}
         >
-            {/* <Form.Item label="Form Size" name="size">
-                <Radio.Group>
-                    <Radio.Button value="small">Small</Radio.Button>
-                    <Radio.Button value="default">Default</Radio.Button>
-                    <Radio.Button value="large">Large</Radio.Button>
-                </Radio.Group>
-            </Form.Item> */}
-            <Form.Item label="Name" >
-                <Input/>
+            <Form.Item label="Name" required >
+                <Input onChange={data => setName(data)} required />
+                {!preferences.name && <span style={{ color: "red" }}><br />input something</span>}
             </Form.Item>
-            <Form.Item label="Gender">
-                <Select>
-                    <Select.Option value="demo">Male</Select.Option>
-                    <Select.Option value="demo">Female</Select.Option>
-                    <Select.Option value="demo">None</Select.Option>
+            <Form.Item label="Gender" required>
+
+                <Select onChange={(data) => setGender(data)} required>
+                    <Select.Option value="Male">Male</Select.Option>
+                    <Select.Option value="Famale">Female</Select.Option>
+                    <Select.Option value="None">None</Select.Option>
                 </Select>
+                {!preferences.gender && <span style={{ color: "red" }}><br />input something</span>}
+
             </Form.Item>
-            <Form.Item label="Game">
-                <TreeSelect
+            <Form.Item label="Game" required>
+                {/* <TreeSelect
+                    onChange={(e) => alert(e)}
                     treeData={[
                         {
                             title: 'Light',
@@ -66,10 +66,18 @@ const Preferences = () => {
                             ],
                         },
                     ]}
-                />
+                /> */}
+                <Select onChange={(data) => setGame(data)} required>
+                    <Select.Option value="LoL">LOL</Select.Option>
+                    <Select.Option value="CSGO">CSGO</Select.Option>
+                    <Select.Option value="8XBET">8XBET</Select.Option>
+                </Select>
+                {!preferences.game && <span style={{ color: "red" }}><br />input something</span>}
+
             </Form.Item>
-            <Form.Item label="Level">
-                <Cascader
+            <Form.Item label="Level" required>
+                {/* <Cascader
+                    onChange={(e) => alert(e)}
                     options={[
                         {
                             value: 'zhejiang',
@@ -82,24 +90,37 @@ const Preferences = () => {
                             ],
                         },
                     ]}
-                />
+                /> */}
+                <Select onChange={(data) => setLevel(data)} required>
+                    <Select.Option value="Begginer">Begginer</Select.Option>
+                    <Select.Option value="Middle">Middle</Select.Option>
+                    <Select.Option value="Senior">Senior</Select.Option>
+                </Select>
+                {!preferences.level && <span style={{ color: "red" }}><br />input something</span>}
+
             </Form.Item>
-            <Form.Item label="Born">
-                <DatePicker className='w-full'/>
+            <Form.Item label="Age" required>
+                {/* <DatePicker className='w-full' onChange={(e) => alert(e)} /> */}
+                <Input onChange={data => setAge(parseInt(data))}/>
+                {!preferences.age && <span style={{ color: "red" }}><br />input something</span>}
+
             </Form.Item>
-            <Form.Item label="Phone" >
+            <Form.Item label="Phone" onChange={data => setPhone(data)}>
                 <InputNumber className='w-full' style={{ marginLeft: "0.1rem" }} />
             </Form.Item>
-            <Form.Item label="With">
-                <Select>
-                    <Select.Option value="demo">Male</Select.Option>
-                    <Select.Option value="demo">Female</Select.Option>
-                    <Select.Option value="demo">None</Select.Option>
+            <Form.Item label="With" required >
+                <Select onChange={(data) => setWith(data)} required> 
+                    <Select.Option value="WithMale">Male</Select.Option>
+                    <Select.Option value="WithFemale">Female</Select.Option>
+                    <Select.Option value="WithBinary">None</Select.Option>
                 </Select>
+                {!preferences.With && <span style={{ color: "red" }}><br />input something</span>}
+
             </Form.Item>
 
-            <Form.Item label="Agree" valuePropName="checked">
-                <Switch style={{ marginRight: "10rem" }} />
+            <Form.Item label="Agree" valuePropName="checked" required>
+                <Switch style={{ marginRight: "10rem" }} required />
+                
             </Form.Item>
             
         </Form>

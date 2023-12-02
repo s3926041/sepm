@@ -2,7 +2,7 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 import { Avatar} from 'antd';
 const reader = new FileReader()
-function UploadPhotos() {
+function UploadPhotos({setAvatar, preferences}) {
     const [src,setSrc] = useState(null);
    
     function importData() {
@@ -12,11 +12,22 @@ function UploadPhotos() {
         input.onchange = _ => {
             // you can use this method to get file and perform respective operations
             let files = Array.from(input.files);
-            const imagePath = URL.createObjectURL(files[0]);
+            let file = files[0];
+            if (file.size > 1024 * 1024) {
+                alert("File is too large! Max size is 1MB.");
+                return;
+            } else if (!/\.(jpg|png)$/.test(file.name)) {
+                alert("Only JPG and PNG files are allowed!");
+                return;
+            }
+            const imagePath = URL.createObjectURL(file);
 
             setSrc(imagePath)
             
-            console.log(files);
+            // console.log(files);
+            const uploadPhoto = new FormData();
+            uploadPhoto.append("avatar",file);
+            setAvatar(uploadPhoto);
         };
         input.click();
 
@@ -25,8 +36,9 @@ function UploadPhotos() {
     return ( 
         <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="col-span-full">
-                <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
-                    Avatar
+                <label htmlFor="photo" className="block text-sm text-center font-medium leading-6 text-gray-900">
+                    Avatar 
+                    {!preferences.avatar && <span style={{ color: "red" }}><br />Please put a Image In</span>}
                 </label>
                 <div className="mt-1 flex flex-col items-center gap-x-3">
                     <Avatar className="mt-5" size={250} src={src}/>
