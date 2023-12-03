@@ -1,76 +1,56 @@
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
-import { checkTokenExpiration } from "./service/authService";
+// App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { API_URL } from "./GlobalVar";
+import AuthForm from "./components/auth/AuthForm";
+import Lobby from "./components/lobby/Lobby";
+import Chat from "./components/chat/Chat";
+import io from "socket.io-client"
 
-const socket = io("http://localhost:5002", {
+const socket = io(API_URL, {
   withCredentials: true,
 });
 
-function App() {
-  const [userId, setUserId] = useState("");
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-
-  useEffect(() => {
-    checkTokenExpiration();
-
-    userId ? socket.connect() : socket.disconnect();
-    return () => {
-      socket.disconnect();
-    };
-  }, [userId]);
-
-  const handleUserIdChange = (e) => {
-    setUserId(e.target.value);
-  };
-
-  const handleConnect = () => {
-    if (userId.trim() !== "") {
-      socket.emit("addUser", userId);
+const socketManager = {
+  connectToQueue: (matchPreferences) => {
+    if (!socket.connected) {
+      socket.connect();
     }
-  };
+    socket.emit("connectToQueue", matchPreferences);
+  },
 
-  const sendMessage = () => {
-    const receiverId = "32"; // Replace with the actual receiver ID
-    socket.emit("sendMessage", { senderId: userId, receiverId, text: message });
-    setMessage("");
-  };
+  disconnect: () => {
+    if (socket.connected) {
+      socket.disconnect();
+    }
+  },
 
+  onMatchFound: (callback) => {
+    socket.on("matchFound", callback);
+  },
+
+  offMatchFound: (callback) => {
+    socket.off("matchFound", callback);
+  },
+};
+
+const App = () => {
   return (
-    <div>
-      <div>
-        {/* Input for user ID */}
-        <label>
-          User ID:
-          <input
-            type="text"
-            value={userId}
-            onChange={handleUserIdChange}
-            placeholder="Enter User ID"
-          />
-        </label>
-        <button onClick={handleConnect}>Connect</button>
-      </div>
-      <div>
-        {/* Display messages */}
-        {messages.map((msg, index) => (
-          <div key={index}>
-            <strong>{msg.senderId}: </strong>
-            {msg.text}
-          </div>
-        ))}
-      </div>
-      <div>
-        {/* Input for sending messages */}
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
+    <Router>
+      <Routes>
+        <Route path="/auth" element={<AuthForm />} />
+        <Route
+          path="/lobby"
+          element={<Lobby socketManager={socketManager} />}
         />
-        <button onClick={sendMessage}>Send</button>
-      </div>
-    </div>
+        <Route
+          path="/chat/:id"
+          element={<Chat socketManager={socketManager} />}
+        />
+        <Route path="/" element={<AuthForm />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;

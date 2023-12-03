@@ -4,33 +4,26 @@ const User = require("../models/User");
 const { verifyToken } = require("./middleWare");
 
 // });
-router.get("/cart", verifyToken, async (req, res) => {
-  const customerId = req.userId;
+router.get("/match/:matchid", verifyToken, async (req, res) => {
+  const { matchid } = req.params;
+  const id = req.userId;
   try {
-    const user = await Customer.findById(customerId);
-    const cart = user.cart;
-    res.status(201).json(cart);
+    res.status(201).json(id);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-router.post("/cart", verifyToken, async (req, res) => {
-  const customerId = req.userId;
-  const newCart = req.body;
 
+router.post("/message/:matchid", verifyToken, async (req, res) => {
+  const { matchid } = req.params;
+  const id = req.userId;
+  const message = req.body.message;
+  
   try {
-    const updatedCustomer = await Customer.findByIdAndUpdate(
-      customerId,
-      { cart: newCart },
-      { new: true }
-    );
-
-    res.status(200).json(updatedCustomer.cart);
+    res.status(201).json(message);
   } catch (err) {
-    res.status(500).json({ err, hung: "feef" });
+    res.status(500).json(err);
   }
 });
-
-
 
 module.exports = router;
