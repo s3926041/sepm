@@ -30,12 +30,26 @@ const initSocketServer = (server) => {
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
+    socket.on("addChatUser", (userId) => {
+      addUser(userId, socket.id);
+      // io.emit("getUsers", users);
+    });
+    //send and get message
+    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+      const user = getUser(receiverId);
+      console.log(text);
+      user?.socketId &&
+        io.to(user.socketId).emit("getMessage", {
+          senderId,
+          text,
+        });
+    });
+
     socket.on("connectToQueue", () => {
       queueMatch.push({ socket });
       if (queueMatch.length >= 2) {
         const user1 = queueMatch.shift();
         const user2 = queueMatch.shift();
-
 
         const match = new Match({
           participants: [user1.socket.id, user2.socket.id],
@@ -54,13 +68,14 @@ const initSocketServer = (server) => {
       }
     });
 
-   
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
       const index = queueMatch.findIndex((entry) => entry.socket === socket);
       if (index !== -1) {
         queueMatch.splice(index, 1);
       }
+      removeUser(socket.id);
+      // io.emit("getUsers", users);
     });
   });
 };
