@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 const Match = require("../models/Match");
 const { verifyToken } = require("./middleWare");
+const GlobalChat = require("../models/GlobalChat");
 
 // });
 router.get("/match/:matchid", verifyToken, async (req, res) => {
@@ -24,7 +25,7 @@ router.get("/match/:matchid", verifyToken, async (req, res) => {
 router.post("/sendMessage/:matchid", verifyToken, async (req, res) => {
   const { matchid } = req.params;
   const id = req.userId;
-  const { message } = req.body; 
+  const { message } = req.body;
 
   try {
     const match = await Match.findById(matchid);
@@ -56,4 +57,26 @@ router.post("/sendMessage/:matchid", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/sendMessage/", verifyToken, async (req, res) => {
+  const id = req.userId;
+  const { message } = req.body;
+
+  try {
+    const chat = await GlobalChat.findOne();
+
+    if (chat) {
+      chat.conversation.push({
+        sender: id,
+        message,
+      });
+      await chat.save();
+      res.status(201).json({ msg: "ok" });
+    } else {
+      res.status(400).json({ error: "Chat does not exist" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;
