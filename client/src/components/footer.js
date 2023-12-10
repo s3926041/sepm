@@ -35,8 +35,8 @@ export default function Footer() {
                 borderRadius: { xs: 0, sm: 0 },
             }}
         >
-            
-           
+
+
             <Box
                 sx={{
                     display: 'flex',
@@ -47,7 +47,7 @@ export default function Footer() {
                     gap: 1,
                 }}
             >
-                
+
                 <List
                     size="sm"
                     orientation="horizontal"
@@ -98,11 +98,11 @@ export default function Footer() {
                         minHeight={80}
                         sx={{ flexBasis: { xs: 200, md: 'initial' } }}
                     >
-                        <img alt="Gmatch" src={gmatch} style={{objectFit: "fill"}} />
+                        <img alt="Gmatch" src={gmatch} style={{ objectFit: "fill" }} />
                     </AspectRatio>
                     <CardContent>
                         <Typography level="body-sm">Gmatch 2023 Ecosystem</Typography>
-                        
+
                     </CardContent>
                 </Card>
             </Box>

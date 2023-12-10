@@ -1,6 +1,6 @@
-import {useState } from 'react'
-import {Link} from "react-router-dom"
-import { Dialog, Popover} from '@headlessui/react'
+import { useState } from 'react'
+import { Link } from "react-router-dom"
+import { Dialog, Popover } from '@headlessui/react'
 import {
 
     Bars3Icon,
@@ -14,7 +14,7 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
-        <header className="bg-white" style={{borderBottom: "0.5px solid grey"}} >
+        <header className="bg-white" style={{ borderBottom: "0.5px solid grey" }} >
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 " aria-label="Global">
                 <div className="flex lg:flex-1">
                     <Link to="/" className="-m-1.5 p-1.5">
@@ -33,7 +33,7 @@ export default function Header() {
                     </button>
                 </div>
                 <Popover.Group className="hidden lg:flex lg:gap-x-12">
-                    
+
 
                     <Link to="/pricing" className="text-sm font-semibold leading-6 text-gray-900">
                         Premium Account
@@ -74,7 +74,7 @@ export default function Header() {
                     <div className="mt-6 flow-root">
                         <div className="-my-6 divide-y divide-gray-500/10">
                             <div className="space-y-2 py-6">
-                                
+
                                 <Link
                                     to="/pricing"
                                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -102,8 +102,8 @@ export default function Header() {
                                     Log in
                                 </Link>
 
-                               
-                                
+
+
                             </div>
                         </div>
                     </div>
