@@ -1,4 +1,5 @@
 import { CloseOutlined, HeartOutlined } from "@ant-design/icons";
+import '../../../material-tailwind.css'
 
 function FindMate({users,setUsers}) {
 
@@ -59,17 +60,18 @@ function FindMate({users,setUsers}) {
        
         
         {/* stylesheet */}
-        <link
+        {/* <link
             rel="stylesheet"
             href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
-        />
+        /> */}
+
         {/* Font Awesome Link */}
-        <link
+        {/* <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
             integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
             crossOrigin="anonymous"
-        />
+        /> */}
     </>
  );
 }
