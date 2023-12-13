@@ -2,7 +2,7 @@ import { DeleteOutlined} from '@ant-design/icons';
 function ChatSideIcon({setMates,user,setChatMates, deleteTalk}) {
     return (
         <>
-            <div className="flex flex-row items-center mt-2 mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md" onClick={() => {setMates(false); setChatMates(user)}}>
+            <div className="flex flex-row items-center mt-2 mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md" onClick={() => {setMates("chat"); setChatMates(user)}}>
                 <div className="flex-col w-10 h-10 bg-gray-300 rounded-full ml-2">
                     <img
                         src="https://placehold.co/200x/ad922e/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
@@ -23,7 +23,7 @@ function ChatSideIcon({setMates,user,setChatMates, deleteTalk}) {
                     }
                 </div>
                 <div className="flex-row ml-9" style={{marginLeft:"2.25rem"}} onClick={
-                    () => {deleteTalk(user)}
+                    (e) => {deleteTalk(user); setMates("lobby"); e.stopPropagation()}
                 }>
                     <DeleteOutlined />
                 </div>

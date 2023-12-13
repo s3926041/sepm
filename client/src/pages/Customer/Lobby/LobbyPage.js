@@ -7,9 +7,10 @@ import ChatBox from './ChatBox';
 import FindMate from './FindMate';
 import ChatSideBar from './ChatSideIcon';
 import ChatBoxHeader from '../../../components/ChatBoxHeader';
+import ChatSideIcon from './ChatSideIcon';
 const { Content, Sider } = Layout;
 const App = () => {
-    const [mates, setMates] = useState(true);
+    const [mates, setMates] = useState("lobby");
     const [chatMate, setChatMates] = useState({});
     const [users, setUsers] = useState([
         {
@@ -58,7 +59,7 @@ const App = () => {
     function deleteTalk(user) {
         let usersClone = users.filter(u => u.name !== user.name);
         setUsers(usersClone);
-        window.location.reload();
+        // window.location.reload();
         // navigate("/lobby")
     }
 
@@ -108,8 +109,8 @@ const App = () => {
                         }
                     }}
                 />
-                <Button className='w-full mb-2' onClick={() => setMates(true)}>Find Mates</Button>
-                {users.map(u => <ChatSideBar setMates={setMates} user={u} setChatMates={setChatMates} deleteTalk={deleteTalk} />)}
+                <Button className='w-full mb-2' onClick={() => setMates("lobby")}>Find Mates</Button>
+                {users.map(u => <ChatSideIcon setMates={setMates} user={u} setChatMates={setChatMates} deleteTalk={deleteTalk} />)}
 
 
             </Sider>
@@ -127,7 +128,7 @@ const App = () => {
                    
                 >
 
-                    {mates ? <FindMate users={users} setUsers={setUsers} />
+                    {mates  === "lobby" ? <FindMate users={users} setUsers={setUsers} />
                         :
                         <ChatBox chatMate={chatMate} sendMessage={sendMessage} />
                     }
