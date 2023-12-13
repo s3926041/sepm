@@ -2,9 +2,8 @@ const router = require("express").Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { verifyToken } = require("./middleWare");
 
-router.post("/register/User", async (req, res) => {
+router.post("/register/", async (req, res) => {
   try {
     const user = await User.findOne({
       $or: [{ phone: req.body.phone }, { email: req.body.email }],
@@ -16,10 +15,8 @@ router.post("/register/User", async (req, res) => {
       const newUser = new User({
         phone: req.body.phone,
         email: req.body.email,
-        address: req.body.address,
         password: await bcrypt.hash(req.body.password, 10),
       });
-
       await newUser.save();
       console.log(newUser);
       res.status(201).json(newUser);
@@ -30,7 +27,7 @@ router.post("/register/User", async (req, res) => {
 });
 
 
-router.post("/login/User", async (req, res) => {
+router.post("/login/", async (req, res) => {
   try {
     console.log(req.body);
     const user = await User.findOne({

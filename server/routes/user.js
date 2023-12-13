@@ -1,36 +1,82 @@
 const router = require("express").Router();
 const User = require("../models/User");
-
+const Match = require("../models/Match");
 const { verifyToken } = require("./middleWare");
+const GlobalChat = require("../models/GlobalChat");
 
 // });
-router.get("/cart", verifyToken, async (req, res) => {
-  const customerId = req.userId;
+router.get("/match/:matchid", verifyToken, async (req, res) => {
+  const { matchid } = req.params;
+  const id = req.userId;
   try {
-    const user = await Customer.findById(customerId);
-    const cart = user.cart;
-    res.status(201).json(cart);
+    const match = await Match.findById(matchid);
+    if (match) {
+      res.status(201).json(id);
+      return;
+    } else {
+      res.status.json(400).json({ error: "Match not exist" });
+      return;
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 });
-router.post("/cart", verifyToken, async (req, res) => {
-  const customerId = req.userId;
-  const newCart = req.body;
+
+router.post("/sendMessage/:matchid", verifyToken, async (req, res) => {
+  const { matchid } = req.params;
+  const id = req.userId;
+  const { message } = req.body;
 
   try {
-    const updatedCustomer = await Customer.findByIdAndUpdate(
-      customerId,
-      { cart: newCart },
-      { new: true }
-    );
+    const match = await Match.findById(matchid);
 
-    res.status(200).json(updatedCustomer.cart);
+    if (match) {
+      if (match.participants.includes(id)) {
+        match.conversation.push({
+          sender: id,
+          message,
+        });
+
+        // Save the updated match document
+        await match.save();
+
+        res
+          .status(201)
+          .json({ success: true, message: "Message sent successfully" });
+      } else {
+        res
+          .status(403)
+          .json({ error: "User is not a participant in the match" });
+      }
+    } else {
+      res.status(400).json({ error: "Match does not exist" });
+    }
   } catch (err) {
-    res.status(500).json({ err, hung: "feef" });
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
+router.post("/sendMessage/", verifyToken, async (req, res) => {
+  const id = req.userId;
+  const { message } = req.body;
 
+  try {
+    const chat = await GlobalChat.findOne();
 
+    if (chat) {
+      chat.conversation.push({
+        sender: id,
+        message,
+      });
+      await chat.save();
+      res.status(201).json({ msg: "ok" });
+    } else {
+      res.status(400).json({ error: "Chat does not exist" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;
