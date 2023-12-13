@@ -1,6 +1,6 @@
 import { CloseOutlined, HeartOutlined } from "@ant-design/icons";
 import '../../../material-tailwind.css'
-
+import gamer from "../../../Assest/gamer1.png";
 function FindMate({users,setUsers}) {
 
 
@@ -11,8 +11,9 @@ function FindMate({users,setUsers}) {
                 >
             <div className="relative mx-4 mt-4 h-80 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
                 <img
-                    src="https://www.material-tailwind.com/img/team-3.jpg"
+                    src={gamer}
                     alt="profile-picture"
+                    style={{height: "100%", objectFit:"cover"}}
                 />
             </div>
             <div className="p-6 text-center">

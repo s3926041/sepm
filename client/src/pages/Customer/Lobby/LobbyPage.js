@@ -121,7 +121,8 @@ const App = () => {
                 <Content
                     style={{
                         margin: '24px 16px 1rem',
-                        height: "68vh"
+                        height: "68vh",
+                        marginBottom: "3rem"
                     }}
                    
                 >
