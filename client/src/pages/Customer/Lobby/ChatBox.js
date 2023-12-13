@@ -8,11 +8,12 @@ function ChatBox({chatMate, sendMessage}) {
     const div = useRef(null);
     const scrollToBottom = () => {
         div.current?.scrollIntoView({ behavior: "smooth" })
+
     }
 
-    useEffect(() => {
-        scrollToBottom()
-    }, [chatMate.talk]);
+    useEffect(
+        scrollToBottom
+    , [chatMate.talk.length]);
 
     return (
     <>
@@ -26,7 +27,7 @@ function ChatBox({chatMate, sendMessage}) {
                     <h1 className="text-2xl font-semibold">{chatMate.name}</h1>
                 </header>
                 {/* Chat Messages */}
-                    <div className="overflow-y-auto p-4 pb-36" style={{ height: "45vh" }}>
+                    <div className="overflow-scroll p-4 pb-36" style={{ height: "45vh" }}>
                     {
                         chatMate.talk.map(t => {
                             

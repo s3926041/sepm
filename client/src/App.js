@@ -10,9 +10,8 @@ import HomePage from './pages/Customer/HomePage/HomePage';
 import Admin from './pages/Admin/admin';
 import Error from './pages/404/Error';
 import LobbyPage from "./pages/Customer/Lobby/LobbyPage"
-import ChatBox from './pages/Customer/Lobby/ChatBox';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ChatSideBar from './pages/Customer/Lobby/ChatSideIcon';
+import AboutPage from './pages/Customer/HomePage/AboutPage';
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -58,6 +57,11 @@ function App() {
     {
       path: "/lobby",
       element: <LobbyPage />,
+
+    },
+    {
+      path: "/aboutus",
+      element: <AboutPage />,
 
     },
 

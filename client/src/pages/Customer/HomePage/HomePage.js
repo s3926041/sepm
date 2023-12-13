@@ -1,6 +1,5 @@
 import Header from "../../../components/header";
 import Footer from "../../../components/footer";
-import AboutUs from "../../../components/AboutUs";
 import Banner from "../../../components/Banner";
 import Promotion from "../../../components/Promotion";
 function HomePage() {
@@ -9,7 +8,6 @@ function HomePage() {
             <Header />
             <Banner />
             <Promotion />
-            <AboutUs />
             <Footer />
         </>
     );

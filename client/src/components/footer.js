@@ -99,7 +99,7 @@ export default function Footer() {
                         minHeight={80}
                         sx={{ flexBasis: { xs: 200, md: 'initial' } }}
                     >
-                        <Link to="/">
+                        <Link to="/aboutus">
                         <img alt="Gmatch" src={gmatch} style={{ objectFit: "fill" }} />
                         </Link>
                     </AspectRatio>
