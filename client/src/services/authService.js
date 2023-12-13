@@ -1,4 +1,4 @@
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 export const isLoggedIn = () => {
   let data = localStorage.getItem("token");
@@ -41,7 +41,7 @@ export const checkTokenExpiration = () => {
     localStorage.removeItem("user");
     return false;
   }
-  const decodedToken = jwt_decode(token);
+  const decodedToken = jwtDecode(token);
   const currentTime = Date.now() / 1000;
 
   if (decodedToken.exp < currentTime) {

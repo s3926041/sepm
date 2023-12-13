@@ -1,5 +1,6 @@
 import { API_URL } from "../GlobalVar";
-import { setToken, setUser } from "../service/authService";
+
+import { setToken, setUser } from "../services/authService";
 
 const register = async (userData) => {
   try {
@@ -22,6 +23,7 @@ const register = async (userData) => {
 };
 
 const login = async (userData) => {
+    console.log(userData)
   try {
     const response = await fetch(API_URL + "/api/auth/login/", {
       method: "POST",
