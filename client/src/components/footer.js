@@ -14,6 +14,7 @@ import ListItemButton from '@mui/joy/ListItemButton';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
 import gmatch from "../Assest/gmatch.png"
+import { Link } from 'react-router-dom';
 // import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
 // import GitHubIcon from '@mui/icons-material/GitHub';
 // import SendIcon from '@mui/icons-material/Send';
@@ -58,13 +59,13 @@ export default function Footer() {
                         <ListSubheader sx={{ fontWeight: 'xl' }}>Sitemap</ListSubheader>
                         <List>
                             <ListItem>
-                                <ListItemButton>Premium Services</ListItemButton>
+                                <ListItemButton><Link to="/pricing">Premium Services</Link></ListItemButton>
                             </ListItem>
                             <ListItem>
-                                <ListItemButton>Safety Instructions</ListItemButton>
+                                <ListItemButton><Link to="/safety">Safety</Link></ListItemButton>
                             </ListItem>
                             <ListItem>
-                                <ListItemButton>Chat Box</ListItemButton>
+                                <ListItemButton><Link to="/register">Chat Box</Link></ListItemButton>
                             </ListItem>
                         </List>
                     </ListItem>
@@ -72,7 +73,7 @@ export default function Footer() {
                         <ListSubheader sx={{ fontWeight: 'xl' }}>Features</ListSubheader>
                         <List sx={{ '--ListItemDecorator-size': '32px' }}>
                             <ListItem>
-                                <ListItemButton>Chat With Friend</ListItemButton>
+                                <ListItemButton><Link to="/login">Chat With Friends</Link></ListItemButton>
                             </ListItem>
                             <ListItem>
                                 <ListItemButton>Share Interests</ListItemButton>
@@ -98,7 +99,9 @@ export default function Footer() {
                         minHeight={80}
                         sx={{ flexBasis: { xs: 200, md: 'initial' } }}
                     >
+                        <Link to="/">
                         <img alt="Gmatch" src={gmatch} style={{ objectFit: "fill" }} />
+                        </Link>
                     </AspectRatio>
                     <CardContent>
                         <Typography level="body-sm">Gmatch 2023 Ecosystem</Typography>

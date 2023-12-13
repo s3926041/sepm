@@ -12,7 +12,7 @@ import Error from './pages/404/Error';
 import LobbyPage from "./pages/Customer/Lobby/LobbyPage"
 import ChatBox from './pages/Customer/Lobby/ChatBox';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ChatSideBar from './pages/Customer/Lobby/ChatSideBar';
+import ChatSideBar from './pages/Customer/Lobby/ChatSideIcon';
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -21,16 +21,16 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HomePage/>,
-      children: [    
+      element: <HomePage />,
+      children: [
       ],
-      errorElement: <Error/>,
+      errorElement: <Error />,
     },
     {
       path: "/safety",
       element: <SafetyPage />,
-    
-    }, 
+
+    },
     {
       path: "/admin",
       element: <Admin />,
@@ -59,22 +59,22 @@ function App() {
       path: "/lobby",
       element: <LobbyPage />,
 
-    }, 
-    
+    },
+
   ]);
   return <RouterProvider router={router}></RouterProvider>;
-// return(
-//   <BrowserRouter>
-//     <Routes>
-//       <Route path="/" element={<HomePage />}>
-//         {/* <Route index element={<HomePage/>} /> */}
-//         <Route path="login" element={<LoginPage />} />
-//         <Route path="safety" element={<SafetyPage />} />
-//         <Route path="*" element={<Error />} />
-//       </Route>
-//     </Routes>
-//   </BrowserRouter>
-// );
+  // return(
+  //   <BrowserRouter>
+  //     <Routes>
+  //       <Route path="/" element={<HomePage />}>
+  //         {/* <Route index element={<HomePage/>} /> */}
+  //         <Route path="login" element={<LoginPage />} />
+  //         <Route path="safety" element={<SafetyPage />} />
+  //         <Route path="*" element={<Error />} />
+  //       </Route>
+  //     </Routes>
+  //   </BrowserRouter>
+  // );
 }
 
 export default App;

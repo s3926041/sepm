@@ -22,13 +22,8 @@ export default function ChatBoxHeader() {
                 <Popover.Group className="lg:flex lg:gap-x-12">
 
 
-                    <Link to="/pricing" className="text-sm font-semibold leading-6 text-gray-900">
-                        Premium Account
-                    </Link>
-                    <Link to="/safety" className="text-sm font-semibold leading-6 text-gray-900">
-                        Safety Instruction
-                    </Link>
-                    <Link to="/edit" className="text-sm flex flex-row font-semibold leading-6 text-gray-900">
+                    
+                    <Link to="/user/editprofile" className="text-sm flex flex-row font-semibold leading-6 text-gray-900">
                         <Avatar icon={<UserOutlined />} size={30} />
                         <span className='ml-2'>Hung Nguyen</span>
                     </Link>

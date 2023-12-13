@@ -1,5 +1,5 @@
 import { DeleteOutlined} from '@ant-design/icons';
-function ChatSideBar({setMates,user,setChatMates, deleteTalk}) {
+function ChatSideIcon({setMates,user,setChatMates, deleteTalk}) {
     return (
         <>
             <div className="flex flex-row items-center mt-2 mb-4 cursor-pointer hover:bg-gray-100 p-2 rounded-md" onClick={() => {setMates(false); setChatMates(user)}}>
@@ -33,4 +33,4 @@ function ChatSideBar({setMates,user,setChatMates, deleteTalk}) {
     );
 }
 
-export default ChatSideBar;
+export default ChatSideIcon;

@@ -18,15 +18,14 @@ const contentStyle = {
 };
 
 const circle = {
-width: "350px",
+width: "550px",
 height: "450px",
 position: "absolute",
 opacity: "0.8",
 top: "10.2rem",
-right: "4rem",
+right: "calc(50% - 275px)",
 background: "#ffff",
    
-
 }
 
 const style = {

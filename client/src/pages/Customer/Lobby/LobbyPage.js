@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DeleteOutlined, PoweroffOutlined, ScissorOutlined } from '@ant-design/icons';
 import { Button, Layout, Menu, theme } from 'antd';
 import Footer from '../../../components/footer';
 import ChatBox from './ChatBox';
 import FindMate from './FindMate';
-import ChatSideBar from './ChatSideBar';
+import ChatSideBar from './ChatSideIcon';
 import ChatBoxHeader from '../../../components/ChatBoxHeader';
 const { Content, Sider } = Layout;
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
         }
     ]
     )
+    const navigate = useNavigate();
     function sendMessage(chatMate, message) {
         let usersClone = [...users];
         usersClone.forEach(u => {
@@ -57,6 +59,7 @@ const App = () => {
         let usersClone = users.filter(u => u.name !== user.name);
         setUsers(usersClone);
         window.location.reload();
+        // navigate("/lobby")
     }
 
     function getItem(label, key, icon, children) {
@@ -96,7 +99,14 @@ const App = () => {
                     mode="inline"
                     defaultSelectedKeys={['4']}
                     items={items}
-                    onClick={(value) => console.log(parseInt(value.key))}
+                    onClick={(value) => {
+                        console.log(parseInt(value.key))
+                        if (value.key === "2") {
+                            navigate('/user/editprofile')
+                        } else if (value.key === "1") {
+                            navigate('/')
+                        }
+                    }}
                 />
                 <Button className='w-full mb-2' onClick={() => setMates(true)}>Find Mates</Button>
                 {users.map(u => <ChatSideBar setMates={setMates} user={u} setChatMates={setChatMates} deleteTalk={deleteTalk} />)}
@@ -106,13 +116,14 @@ const App = () => {
             <Layout>
 
 
-                {/* <Header /> */}
 
                 <ChatBoxHeader />
                 <Content
                     style={{
                         margin: '24px 16px 1rem',
+                        height: "68vh"
                     }}
+                   
                 >
 
                     {mates ? <FindMate users={users} setUsers={setUsers} />

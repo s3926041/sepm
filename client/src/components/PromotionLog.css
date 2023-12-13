@@ -1,7 +1,15 @@
 .log{
-    @media (max-width: 600px){
+    @media (max-width: 1000px){
         /* top: "5.2rem";
         right: "1rem"; */
         display: none;
+    }
+}
+
+.logx{
+    @media (max-width: 2000px){
+        /* top: "5.2rem";
+        right: "1rem"; */
+        
     }
 }

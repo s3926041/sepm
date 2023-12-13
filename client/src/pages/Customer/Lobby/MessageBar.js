@@ -1,7 +1,7 @@
 import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-function SenderTab({chatMate, sendMessage}) {
+function MessageBar({chatMate, sendMessage}) {
     const[message,setMessages] = useState("");
 
     return (<div>
@@ -36,4 +36,4 @@ function SenderTab({chatMate, sendMessage}) {
  );
 }
 
-export default SenderTab;
+export default MessageBar;

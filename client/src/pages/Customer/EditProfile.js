@@ -27,6 +27,7 @@ import {
 } from 'antd';
 import { Avatar } from 'antd';
 import Sliderr from './Sliderr';
+import { useNavigate } from 'react-router';
 const { Option } = Select;
 const UserList = ['U', 'Lucy', 'Tom', 'Edward'];
 const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
@@ -35,6 +36,7 @@ const GapList = [4, 3, 2, 1];
 
 export default function EditProfile() {
     const [componentSize, setComponentSize] = useState('default');
+    const navigate = useNavigate();
 
 
     const [src, setSrc] = useState(null);
@@ -169,6 +171,7 @@ export default function EditProfile() {
                     type="submit"
                     className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     style={{width:"50%"}}
+                    onClick={() => {navigate("/lobby")}}
                 >
                     Done
                 </button>
