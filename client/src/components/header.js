@@ -19,9 +19,9 @@ const style = {
     display: "none",
 }
 
-export default function Header() {
+export default function Header({user}) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [user, setUser] = useState(true);
+   
     return (
         <header className="bg-white" style={{ borderBottom: "0.5px solid grey" }} >
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 " aria-label="Global">

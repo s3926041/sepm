@@ -33,7 +33,7 @@ const style = {
         display: 'none',
     },
 }
-const Promotion = () => {
+const CarouselBar = ({user}) => {
     // const onChange = (currentSlide) => {
     //     console.log(currentSlide);
     // };
@@ -55,11 +55,15 @@ const Promotion = () => {
 
            
         </Carousel>
+            {!user &&
         <div style={circle} className='log'>
+           
                 <Login/>
+            
         </div>
+            }
         </div>
         
     );
 };
-export default Promotion;
+export default CarouselBar;
