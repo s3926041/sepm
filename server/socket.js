@@ -12,37 +12,17 @@ const initSocketServer = (server) => {
 
   const queueMatch = [];
 
-  const chatUser = [];
-
-  const addUser = (userId, socketId) => {
-    !chatUser.some((user) => user.userId === userId) &&
-      chatUser.push({ userId, socketId });
-  };
-
-  const removeUser = (socketId) => {
-    chatUser = chatUser.filter((user) => user.socketId !== socketId);
-  };
-
-  const getUser = (userId) => {
-    return chatUser.find((user) => user.userId === userId);
-  };
-
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
-    socket.on("addChatUser", (userId) => {
-      addUser(userId, socket.id);
-      // io.emit("getUsers", users);
+    // Global Chat
+    socket.on("globalChatMessage", (message) => {
+      io.emit("globalChatMessage", { user: socket.id, message });
     });
-    //send and get message
-    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-      const user = getUser(receiverId);
-      console.log(text);
-      user?.socketId &&
-        io.to(user.socketId).emit("getMessage", {
-          senderId,
-          text,
-        });
+
+    // Private Chat
+    socket.on("privateChatMessage", ({ matchId, message }) => {
+      io.to(matchId).emit("privateChatMessage", { user: socket.id, message });
     });
 
     socket.on("connectToQueue", () => {
@@ -63,6 +43,9 @@ const initSocketServer = (server) => {
           } else {
             io.to(user1.socket.id).emit("matchFound", { matchId: match._id });
             io.to(user2.socket.id).emit("matchFound", { matchId: match._id });
+
+            // Join private chat room
+            io.in(match._id).socketsJoin(match._id);
           }
         });
       }
@@ -74,8 +57,14 @@ const initSocketServer = (server) => {
       if (index !== -1) {
         queueMatch.splice(index, 1);
       }
-      removeUser(socket.id);
-      // io.emit("getUsers", users);
+
+      // Leave private chat room on disconnect
+      const rooms = io.sockets.adapter.rooms;
+      for (const roomId in rooms) {
+        if (rooms[roomId].sockets[socket.id]) {
+          socket.leave(roomId);
+        }
+      }
     });
   });
 };

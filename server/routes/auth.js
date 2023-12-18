@@ -7,6 +7,7 @@ router.post("/register/", async (req, res) => {
   try {
     const user = await User.findOne({
       $or: [{ phone: req.body.phone }, { email: req.body.email }],
+      // $or: [{ email: req.body.email }],
     });
     if (user) {
       res.status(400).json({ error: "Email or Phone exist" });
@@ -14,6 +15,7 @@ router.post("/register/", async (req, res) => {
     } else {
       const newUser = new User({
         phone: req.body.phone,
+        name: req.body.name,
         email: req.body.email,
         password: await bcrypt.hash(req.body.password, 10),
       });
@@ -25,7 +27,6 @@ router.post("/register/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
 
 router.post("/login/", async (req, res) => {
   try {
@@ -51,7 +52,5 @@ router.post("/login/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
 
 module.exports = router;

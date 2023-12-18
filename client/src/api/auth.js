@@ -17,13 +17,14 @@ const register = async (userData) => {
       console.log("ok");
       return data;
     }
+    return null;
   } catch (error) {
     console.error("Error sending registration data:", error);
   }
 };
 
 const login = async (userData) => {
-    console.log(userData)
+  console.log(userData);
   try {
     const response = await fetch(API_URL + "/api/auth/login/", {
       method: "POST",
@@ -38,10 +39,9 @@ const login = async (userData) => {
       console.log("ok");
       setUser(data);
       return data;
-    } else {
-      console.error("Login failed:", response.statusText);
-      return null;
     }
+    console.error("Login failed:", response.statusText);
+    return null;
   } catch (error) {
     console.error("Error sending registration data:", error);
     return null;

@@ -11,15 +11,23 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,
     },
-    sex: {
+    gender: {
       type: String,
-      enum: ["male", "female"],
-      default: "male",
+      enum: ["male", "female","none"],
+      default: "none",
     },
+    // avatarImg: {
+    //   data: Buffer,
+    //   type: String,
+    // },
   },
   { timestamps: true }
 );
