@@ -1,34 +1,47 @@
 import { useState } from 'react'
 import { Link } from "react-router-dom"
-import {  Popover } from '@headlessui/react'
 import gmatch from "../Assest/gmatch.svg";
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
+import { DownOutlined } from '@ant-design/icons';
+import { Dropdown, Space } from 'antd';
 
+const items = [
+    {
+        label: < Link to = "/" onClick={() => {}}>Log Out</Link>,
+        key: '0',
+    },
 
-export default function ChatBoxHeader() {
+];
+
+export default function ChatBoxHeader({user}) {
    
 
     return (
         <header className="bg-white" style={{ borderBottom: "0.5px solid grey" }} >
             <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 " aria-label="Global">
                 <div className="flex lg:flex-1">
-                    <Link to="/" className="-m-1.5 p-1.5">
+                    <div className="-m-1.5 p-1.5">
                         <span className="sr-only">Gmatch Company</span>
                         <img className="h-8 w-auto" src={gmatch} alt="Gmatch" />
-                    </Link>
+                    </div>
                 </div>
                 
-                <Popover.Group className="lg:flex lg:gap-x-12">
-
-
-                    
-                    <Link to="/user/editprofile" className="text-sm flex flex-row font-semibold leading-6 text-gray-900">
-                        <Avatar icon={<UserOutlined />} size={30} />
-                        <span className='ml-2'>Hung Nguyen</span>
-                    </Link>
-                    
-                </Popover.Group>
+                <Dropdown
+                    menu={{
+                        items,
+                    }}
+                    trigger={['hover']}
+                    className="lg:flex lg:gap-x-1"
+                >
+                        <Space>
+                            <div className="text-sm flex flex-row font-semibold leading-6 text-gray-900" onClick={(e) => e.preventDefault()}>
+                                <Avatar icon={<UserOutlined />} size={30} />
+                                <span className='ml-2'>Hung Nguyen</span>
+                            </div>
+                            <DownOutlined />
+                        </Space>
+                </Dropdown>
                 
             </nav>
             

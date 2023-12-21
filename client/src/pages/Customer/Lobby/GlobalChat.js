@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Input, List, Avatar, Button } from "antd";
+// import { Input, List, Avatar, Button } from "antd";
+// import ChatBox from "./ChatBox";
+import {  SendOutlined } from "@ant-design/icons";
+import { useRef } from 'react';
 const GlobalChat = ({ socketManager }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -31,9 +34,18 @@ const GlobalChat = ({ socketManager }) => {
     }
   };
 
+  const div = useRef(null);
+  const scrollToBottom = () => {
+    div.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(
+    scrollToBottom
+    , [messages.length]);
+
   return (
-    <div style={{ maxWidth: 600, margin: "auto" }}>
-      <List
+    <div style={{ width: 500, margin: "auto" }}>
+      {/* <List
         header={<div>Global Chat</div>}
         itemLayout="horizontal"
         dataSource={messages}
@@ -45,9 +57,62 @@ const GlobalChat = ({ socketManager }) => {
             />
           </List.Item>
         )}
-      />
+      /> */}
+
+        {/* Main Chat Area */}
+        <div className="h-full  bg-white">
+          <header className="bg-white p-4 text-gray-700">
+            <h1 className="text-2xl font-semibold">Global Chat</h1>
+          </header>
+        
+          <div className="overflow-scroll p-4 pb-36" style={{ height: "60vh" }}>
+            {
+              messages.map(msg => {
+                if (msg.user === msg.user) {
+                  return (
+                    <div className="flex justify-end mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
+                      <div className="relative ml-3 text-sm py-2 px-4 shadow rounded-xl" style={{ backgroundColor: "#ebf4ff", marginRight: " 0.5rem" }} >
+                        <p className="font-bold text-wrap">
+                          {`${msg.user}:`}
+                        </p>
+                        <p className="">
+                          {`${msg.text.message}`}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0" style={{ height: "3rem", width: "3rem" }}>
+                        <img
+                          src="https://placehold.co/200x/b7a8ff/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
+                          alt="My Avatar"
+                          className="w-full h-full rounded-full"
+                        />
+                      </div>
+                    </div> 
+                  )
+                } else {
+                  return (
+                    <div className="flex mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
+                      <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0" style={{ height: "3rem", width: "3rem" }}>
+                        <img
+                          src="https://placehold.co/200x/ffa8e4/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
+                          alt="User Avatar"
+                          className="w-full h-full rounded-full"
+                        />
+                      </div>
+                      <div className="relative ml-3 text-lg bg-white py-2 px-4 shadow rounded-xl" style={{  }}>
+                        <p className="text-gray-700 break-word">{`${msg.user}: ${msg.text.message}`}</p>
+                      </div>
+                    </div> 
+                  )
+                }
+              })
+            }
+            <div ref={div} ></div>
+          </div>
+        </div>
+     
+
       <div style={{ marginTop: 16 }}>
-        <Input.TextArea
+        {/* <Input.TextArea
           rows={4}
           value={message}
           onChange={handleMessageChange}
@@ -59,7 +124,25 @@ const GlobalChat = ({ socketManager }) => {
           onClick={handleSendMessage}
         >
           Send
-        </Button>
+        </Button> */}
+        <div className="flex items-center py-2 px-1 bg-white rounded-lg dark:bg-gray-700">
+          <textarea
+            id="chat"
+            rows={1}
+            className="block mx-1 ml-2 p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Your message..."
+            defaultValue={""}
+            value={message}
+            onChange={handleMessageChange}
+          />
+          <button
+            type="submit"
+            className="inline-flex justify-center p-3 text-blue-600 rounded-full cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
+            onClick={handleSendMessage}
+          >
+            <SendOutlined />
+          </button>
+        </div>
       </div>
     </div>
   );

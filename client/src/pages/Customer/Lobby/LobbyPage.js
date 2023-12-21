@@ -13,6 +13,7 @@ import ChatSideBar from "./ChatSideIcon";
 import ChatBoxHeader from "../../../components/ChatBoxHeader";
 import ChatSideIcon from "./ChatSideIcon";
 import GlobalChat from "./GlobalChat";
+import EditProfile from "../EditProfile";
 const { Content, Sider } = Layout;
 const App = ({ socketManager }) => {
   const [mates, setMates] = useState("lobby");
@@ -38,6 +39,7 @@ const App = ({ socketManager }) => {
       ],
     },
   ]);
+  // const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   function sendMessage(chatMate, message) {
     let usersClone = [...users];
@@ -92,36 +94,24 @@ const App = ({ socketManager }) => {
         onCollapse={(collapsed, type) => {
           console.log(collapsed, type);
         }}
+        width={300}
       >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={items}
-          onClick={(value) => {
-            console.log(parseInt(value.key));
-            if (value.key === "2") {
-              navigate("/user/editprofile");
-            } else if (value.key === "1") {
-              navigate("/");
-            }
-          }}
-        />
-        <Button className="w-full mb-2" onClick={() => setMates("lobby")}>
+        {/* <Button className="w-full mb-2" onClick={() => {setCollapsed(true)}}>
           Find Mates
-        </Button>
-        {users.map((u) => (
+        </Button> */}
+        {/* {users.map((u) => (
           <ChatSideIcon
             setMates={setMates}
             user={u}
             setChatMates={setChatMates}
             deleteTalk={deleteTalk}
           />
-        ))}
+        ))} */}
+        <EditProfile />
       </Sider>
       <Layout>
         <ChatBoxHeader />
+      
         <Content
           style={{
             margin: "24px 16px 1rem",
@@ -142,11 +132,9 @@ const App = ({ socketManager }) => {
             <ChatBox chatMate={chatMate} sendMessage={sendMessage} />
           )}
 
-          {/* <ChatBox /> */}
-          {/* <FindMate /> */}
+
         </Content>
 
-        {/* <Footer /> */}
       </Layout>
     </Layout>
   );

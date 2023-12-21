@@ -98,6 +98,7 @@ function App() {
     {
       path: "/lobby",
       element: <LobbyPage socketManager={socketManager} />,
+      
     },
     {
       path: "/aboutus",

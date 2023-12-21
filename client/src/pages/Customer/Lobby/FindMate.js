@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import { Button, Input } from "antd";
 import { getUsers } from "../../../services/authService";
+import {  Modal, Space } from 'antd';
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -20,12 +21,15 @@ function FindMate({ users, setUsers, socketManager }) {
   const [finding, setFinding] = useState(false);
   const [timer, setTimer] = useState(0);
   const [user, setUser] = useState(getUsers().user);
+  const [matchId, setMatchId] = useState('');
 
   const [matchPreferences, setMatchPreferences] = useState({
     userId: user._id,
     skillLevel: "",
     gameMode: "",
   });
+
+
   const navigate = useNavigate();
 
   const handleConnect = () => {
@@ -41,8 +45,8 @@ function FindMate({ users, setUsers, socketManager }) {
     const handleMatchFound = (data) => {
       console.log("Match found!", data.matchId);
       socketManager.disconnect();
-      navigate("/chat/" + data.matchId);
-      setFinding(false);
+      showModal();
+      setMatchId(data.matchId);
     };
 
     socketManager.onMatchFound(handleMatchFound);
@@ -72,8 +76,40 @@ function FindMate({ users, setUsers, socketManager }) {
     return () => clearInterval(interval);
   }, [finding]);
 
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState('Found A Match' + matchId);
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleOk = () => {
+    setModalText('Move to The Chat Page after two seconds');
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+      navigate("chat/" + matchId);
+      setFinding(false);
+    }, 2000);
+  };
+  const handleCancel = () => {
+    console.log('You Just Canceled The Conversation: ' + matchId);
+    setOpen(false);
+  };
+
+
   return (
     <>
+      <Modal
+        title="Match Found"
+        open={open}
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <p>{modalText}</p>
+      </Modal>
+
       <div className="w-full h-full flex flex-col justify-center items-center">
         <div className="w-96 h-96">
           <Lottie animationData={loading} loop={finding} />

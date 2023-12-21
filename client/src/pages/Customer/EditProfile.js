@@ -61,7 +61,7 @@ export default function EditProfile() {
     return (
     <>
         <div className='flex flex-col mx-auto mb-3' style={{width: "50%"}}>
-                <Avatar className="mt-5 mx-auto" size={250} src={src} />
+                <Avatar className="mt-5 mx-auto" size={150} src={src} />
                 <button
                     type="button"
                     className="rounded-md mx-auto mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
