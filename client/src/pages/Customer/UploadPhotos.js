@@ -23,8 +23,6 @@ function UploadPhotos({setAvatar, preferences}) {
             const imagePath = URL.createObjectURL(file);
 
             setSrc(imagePath)
-            
-            // console.log(files);
             const uploadPhoto = new FormData();
             uploadPhoto.append("image",file);
             setAvatar(uploadPhoto);

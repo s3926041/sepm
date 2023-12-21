@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -21,13 +22,13 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female","none"],
+      enum: ["male", "female", "none"],
       default: "none",
     },
-    // avatarImg: {
-    //   data: Buffer,
-    //   type: String,
-    // },
+    avatarImg: {
+      data: Buffer,
+      contentType: String,
+    },
   },
   { timestamps: true }
 );
