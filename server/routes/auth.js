@@ -4,8 +4,9 @@ const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const upload = multer(); 
+const upload = multer();
 router.post("/register/", upload.single("image"), async (req, res) => {
+  console.log(req.file.buffer);
   try {
     // Check if email or phone already exists
     const user = await User.findOne({
@@ -23,7 +24,10 @@ router.post("/register/", upload.single("image"), async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: await bcrypt.hash(req.body.password, 10),
-      image: req.file.buffer,
+      avatarImg: {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      },
     });
 
     await newUser.save();

@@ -15,7 +15,6 @@ const GlobalChat = ({ socketManager }) => {
     });
 
     return () => {
-      
       socketManager.offGlobalChatMessage();
     };
   }, []);
@@ -26,6 +25,7 @@ const GlobalChat = ({ socketManager }) => {
 
   const handleSendMessage = () => {
     if (message.trim() !== "") {
+      console.log(messages)
       socketManager.sendGlobalChatMessage(message);
       setMessage("");
     }
@@ -38,7 +38,7 @@ const GlobalChat = ({ socketManager }) => {
         itemLayout="horizontal"
         dataSource={messages}
         renderItem={(msg) => (
-          <List.Item>
+          <List.Item key={msg.id}>
             <List.Item.Meta
               avatar={<Avatar icon={<i className="far fa-user-circle"></i>} />}
               title={`${msg.user}: ${msg.text.message}`}

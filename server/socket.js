@@ -17,6 +17,7 @@ const initSocketServer = (server) => {
 
     // Global Chat
     socket.on("globalChatMessage", (message) => {
+  console.log(message)
       io.emit("globalChatMessage", { user: socket.id, message });
     });
 
