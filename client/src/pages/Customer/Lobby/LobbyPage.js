@@ -93,6 +93,7 @@ const App = () => {
                 onCollapse={(collapsed, type) => {
                     console.log(collapsed, type);
                 }}
+                width={100}
             >
                 <div className="demo-logo-vertical" />
                 <Menu
@@ -110,6 +111,21 @@ const App = () => {
                     }}
                 />
                 <Button className='w-full mb-2' onClick={() => setMates("lobby")}>Find Mates</Button>
+                
+
+
+            </Sider>
+            <Sider
+                breakpoint="lg"
+                collapsedWidth="0"
+                theme="light"
+                onBreakpoint={(broken) => {
+                    console.log(broken);
+                }}
+                onCollapse={(collapsed, type) => {
+                    console.log(collapsed, type);
+                }}
+            >
                 {users.map(u => <ChatSideIcon setMates={setMates} user={u} setChatMates={setChatMates} deleteTalk={deleteTalk} />)}
 
 
@@ -118,11 +134,11 @@ const App = () => {
 
 
 
-                <ChatBoxHeader />
+                {/* <ChatBoxHeader /> */}
                 <Content
                     style={{
                         margin: '24px 16px 1rem',
-                        height: "68vh",
+                        height: "90vh",
                         marginBottom: "3rem"
                     }}
                    
@@ -139,7 +155,7 @@ const App = () => {
                 </Content>
 
 
-                <Footer />
+                {/* <Footer /> */}
             </Layout>
         </Layout>
     );

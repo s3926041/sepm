@@ -18,16 +18,16 @@ function ChatBox({chatMate, sendMessage}) {
     return (
     <>
         {/* component */}
-        <div className="flex overflow-hidden">
+        <div className="flex overflow-hidden" style={{borderRadius: "1.2rem"}}>
             
             {/* Main Chat Area */}
-            <div className="h-full flex-1">
+            <div className="h-full flex-1" >
                 {/* Chat Header */}
-                <header className="bg-white p-4 text-gray-700">
-                    <h1 className="text-2xl font-semibold">{chatMate.name}</h1>
+                <header className="bg-white p-4 text-gray-700 border-gray-300  border-b" >
+                    <h1 className="text-xl font-semibold ml-4">{chatMate.name}</h1>
                 </header>
                 {/* Chat Messages */}
-                    <div className="overflow-scroll p-4 pb-36" style={{ height: "45vh" }}>
+                    <div className="overflow-scroll p-4 pb-36" style={{ height: "75vh", backgroundColor:"#f7fafc" }}>
                     {
                         chatMate.talk.map(t => {
                             
@@ -43,8 +43,8 @@ function ChatBox({chatMate, sendMessage}) {
                     <div ref={div} ></div>
                 </div>
                 {/* Chat Input */}
-                <div className="bg-white border-t border-gray-300 p-4 bottom-0 w-full">
-                    <MessageBar chatMate={chatMate} sendMessage={sendMessage}/>
+                    <div className=" border-t p-4 border-gray-300  bottom-0 w-full bg-gray-50" >
+                    <MessageBar chatMate={chatMate} sendMessage={sendMessage} style={{width: "100%"}}/>
                 </div>
             </div>
         </div>

@@ -105,8 +105,8 @@ const Preferences = ({setGame,setAge,setLevel,setPhone,setGender, setWith,setNam
                 {!preferences.age && <span style={{ color: "red" }}><br />input something</span>}
 
             </Form.Item>
-            <Form.Item label="Phone" onChange={data => setPhone(data)}>
-                <InputNumber className='w-full' style={{ marginLeft: "0.1rem" }} />
+            <Form.Item label="Phone" >
+                <InputNumber className='w-full' style={{ marginLeft: "0.1rem" }} onChange={data => setPhone(data)} />
             </Form.Item>
             <Form.Item label="With" required >
                 <Select onChange={(data) => setWith(data)} required> 

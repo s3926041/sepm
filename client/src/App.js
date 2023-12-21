@@ -12,6 +12,7 @@ import Error from './pages/404/Error';
 import LobbyPage from "./pages/Customer/Lobby/LobbyPage"
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AboutPage from './pages/Customer/HomePage/AboutPage';
+import ChatPage from './pages/Customer/Lobby/ChatPage';
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
@@ -56,7 +57,7 @@ function App() {
     },
     {
       path: "/lobby",
-      element: <LobbyPage />,
+      element: < ChatPage/>,
 
     },
     {
