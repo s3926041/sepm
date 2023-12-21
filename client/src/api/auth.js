@@ -1,46 +1,51 @@
 import { API_URL } from "../GlobalVar";
 
-const register = async (userType, userData) => {
-    try {
-        const response = await fetch(API_URL + "/api/auth/register/" + userType, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-        });
+import { setToken, setUser } from "../services/authService";
 
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        }
-    } catch (error) {
-        console.error("Error sending registration data:", error);
+const register = async (userData) => {
+  try {
+    const response = await fetch(API_URL + "/api/auth/register/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("ok");
+      return data;
     }
+    return null;
+  } catch (error) {
+    console.error("Error sending registration data:", error);
+  }
 };
 
+const login = async (userData) => {
+  console.log(userData);
+  try {
+    const response = await fetch(API_URL + "/api/auth/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
 
-const login = async (userType, userData) => {
-    // alert(userData);
-    try {
-        const response = await fetch(API_URL + "/api/auth/login/" + userType, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            return data;
-        } else {
-            console.error("Login failed:", response.statusText);
-        }
-    } catch (error) {
-        console.error("Error sending registration data:", error);
+    if (response.ok) {
+      const data = await response.json();
+      console.log("ok");
+      setUser(data);
+      return data;
     }
+    console.error("Login failed:", response.statusText);
+    return null;
+  } catch (error) {
+    console.error("Error sending registration data:", error);
+    return null;
+  }
 };
-
 
 export { register, login };

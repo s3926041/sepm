@@ -2,12 +2,12 @@ const router = require("express").Router();
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { verifyToken } = require("./middleWare");
 
-router.post("/register/User", async (req, res) => {
+router.post("/register/", async (req, res) => {
   try {
     const user = await User.findOne({
       $or: [{ phone: req.body.phone }, { email: req.body.email }],
+      // $or: [{ email: req.body.email }],
     });
     if (user) {
       res.status(400).json({ error: "Email or Phone exist" });
@@ -15,11 +15,10 @@ router.post("/register/User", async (req, res) => {
     } else {
       const newUser = new User({
         phone: req.body.phone,
+        name: req.body.name,
         email: req.body.email,
-        address: req.body.address,
         password: await bcrypt.hash(req.body.password, 10),
       });
-
       await newUser.save();
       console.log(newUser);
       res.status(201).json(newUser);
@@ -29,8 +28,7 @@ router.post("/register/User", async (req, res) => {
   }
 });
 
-
-router.post("/login/User", async (req, res) => {
+router.post("/login/", async (req, res) => {
   try {
     console.log(req.body);
     const user = await User.findOne({
@@ -54,7 +52,5 @@ router.post("/login/User", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-
 
 module.exports = router;

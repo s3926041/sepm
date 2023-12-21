@@ -11,7 +11,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const server = http.createServer(app);
-initSocketServer();
+
+//QUEUING and MESSAGING SOCKET
+initSocketServer(server);
+
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -27,7 +30,6 @@ app.use(express.json());
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 
-// Use process.env.PORT instead of hardcoded port
 const PORT = process.env.PORT || 5001;
 server.listen(PORT, () => {
   console.log(`Backend server is running on port ${PORT}`);

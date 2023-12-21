@@ -1,80 +1,109 @@
 import { CloseOutlined, HeartOutlined } from "@ant-design/icons";
-import '../../../material-tailwind.css'
+import "../../../material-tailwind.css";
 import gamer from "../../../Assest/gamer1.png";
-function FindMate({users,setUsers}) {
+import { loading } from "../../../Assest/loading";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
+import Lottie from "lottie-react";
+import { Button, Input } from "antd";
+import { getUsers } from "../../../services/authService";
 
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedMinutes = String(minutes).padStart(2, "0");
+  const formattedSeconds = String(remainingSeconds).padStart(2, "0");
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
 
+function FindMate({ users, setUsers, socketManager }) {
+  const [finding, setFinding] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [user, setUser] = useState(getUsers().user);
 
-    return (
+  const [matchPreferences, setMatchPreferences] = useState({
+    userId: user._id,
+    skillLevel: "",
+    gameMode: "",
+  });
+  const navigate = useNavigate();
+
+  const handleConnect = () => {
+    setFinding(!finding);
+    socketManager.connectToQueue(matchPreferences);
+  };
+
+  const handleStop = () => {
+    setFinding(false);
+    socketManager.disconnect();
+  };
+  useEffect(() => {
+    const handleMatchFound = (data) => {
+      console.log("Match found!", data.matchId);
+      socketManager.disconnect();
+      navigate("/chat/" + data.matchId);
+      setFinding(false);
+    };
+
+    socketManager.onMatchFound(handleMatchFound);
+
+    return () => {
+      socketManager.offMatchFound(handleMatchFound);
+    };
+  }, [navigate]);
+
+  useEffect(() => {
+    return () => {
+      socketManager.disconnect();
+    };
+  }, []);
+  useEffect(() => {
+    let interval;
+
+    if (finding) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer + 1);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+      setTimer(0);
+    }
+
+    return () => clearInterval(interval);
+  }, [finding]);
+
+  return (
     <>
-            <div className="mx-auto flex w-96 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md" draggable 
-                >
-            <div className="relative mx-4 mt-4 h-80 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg">
-                <img
-                    src={gamer}
-                    alt="profile-picture"
-                    style={{height: "100%", objectFit:"cover"}}
-                />
-            </div>
-            <div className="p-6 text-center">
-                <h4 className="mb-2 block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                    Hung Nguyen
-                </h4>
-                <p className="block bg-gradient-to-tr from-pink-600 to-pink-400 bg-clip-text font-sans text-base font-medium leading-relaxed text-transparent antialiased">
-                    CEO / Co-Founder
-                </p>
-                <p className="block font-sans text-base font-medium leading-relaxed">
-                        I am a software engineer with over 10 years of experience in developing
-                        web and mobile applications. I am skilled in JavaScript, React, and
-                        Node.js.
-                </p>
-            </div>
-            <div className="flex gap-7 p-6 pt-2 justify-between">
-               
-                    <button
-                        type="submit"
-                        className="flex w-1/2 justify-center rounded-md bg-red-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onClick={() => {
-                            let usersClone = [...users];
-                            usersClone.push(
-                                {
-                                    name: "Hung Nguyen",
-                                    type: "new",
-                                    talk: [],
-                                }
-                            )
-                            setUsers(usersClone);
-                        }}
-                    >
-                        <HeartOutlined />
-                    </button>
-
-                    <button
-                        type="submit"
-                        className="flex w-1/2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        <CloseOutlined />
-                    </button>
-                
-            </div>
+      <div className="w-full h-full flex flex-col justify-center items-center">
+        <div className="w-96 h-96">
+          <Lottie animationData={loading} loop={finding} />
         </div>
-       
-        
-        {/* stylesheet */}
-        {/* <link
-            rel="stylesheet"
-            href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css"
-        /> */}
-
-        {/* Font Awesome Link */}
-        {/* <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-            integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
-            crossOrigin="anonymous"
-        /> */}
+        <div className="h-4 text-center text-gray-600">
+          {timer > 0 ? (
+            <Button
+              onClick={() => {
+                setFinding(!finding);
+                handleStop();
+              }}
+            >
+              {" "}
+              Stop
+            </Button>
+          ) : (
+            <Button
+              onClick={() => {
+                setFinding(!finding);
+                handleConnect()
+              }}
+            >
+              Find
+            </Button>
+          )}
+          {timer > 0 && <p>{formatTime(timer)}</p>}
+        </div>
+      </div>
     </>
- );
+  );
 }
 
 export default FindMate;
