@@ -1,13 +1,10 @@
 import { PaperClipOutlined, SendOutlined } from "@ant-design/icons";
-import { useState } from "react";
 
-function MessageBar({chatMate, sendMessage}) {
-    const[message,setMessages] = useState("");
+function MessageBar({ handleSendMessage, handleMessageChange, message }) {
 
-    return (<div>
-        <label htmlFor="chat" className="sr-only">
-            Your message
-        </label>
+
+    return (
+    <div>
         <div className="flex items-center py-2 px-3 bg-white rounded-lg dark:bg-gray-700">
             <button
                 type="button"
@@ -23,12 +20,12 @@ function MessageBar({chatMate, sendMessage}) {
                 placeholder="Your message..."
                 defaultValue={""}
                 value={message}
-                onChange={(e) => {setMessages(e.target.value)}}
+                onChange={handleMessageChange}
             />
             <button
                 type="submit"
                 className="inline-flex justify-center p-4 text-blue-600 rounded-full cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
-                onClick={() => {sendMessage(chatMate,message); setMessages("")}}
+                onClick={handleSendMessage}
             >
                 <SendOutlined/>
             </button>

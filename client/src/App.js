@@ -15,6 +15,7 @@ import AboutPage from "./pages/Customer/HomePage/AboutPage";
 import { API_URL } from "./GlobalVar";
 // import { BrowserRouter, Routes, Route } from "react-router-dom";
 import io from "socket.io-client";
+import ChatPage from "./pages/Customer/Lobby/ChatPage";
 
 const socket = io(API_URL, {
   withCredentials: true,
@@ -46,6 +47,22 @@ const socketManager = {
     if (socket.connected) {
       socket.emit("globalChatMessage", { message });
     }
+  },
+
+  sendPrivateChatMessage: (chatid, message) => {
+      if(socket.connected){
+        socket.emit("privateChatMessage", {matchId: chatid, message: message});
+      }
+  },
+
+  // Function to receive global chat messages
+  onPrivateChatMessage: (callback) => {
+    socket.on("privateChatMessage", callback);
+  },
+
+  // Function to stop listening to global chat messages
+  offPrivateChatMessage: (callback) => {
+    socket.off("privateChatMessage", callback);
   },
 
   // Function to receive global chat messages
@@ -99,6 +116,10 @@ function App() {
       path: "/lobby",
       element: <LobbyPage socketManager={socketManager} />,
       
+    },
+    {
+      path: "/lobby/chat/:chatid",
+      element: <ChatPage socketManager={socketManager} />
     },
     {
       path: "/aboutus",

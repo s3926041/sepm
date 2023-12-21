@@ -1,19 +1,50 @@
 import IncomingChat from "./IncomingChat";
 import OutgoingChat from "./OutgoingChat";
 import MessageBar from "./MessageBar";
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { useParams } from "react-router";
 
-function ChatBox({chatMate, sendMessage}) {
-   
+function ChatBox({socketManager}) {
+    
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState([]);
+    let { chatid } = useParams();
+
+    useEffect(() => {
+        socketManager.onPrivateChatMessage((data) => {
+            const newMessage = {
+                id: Date.now(),
+                text: data.message,
+                user: data.user,
+            };
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+        });
+
+        return () => {
+            socketManager.offPrivateChatMessage();
+        };
+    }, []);
+
+    const handleMessageChange = (e) => {
+        setMessage(e.target.value);
+    };
+
+    const handleSendMessage = () => {
+        if (message.trim() !== "") {
+            console.log(messages)
+            socketManager.sendPrivateChatMessage(chatid,message);
+            setMessage("");
+        }
+    };
+
     const div = useRef(null);
     const scrollToBottom = () => {
         div.current?.scrollIntoView({ behavior: "smooth" })
-
     }
 
     useEffect(
         scrollToBottom
-    , [chatMate.talk.length]);
+    , [messages.length]);
 
     return (
     <>
@@ -24,19 +55,19 @@ function ChatBox({chatMate, sendMessage}) {
             <div className="h-full flex-1">
                 {/* Chat Header */}
                 <header className="bg-white p-4 text-gray-700">
-                    <h1 className="text-2xl font-semibold">{chatMate.name}</h1>
+                    <h1 className="text-2xl font-semibold">{chatid}</h1>
                 </header>
                 {/* Chat Messages */}
-                    <div className="overflow-scroll p-4 pb-36" style={{ height: "45vh" }}>
+                    <div className="overflow-scroll p-4 pb-36" style={{ height: "72vh" }}>
                     {
-                        chatMate.talk.map(t => {
+                            messages.map(msg => {
                             
-                            if (t.from === chatMate.name){
+                                if (msg.user === msg.user){
                                 return (
-                                    <IncomingChat message={t.message}/>
+                                    <IncomingChat message={msg.text.message} user={msg.user}/>
                                 )
                             }else{
-                                return ( <OutgoingChat message={t.message}/> )
+                                    return (<OutgoingChat message={msg.text.message} user={msg.user} /> )
                             }
                         })
                     }
@@ -44,7 +75,7 @@ function ChatBox({chatMate, sendMessage}) {
                 </div>
                 {/* Chat Input */}
                 <div className="bg-white border-t border-gray-300 p-4 bottom-0 w-full">
-                    <MessageBar chatMate={chatMate} sendMessage={sendMessage}/>
+                    <MessageBar handleSendMessage={handleSendMessage} handleMessageChange={handleMessageChange} message={message}/>
                 </div>
             </div>
         </div>
