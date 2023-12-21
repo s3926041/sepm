@@ -36,8 +36,6 @@ router.post("/sendMessage/:matchid", verifyToken, async (req, res) => {
           sender: id,
           message,
         });
-
-        // Save the updated match document
         await match.save();
 
         res

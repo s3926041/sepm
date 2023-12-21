@@ -1,30 +1,37 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const multer = require("multer");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-router.post("/register/", async (req, res) => {
+const upload = multer(); 
+router.post("/register/", upload.single("image"), async (req, res) => {
   try {
+    // Check if email or phone already exists
     const user = await User.findOne({
       $or: [{ phone: req.body.phone }, { email: req.body.email }],
-      // $or: [{ email: req.body.email }],
     });
+
     if (user) {
       res.status(400).json({ error: "Email or Phone exist" });
       return;
-    } else {
-      const newUser = new User({
-        phone: req.body.phone,
-        name: req.body.name,
-        email: req.body.email,
-        password: await bcrypt.hash(req.body.password, 10),
-      });
-      await newUser.save();
-      console.log(newUser);
-      res.status(201).json(newUser);
     }
+
+    // Create a new user with image upload
+    const newUser = new User({
+      phone: req.body.phone,
+      name: req.body.name,
+      email: req.body.email,
+      password: await bcrypt.hash(req.body.password, 10),
+      image: req.file.buffer,
+    });
+
+    await newUser.save();
+    console.log(newUser);
+    res.status(201).json(newUser);
   } catch (err) {
-    res.status(500).json(err);
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

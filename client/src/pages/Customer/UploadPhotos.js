@@ -26,7 +26,7 @@ function UploadPhotos({setAvatar, preferences}) {
             
             // console.log(files);
             const uploadPhoto = new FormData();
-            uploadPhoto.append("avatar",file);
+            uploadPhoto.append("image",file);
             setAvatar(uploadPhoto);
         };
         input.click();

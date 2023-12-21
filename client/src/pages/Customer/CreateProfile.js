@@ -92,10 +92,10 @@ export default function CreateProfile() {
 
   const validateAvatar = () => {
     let checkava = true;
-    // if (avatar === null) {
-    //     checkava = false;
-    // }
-    // setPreferences({avatar: checkava});
+    if (avatar === null) {
+        checkava = false;
+    }
+    setPreferences({avatar: checkava});
     return checkava;
   };
 
@@ -222,7 +222,7 @@ export default function CreateProfile() {
                       email,
                       password,
                       phone,
-                    });
+                    },avatar);
                     console.log({
                         name,
                         gender,

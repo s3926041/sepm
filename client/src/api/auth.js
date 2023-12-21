@@ -2,24 +2,28 @@ import { API_URL } from "../GlobalVar";
 
 import { setToken, setUser } from "../services/authService";
 
-const register = async (userData) => {
+const register = async (userData, formData) => {
   try {
+    for (const key in userData) {
+      formData.append(key, userData[key]);
+    }
+
     const response = await fetch(API_URL + "/api/auth/register/", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
+      body: formData,
     });
 
     if (response.ok) {
       const data = await response.json();
-      console.log("ok");
+      console.log("Registration successful");
       return data;
+    } else {
+      console.error("Registration failed:", response.statusText);
+      return null;
     }
-    return null;
   } catch (error) {
     console.error("Error sending registration data:", error);
+    return null;
   }
 };
 
