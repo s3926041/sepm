@@ -4,6 +4,7 @@ import Footer from "../../../components/footer";
 function AboutPage() {
     return ( 
     <>
+        
         <Header />
         <AboutUs />
         <Footer />

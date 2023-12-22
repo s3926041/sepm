@@ -2,11 +2,24 @@ import React, { useState } from "react";
 import gmatch from "../../Assest/gmatch.svg";
 import { login } from "../../api/auth";
 import { useNavigate } from "react-router-dom";
+import {  notification } from "antd";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const openNotification = () => {
+    notification.open({
+      message: 'Login Error!',
+      description: 
+       'Wrong Password or Email!',
+      onClick: () => {
+        console.log('Login Error');
+      },
+    });
+  };
+
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -16,11 +29,12 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = () => {
-    const status = login({ username: email, password });
+  const handleSubmit = async () => {
+    const status = await login({ username: email, password });
     if (status !== null) 
         navigate("/lobby")
     else {
+      openNotification()
         //LAM CAI TOAST HIEN LEN BAO SAI ROI
     }
 
@@ -29,6 +43,7 @@ export default function Login() {
 
   return (
     <>
+
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="mx-auto h-10 w-auto" src={gmatch} alt="Gmatch" />

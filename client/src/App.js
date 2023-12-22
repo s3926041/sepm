@@ -2,7 +2,7 @@ import "./App.css";
 import "./output.css";
 import SafetyPage from "./pages/Customer/SafetyPage/SafetyPage";
 import LoginPage from "./pages/Customer/Authentication/LoginPage";
-import EditProfilePage from "./pages/Customer/EditProfilePage/EditProfilePage";
+// import EditProfilePage from "./pages/Customer/EditProfilePage/EditProfilePage";
 import RegisterPage from "./pages/Customer/Authentication/RegisterPage";
 import PaymentPage from "./pages/Customer/PaymentPage/PaymentPage";
 import PricePage from "./pages/Customer/PaymentPage/PricePage";
@@ -107,10 +107,6 @@ function App() {
     {
       path: "/pricing/payment",
       element: <PaymentPage />,
-    },
-    {
-      path: "/user/editprofile",
-      element: <EditProfilePage />,
     },
     {
       path: "/lobby",

@@ -21,7 +21,7 @@ const Dashboard = (number) => (
             <Card bordered={false}>
                 <Statistic
                     title="Idle"
-                    value={number.number}
+                    value={number.number * 0}
                     precision={2}
                     valueStyle={{
                         color: '#cf1322',

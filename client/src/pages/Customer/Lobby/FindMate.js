@@ -17,10 +17,10 @@ function formatTime(seconds) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-function FindMate({ users, setUsers, socketManager }) {
+function FindMate({ socketManager }) {
   const [finding, setFinding] = useState(false);
   const [timer, setTimer] = useState(0);
-  const [user, setUser] = useState(getUsers().user);
+  const [user, setUser] = useState({});
   const [matchId, setMatchId] = useState('');
 
   const [matchPreferences, setMatchPreferences] = useState({
@@ -31,6 +31,12 @@ function FindMate({ users, setUsers, socketManager }) {
 
 
   const navigate = useNavigate();
+  useEffect(() => {
+    const user = getUsers();
+    if(user != null){
+      setUser(user.user);
+    }
+  }, [])
 
   const handleConnect = () => {
     setFinding(!finding);

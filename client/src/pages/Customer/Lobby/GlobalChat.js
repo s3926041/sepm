@@ -3,9 +3,13 @@ import React, { useState, useEffect } from "react";
 // import ChatBox from "./ChatBox";
 import {  SendOutlined } from "@ant-design/icons";
 import { useRef } from 'react';
+import { getUsers } from "../../../services/authService";
+import "./breakpoint.css"
 const GlobalChat = ({ socketManager }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+
 
   useEffect(() => {
     socketManager.onGlobalChatMessage((data) => {
@@ -44,7 +48,7 @@ const GlobalChat = ({ socketManager }) => {
     , [messages.length]);
 
   return (
-    <div style={{ width: 500, margin: "auto" }}>
+    <div className="breakkk" style={{marginRight:"1rem"}}>
       {/* <List
         header={<div>Global Chat</div>}
         itemLayout="horizontal"
@@ -60,12 +64,12 @@ const GlobalChat = ({ socketManager }) => {
       /> */}
 
         {/* Main Chat Area */}
-        <div className="h-full  bg-white">
-          <header className="bg-white p-4 text-gray-700">
+      <div className="h-full  bg-white" style={{ borderRadius: "1rem" }} >
+        <header className="bg-white p-4 text-gray-700" style={{ borderRadius: "1rem" }}>
             <h1 className="text-2xl font-semibold">Global Chat</h1>
           </header>
         
-          <div className="overflow-scroll p-4 pb-36" style={{ height: "60vh" }}>
+          <div className="overflow-scroll p-4 pb-36" style={{ height: "55vh" }}>
             {
               messages.map(msg => {
                 if (msg.user === msg.user) {
@@ -99,7 +103,10 @@ const GlobalChat = ({ socketManager }) => {
                         />
                       </div>
                       <div className="relative ml-3 text-lg bg-white py-2 px-4 shadow rounded-xl" style={{  }}>
-                        <p className="text-gray-700 break-word">{`${msg.user}: ${msg.text.message}`}</p>
+                        <p className="font-bold text-wrap">
+                          {`${msg.user}:`}
+                        </p>
+                        <p className="text-gray-700 break-word">{`${msg.text.message}`}</p>
                       </div>
                     </div> 
                   )
@@ -111,20 +118,7 @@ const GlobalChat = ({ socketManager }) => {
         </div>
      
 
-      <div style={{ marginTop: 16 }}>
-        {/* <Input.TextArea
-          rows={4}
-          value={message}
-          onChange={handleMessageChange}
-          placeholder="Type your message..."
-        />
-        <Button
-          type="primary"
-          style={{ marginTop: 8 }}
-          onClick={handleSendMessage}
-        >
-          Send
-        </Button> */}
+      <div style={{ marginTop: 16}}>
         <div className="flex items-center py-2 px-1 bg-white rounded-lg dark:bg-gray-700">
           <textarea
             id="chat"

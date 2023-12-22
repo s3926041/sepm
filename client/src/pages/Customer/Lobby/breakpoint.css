@@ -1,0 +1,22 @@
+@media (min-width: 200px) and (max-width: 1000px) {
+  .break {
+    flex-direction: column;
+  }
+  .breakk{
+    height: 150vh !important;
+  }
+    .breakkk{
+    margin: 3rem;
+  }
+}
+@media (max-width: 2000px) and (min-width: 1002px) {
+
+  .breakk{
+    height: 95vh !important;
+  }
+
+  .breakkk{
+    width: 500px;
+    margin: auto;
+  }
+}

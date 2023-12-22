@@ -1,3 +1,4 @@
+import Authentication from "../../../components/Authentication";
 import Footer from "../../../components/footer";
 import Header from "../../../components/header";
 import CreateProfile from "../CreateProfile";
@@ -5,6 +6,7 @@ import CreateProfile from "../CreateProfile";
 function RegisterPage() {
     return (
         <>
+            {/* <Authentication /> */}
             <Header />
             <CreateProfile />
             <Footer />

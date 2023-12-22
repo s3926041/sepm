@@ -1,15 +1,20 @@
 import { jwtDecode } from "jwt-decode";
 
 export const isLoggedIn = () => {
-  let data = localStorage.getItem("token");
+  let data = localStorage.getItem("user");
   return !!data;
 };
 
 export const getUsers = () => {
   let data = localStorage.getItem("user");
-  let user = JSON.parse(data);
-  // console.log(data);
-  return user;
+  if(data === null) {
+    return null;
+  }else{
+    // alert()
+    let user = JSON.parse(data);
+    console.log(user);
+    return user;
+  }
 };
 
 export const setToken = (data) => {
@@ -22,7 +27,7 @@ export const setUser = (data) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("user");
 };
 
 export const headers = () => {

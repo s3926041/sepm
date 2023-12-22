@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table, Tag } from 'antd';
+// import { getUsers } from '../../api/user';
 const columns = [
     {
         title: 'Name',
@@ -7,16 +8,16 @@ const columns = [
         key: 'name',
         render: (text) => <a>{text}</a>,
     },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-    },
-    {
-        title: 'Game',
-        dataIndex: 'game',
-        key: 'game',
-    },
+    // {
+    //     title: 'Age',
+    //     dataIndex: 'age',
+    //     key: 'age',
+    // },
+    // {
+    //     title: 'Game',
+    //     dataIndex: 'game',
+    //     key: 'game',
+    // },
     // {
     //     title: 'Tags',
     //     key: 'tags',
@@ -79,5 +80,38 @@ const data = [
         tags: ['middle', 'teacher'],
     },
 ];
-const DataTable= () => <Table columns={columns} dataSource={data} />;
+
+const DataTable = ({setNumber}) => {
+// const [users, setUsers] = useState([]);
+// const [usersName, setUsersName] = useState([]);
+
+// useEffect(
+//         () => {
+//             const fetchData = async () => {
+//                 const uList = await getUsers();
+//                 if (uList != null) {
+//                     setUsers(uList.users);
+//                     let nameList = [];
+//                     users.forEach((u) => nameList.push({
+//                         key: "1",
+//                         name: u.name,
+//                         age: 42,
+//                         game: 'LoL',
+//                         tags: ['beginner', 'gangster'],
+//                     }));
+//                     setUsersName(nameList);
+//                     setNumber(nameList.length);
+//                     // console.log(nameList);
+//                 }
+//             }
+//             fetchData();
+//         }, []
+//  )
+
+return(
+<Table columns={columns} dataSource={data} />
+)
+
+}
+
 export default DataTable;

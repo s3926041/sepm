@@ -5,6 +5,7 @@ import UploadPhotos from "./UploadPhotos";
 import Preferences from "./Preferences";
 import gmatch from "../../Assest/gmatch.svg";
 import { register } from "../../api/auth";
+import { useNavigate } from "react-router";
 const steps = [
   {
     title: "First",
@@ -23,6 +24,7 @@ const steps = [
 export default function CreateProfile() {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
@@ -230,7 +232,14 @@ export default function CreateProfile() {
                         password,
                         phone,
                     })
-                    if (data != null) message.success("Processing complete!");
+                    
+                    if (data != null) {
+                      message.success("Processing complete!");
+                      setTimeout(() => {
+                        navigate("/");
+                      }, 2000);
+                      
+                    }
                   } else {
                     message.error("Please Check your info");
                   }

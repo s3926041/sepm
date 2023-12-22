@@ -9,6 +9,7 @@ import {
 import { Layout, Menu, message } from 'antd';
 import { Modal } from 'antd';
 import { useNavigate, useParams } from 'react-router';
+import Authentication from '../../../components/Authentication';
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
     return {
@@ -62,8 +63,10 @@ const ChatPage = ({ socketManager }) => {
     const navigate = useNavigate();
 
     return (
+        <>
+        <Authentication />
         <Layout>
-           
+            
             <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
                 <div className="demo-logo-vertical" />
                 <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} onClick={(e) => {
@@ -99,6 +102,7 @@ const ChatPage = ({ socketManager }) => {
 
             </Layout>
         </Layout>
+        </>
     );
 };
 export default ChatPage;

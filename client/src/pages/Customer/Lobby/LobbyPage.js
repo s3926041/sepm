@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   DeleteOutlined,
@@ -14,75 +14,49 @@ import ChatBoxHeader from "../../../components/ChatBoxHeader";
 import ChatSideIcon from "./ChatSideIcon";
 import GlobalChat from "./GlobalChat";
 import EditProfile from "../EditProfile";
+import Authentication from "../../../components/Authentication";
+import { checkTokenExpiration, getUsers, isLoggedIn } from "../../../services/authService";
 const { Content, Sider } = Layout;
 const App = ({ socketManager }) => {
-  const [mates, setMates] = useState("lobby");
-  const [chatMate, setChatMates] = useState({});
-  const [users, setUsers] = useState([
-    {
-      name: "Hoang",
-      status: "new",
-      talk: [],
-    },
-    {
-      name: "Hung",
-      status: "talked",
-      talk: [
-        {
-          from: "Hung",
-          message: "Hi",
-        },
-        {
-          from: "Me",
-          message: "Hi, Hung",
-        },
-      ],
-    },
-  ]);
+  const[ width, setWidth] = useState(500);
+
+  //   {
+  //     name: "Hoang",
+  //     status: "new",
+  //     talk: [],
+  //   },
+  //   {
+  //     name: "Hung",
+  //     status: "talked",
+  //     talk: [
+  //       {
+  //         from: "Hung",
+  //         message: "Hi",
+  //       },
+  //       {
+  //         from: "Me",
+  //         message: "Hi, Hung",
+  //       },
+  //     ],
+  //   },
+  // ]);
   // const [collapsed, setCollapsed] = useState(false);
-  const navigate = useNavigate();
-  function sendMessage(chatMate, message) {
-    let usersClone = [...users];
-    usersClone.forEach((u) => {
-      if (u.name === chatMate.name) {
-        u.talk.push({
-          from: "Me",
-          message: message,
-        });
-        return;
-      }
-      // alert(chatMate.name)
-    });
 
-    setUsers(usersClone);
-    // alert(mates)
-  }
+  
 
-  function deleteTalk(user) {
-    let usersClone = users.filter((u) => u.name !== user.name);
-    setUsers(usersClone);
-    // window.location.reload();
-    // navigate("/lobby")
-  }
 
-  function getItem(label, key, icon, children) {
-    return {
-      key,
-      icon,
-      children,
-      label,
-    };
-  }
-  const items = [
-    getItem("Log Out", "1", <PoweroffOutlined />),
-    getItem("Edit Profile", "2", <ScissorOutlined />),
-  ];
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
+
+
+
+
   return (
+    <>
+    <Authentication />
     <Layout>
       <Sider
         breakpoint="lg"
@@ -96,47 +70,32 @@ const App = ({ socketManager }) => {
         }}
         width={300}
       >
-        {/* <Button className="w-full mb-2" onClick={() => {setCollapsed(true)}}>
-          Find Mates
-        </Button> */}
-        {/* {users.map((u) => (
-          <ChatSideIcon
-            setMates={setMates}
-            user={u}
-            setChatMates={setChatMates}
-            deleteTalk={deleteTalk}
-          />
-        ))} */}
         <EditProfile />
       </Sider>
+
       <Layout>
         <ChatBoxHeader />
-      
         <Content
           style={{
             margin: "24px 16px 1rem",
-            height: "68vh",
             marginBottom: "3rem",
           }}
+          className="breakk"
         >
-          {mates === "lobby" ? (
-            <div className="flex">
-              <FindMate
-                socketManager={socketManager}
-                users={users}
-                setUsers={setUsers}
-              />
+
+          <div className="flex break">
+            <FindMate
+              socketManager={socketManager}
+            />
               <GlobalChat socketManager={socketManager}></GlobalChat>
-            </div>
-          ) : (
-            <ChatBox chatMate={chatMate} sendMessage={sendMessage} />
-          )}
+          </div>
 
 
         </Content>
 
       </Layout>
     </Layout>
+    </>
   );
 };
 export default App;

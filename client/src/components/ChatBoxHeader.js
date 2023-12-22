@@ -1,20 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import gmatch from "../Assest/gmatch.svg";
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space } from 'antd';
+import { getUsers, logout } from '../services/authService';
 
 const items = [
     {
-        label: < Link to = "/" onClick={() => {}}>Log Out</Link>,
+        label: < Link to = "/" onClick={() => {logout()}}>Log Out</Link>,
         key: '0',
     },
 
 ];
 
-export default function ChatBoxHeader({user}) {
+export default function ChatBoxHeader() {
+    const [user, setUser] = useState({});
+    useEffect(() => {
+      const user = getUsers();
+      if (user != null) {
+        setUser(user.user);
+      }
+    }, [])
    
 
     return (
@@ -37,7 +45,7 @@ export default function ChatBoxHeader({user}) {
                         <Space>
                             <div className="text-sm flex flex-row font-semibold leading-6 text-gray-900" onClick={(e) => e.preventDefault()}>
                                 <Avatar icon={<UserOutlined />} size={30} />
-                                <span className='ml-2'>Hung Nguyen</span>
+                                <span className='ml-2'>{user.name}</span>
                             </div>
                             <DownOutlined />
                         </Space>

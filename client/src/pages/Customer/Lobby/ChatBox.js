@@ -49,12 +49,12 @@ function ChatBox({socketManager}) {
     return (
     <>
         {/* component */}
-        <div className="flex overflow-hidden">
+            <div className="flex overflow-hidden" style={{ borderRadius: "1rem" }}>
             
             {/* Main Chat Area */}
-            <div className="h-full flex-1">
+                <div className="h-full flex-1" style={{ borderRadius: "1rem" }}>
                 {/* Chat Header */}
-                <header className="bg-white p-4 text-gray-700">
+                    <header className="bg-white p-4 text-gray-700" >
                     <h1 className="text-2xl font-semibold">{chatid}</h1>
                 </header>
                 {/* Chat Messages */}
