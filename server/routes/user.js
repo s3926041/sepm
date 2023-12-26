@@ -24,8 +24,6 @@ router.get("/", verifyToken, async (req, res) => {
   }
 });
 
-
-
 router.post(
   "/update",
   verifyToken,
