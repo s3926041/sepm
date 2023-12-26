@@ -19,6 +19,10 @@ export const updateProfile = async (data) => {
   }
 };
 
+
+
+
+
 export const getUser = async () => {
   try {
     const response = await fetch(API_URL + "/api/user/", {

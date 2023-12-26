@@ -15,10 +15,72 @@ import ChatSideIcon from "./ChatSideIcon";
 import GlobalChat from "./GlobalChat";
 import EditProfile from "../EditProfile";
 import Authentication from "../../../components/Authentication";
-import { checkTokenExpiration, getUsers, isLoggedIn } from "../../../services/authService";
+import {
+  checkTokenExpiration,
+  getUsers,
+  isLoggedIn,
+} from "../../../services/authService";
+import { API_URL } from "../../../GlobalVar";
+import io from "socket.io-client";
 const { Content, Sider } = Layout;
-const App = ({ socketManager }) => {
-  const[ width, setWidth] = useState(500);
+const socket = io(API_URL, {
+  withCredentials: true,
+});
+
+const socketManager = {
+  connectToQueue: (matchPreferences) => {
+    if (!socket.connected) {
+      socket.connect();
+    }
+    socket.emit("connectToQueue", matchPreferences);
+  },
+
+  disconnect: () => {
+    if (socket.connected) {
+      socket.disconnect();
+    }
+  },
+
+  onMatchFound: (callback) => {
+    socket.on("matchFound", callback);
+  },
+
+  offMatchFound: (callback) => {
+    socket.off("matchFound", callback);
+  },
+
+  sendGlobalChatMessage: (message) => {
+    socket.emit("globalChatMessage", { message });
+  },
+
+  sendPrivateChatMessage: (chatid, message) => {
+    if (socket.connected) {
+      socket.emit("privateChatMessage", { matchId: chatid, message: message });
+    }
+  },
+
+  // Function to receive global chat messages
+  onPrivateChatMessage: (callback) => {
+    socket.on("privateChatMessage", callback);
+  },
+
+  // Function to stop listening to global chat messages
+  offPrivateChatMessage: (callback) => {
+    socket.off("privateChatMessage", callback);
+  },
+
+  // Function to receive global chat messages
+  onGlobalChatMessage: (callback) => {
+    socket.on("globalChatMessage", callback);
+  },
+
+  // Function to stop listening to global chat messages
+  offGlobalChatMessage: (callback) => {
+    socket.off("globalChatMessage", callback);
+  },
+};
+const App = () => {
+  const [width, setWidth] = useState(500);
 
   //   {
   //     name: "Hoang",
@@ -42,59 +104,45 @@ const App = ({ socketManager }) => {
   // ]);
   // const [collapsed, setCollapsed] = useState(false);
 
-  
-
-
-
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
-
-
-
-
   return (
     <>
-    <Authentication />
-    <Layout>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        theme="light"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-        width={300}
-      >
-        <EditProfile />
-      </Sider>
-
+      <Authentication />
       <Layout>
-        <ChatBoxHeader />
-        <Content
-          style={{
-            margin: "24px 16px 1rem",
-            marginBottom: "3rem",
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          theme="light"
+          onBreakpoint={(broken) => {
+            console.log(broken);
           }}
-          className="breakk"
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type);
+          }}
+          width={300}
         >
+          <EditProfile />
+        </Sider>
 
-          <div className="flex break">
-            <FindMate
-              socketManager={socketManager}
-            />
+        <Layout>
+          <ChatBoxHeader />
+          <Content
+            style={{
+              margin: "24px 16px 1rem",
+              marginBottom: "3rem",
+            }}
+            className="breakk"
+          >
+            <div className="flex break">
+              <FindMate socketManager={socketManager} />
               <GlobalChat socketManager={socketManager}></GlobalChat>
-          </div>
-
-
-        </Content>
-
+            </div>
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
     </>
   );
 };
