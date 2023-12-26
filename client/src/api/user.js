@@ -22,13 +22,13 @@ export const updateProfile = async (data) => {
 export const getUser = async () => {
   try {
     const response = await fetch(API_URL + "/api/user/", {
-      method: "POST",
+      method: "GET",
       headers: headers(),
-     
     });
 
     if (response.ok) {
       const data = await response.json();
+      console.log(data);
       return data;
     }
   } catch (error) {
