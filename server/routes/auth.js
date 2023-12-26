@@ -38,12 +38,14 @@ router.post("/register/", upload.single("image"), async (req, res) => {
   }
 });
 
+
 router.post("/login/", async (req, res) => {
   try {
     console.log(req.body);
     const user = await User.findOne({
       $or: [{ phone: req.body.username }, { email: req.body.username }],
     });
+    // const user = await User.findOne({ email: req.body.username });
     console.log(user);
     if (!user || !(await bcrypt.compare(req.body.password, user.password)))
       return res.status(401).json("Wrong credentials!");

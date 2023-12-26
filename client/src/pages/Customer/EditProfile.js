@@ -28,7 +28,8 @@ import {
 import { Avatar } from "antd";
 import Sliderr from "./Sliderr";
 import { useNavigate } from "react-router";
-import { getUsers } from "../../services/authService";
+// import { getUsers } from "../../services/authService";
+import { getUser } from "../../api/user";
 import { updateProfile } from "../../api/user";
 
 const { Option } = Select;
@@ -47,19 +48,21 @@ export default function EditProfile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const users = await getUsers();
+        // const users = await getUsers();
+        const users = await getUser();
+
 
         if (users != null) {
-          setUser(users.user);
+          setUser(users);
 
           // Convert the Buffer data to a base64 string
-          const uint8Array = new Uint8Array(users.user.avatarImg.data.data);
+          const uint8Array = new Uint8Array(users.avatarImg.data.data);
           const base64String = btoa(
             String.fromCharCode.apply(null, uint8Array)
           );
 
           // Create a data URL
-          const dataUrl = `data:${users.user.avatarImg.contentType};base64,${base64String}`;
+          const dataUrl = `data:${users.avatarImg.contentType};base64,${base64String}`;
           setSrc(dataUrl);
         }
       } catch (error) {
