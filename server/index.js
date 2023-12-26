@@ -11,9 +11,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const server = http.createServer(app);
+app.use(bodyParser.json());
 
 app.use(cors());
-
 // QUEUING and MESSAGING SOCKET
 initSocketServer(server);
 
