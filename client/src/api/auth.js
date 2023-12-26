@@ -30,6 +30,7 @@ const register = async (userData, formData) => {
 const login = async (userData) => {
   console.log(userData);
   try {
+
     const response = await fetch(API_URL + "/api/auth/login/", {
       method: "POST",
       // headers: {
@@ -37,6 +38,7 @@ const login = async (userData) => {
       // },
       body: JSON.stringify(userData),
     });
+
 
     if (response.ok) {
       const data = await response.json();
