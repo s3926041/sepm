@@ -22,6 +22,17 @@ router.get("/match/:matchid", verifyToken, async (req, res) => {
   }
 });
 
+// router.get("/getusers", async (req,res) => {
+//   const users = await User.find();
+//   if(users){
+//     // let userData = JSON.stringify(users);
+//     console.log({users: users})
+//     res.status(200).json({users: users});
+//   }else{
+//     res.status(500).json({ error: "Not Found" });
+//   }
+// })
+
 router.post("/sendMessage/:matchid", verifyToken, async (req, res) => {
   const { matchid } = req.params;
   const id = req.userId;
