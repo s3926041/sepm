@@ -31,10 +31,11 @@ export const logout = () => {
 };
 
 export const headers = () => {
-  let token = localStorage.getItem("token");
+  let token = JSON.parse(localStorage.getItem("user")).token;
+  console.log(token)
   return {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`,
+    // "Content-Type": "application/json",
   };
 };
 

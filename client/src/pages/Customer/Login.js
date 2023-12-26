@@ -33,7 +33,7 @@ export default function Login() {
     const status = await login({ username: email, password });
     if (status !== null) 
         navigate("/lobby")
-    else {
+    else { 
       openNotification()
         //LAM CAI TOAST HIEN LEN BAO SAI ROI
     }

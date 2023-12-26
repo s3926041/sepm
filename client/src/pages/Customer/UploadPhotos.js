@@ -1,56 +1,63 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
-import React, { useState } from 'react';
-import { Avatar} from 'antd';
-const reader = new FileReader()
-function UploadPhotos({setAvatar, preferences}) {
-    const [src,setSrc] = useState(null);
-   
-    function importData() {
-        let input = document.createElement('input');
-        input.type = 'file';
-       
-        input.onchange = _ => {
-            // you can use this method to get file and perform respective operations
-            let files = Array.from(input.files);
-            let file = files[0];
-            if (file.size > 1024 * 1024) {
-                alert("File is too large! Max size is 1MB.");
-                return;
-            } else if (!/\.(jpg|png)$/.test(file.name)) {
-                alert("Only JPG and PNG files are allowed!");
-                return;
-            }
-            const imagePath = URL.createObjectURL(file);
+import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import React, { useState } from "react";
+import { Avatar } from "antd";
+const reader = new FileReader();
+function UploadPhotos({ setAvatar, preferences }) {
+  const [src, setSrc] = useState(null);
 
-            setSrc(imagePath)
-            const uploadPhoto = new FormData();
-            uploadPhoto.append("image",file);
-            setAvatar(uploadPhoto);
-        };
-        input.click();
+  function importData() {
+    let input = document.createElement("input");
+    input.type = "file";
 
-    }
+    input.onchange = (_) => {
+      // you can use this method to get file and perform respective operations
+      let files = Array.from(input.files);
+      let file = files[0];
+      if (file.size > 1024 * 1024) {
+        alert("File is too large! Max size is 1MB.");
+        return;
+      } else if (!/\.(jpg|png)$/.test(file.name)) {
+        alert("Only JPG and PNG files are allowed!");
+        return;
+      }
+      const imagePath = URL.createObjectURL(file);
 
-    return ( 
-        <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="col-span-full">
-                <label htmlFor="photo" className="block text-sm text-center font-medium leading-6 text-gray-900">
-                    Avatar 
-                    {!preferences.avatar && <span style={{ color: "red" }}><br />Please put a Image In</span>}
-                </label>
-                <div className="mt-1 flex flex-col items-center gap-x-3">
-                    <Avatar className="mt-5" size={250} src={src}/>
-                    <button
-                        type="button"
-                        className="rounded-md mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                        onClick={() => importData()}
-                    >
-                        Change
-                    </button>
-                </div>
-            </div>
+      setSrc(imagePath);
+      const uploadPhoto = new FormData();
+      uploadPhoto.append("image", file);
+      setAvatar(uploadPhoto);
+    };
+    input.click();
+  }
 
-            {/* <div className="col-span-full">
+  return (
+    <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+      <div className="col-span-full">
+        <label
+          htmlFor="photo"
+          className="block text-sm text-center font-medium leading-6 text-gray-900"
+        >
+          Avatar
+          {!preferences.avatar && (
+            <span style={{ color: "red" }}>
+              <br />
+              Please put a Image In
+            </span>
+          )}
+        </label>
+        <div className="mt-1 flex flex-col items-center gap-x-3">
+          <Avatar className="mt-5" size={250} src={src} />
+          <button
+            type="button"
+            className="rounded-md mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            onClick={() => importData()}
+          >
+            Change
+          </button>
+        </div>
+      </div>
+
+      {/* <div className="col-span-full">
                 <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
                     Cover photo
                 </label>
@@ -71,7 +78,8 @@ function UploadPhotos({setAvatar, preferences}) {
                     </div>
                 </div>
             </div> */}
-    </div> );
+    </div>
+  );
 }
 
 export default UploadPhotos;

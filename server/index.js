@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const http = require("http");
 const { initSocketServer } = require("./socket");
-
+const bodyParser = require("body-parser");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const cors = require("cors");
@@ -12,7 +12,9 @@ dotenv.config();
 
 const server = http.createServer(app);
 
-//QUEUING and MESSAGING SOCKET
+app.use(cors());
+
+// QUEUING and MESSAGING SOCKET
 initSocketServer(server);
 
 mongoose
@@ -24,8 +26,6 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-app.use(cors());
-app.use(express.json());
 
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);

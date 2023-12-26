@@ -3,8 +3,44 @@ const User = require("../models/User");
 const Match = require("../models/Match");
 const { verifyToken } = require("./middleWare");
 const GlobalChat = require("../models/GlobalChat");
+const multer = require("multer");
 
 // });
+const upload = multer();
+
+router.post(
+  "/update",
+  verifyToken,
+  upload.single("image"),
+  async (req, res) => {
+    console.log(req.file);
+    const userId = req.userId;
+    const avatarImg = {
+      data: req.file.buffer,
+      contentType: req.file.mimetype,
+    };
+
+    try {
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $set: { avatarImg: avatarImg } },
+        {
+          new: false,
+        }
+      );
+      if (updatedUser) {
+        console.log("ok");
+        res.status(200).json(updatedUser);
+      } else {
+        console.log("not ok");
+        res.status(404).json({ error: "User not found" });
+      }
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+); 
+
 router.get("/match/:matchid", verifyToken, async (req, res) => {
   const { matchid } = req.params;
   const id = req.userId;

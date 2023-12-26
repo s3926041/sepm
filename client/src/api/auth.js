@@ -7,7 +7,7 @@ const register = async (userData, formData) => {
     for (const key in userData) {
       formData.append(key, userData[key]);
     }
-
+    console.log(formData);
     const response = await fetch(API_URL + "/api/auth/register/", {
       method: "POST",
       body: formData,
@@ -32,9 +32,9 @@ const login = async (userData) => {
   try {
     const response = await fetch(API_URL + "/api/auth/login/", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      // headers: {
+      //   "Content-Type": "application/json",
+      // },
       body: JSON.stringify(userData),
     });
 
