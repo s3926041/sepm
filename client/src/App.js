@@ -30,9 +30,9 @@ const socketManager = {
   },
 
   disconnect: () => {
-    if (socket.connected) {
-      socket.disconnect();
-    }
+    // if (socket.connected) {
+    //   socket.disconnect();
+    // }
   },
 
   onMatchFound: (callback) => {
@@ -44,15 +44,13 @@ const socketManager = {
   },
 
   sendGlobalChatMessage: (message) => {
-    if (socket.connected) {
-      socket.emit("globalChatMessage", { message });
-    }
+    socket.emit("globalChatMessage", { message });
   },
 
   sendPrivateChatMessage: (chatid, message) => {
-      if(socket.connected){
-        socket.emit("privateChatMessage", {matchId: chatid, message: message});
-      }
+    if (socket.connected) {
+      socket.emit("privateChatMessage", { matchId: chatid, message: message });
+    }
   },
 
   // Function to receive global chat messages
@@ -111,11 +109,10 @@ function App() {
     {
       path: "/lobby",
       element: <LobbyPage socketManager={socketManager} />,
-      
     },
     {
       path: "/lobby/chat/:chatid",
-      element: <ChatPage socketManager={socketManager} />
+      element: <ChatPage socketManager={socketManager} />,
     },
     {
       path: "/aboutus",

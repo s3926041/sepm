@@ -6,9 +6,8 @@ const bcrypt = require("bcrypt");
 
 const upload = multer();
 router.post("/register/", upload.single("image"), async (req, res) => {
-  console.log(req.file.buffer);
+  console.log(req.file);
   try {
-    // Check if email or phone already exists
     const user = await User.findOne({
       $or: [{ phone: req.body.phone }, { email: req.body.email }],
     });
@@ -40,10 +39,10 @@ router.post("/register/", upload.single("image"), async (req, res) => {
 });
 
 router.post("/login/", async (req, res) => {
+  console.log(req.body);
   try {
-    console.log(req.body);
     const user = await User.findOne({
-      $or: [{ phone: req.body.username }, { email: req.body.username }],
+      $or: [{ email: req.body.username }],
     });
     console.log(user);
     if (!user || !(await bcrypt.compare(req.body.password, user.password)))

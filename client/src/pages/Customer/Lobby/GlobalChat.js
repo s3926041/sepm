@@ -8,9 +8,6 @@ import "./breakpoint.css"
 const GlobalChat = ({ socketManager }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-
-
-
   useEffect(() => {
     socketManager.onGlobalChatMessage((data) => {
       const newMessage = {
