@@ -8,6 +8,24 @@ const multer = require("multer");
 // });
 const upload = multer();
 
+router.get("/", verifyToken, async (req, res) => {
+  const id = req.userId;
+  try {
+    const user = await User.findById(id);
+    if (user) {
+      res.status(201).json(user);
+      return;
+    } else {
+      res.status.json(400).json({ error: "Match not exist" });
+      return;
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+
+
 router.post(
   "/update",
   verifyToken,
@@ -39,7 +57,7 @@ router.post(
       res.status(500).json({ error: err.message });
     }
   }
-); 
+);
 
 router.get("/match/:matchid", verifyToken, async (req, res) => {
   const { matchid } = req.params;

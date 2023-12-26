@@ -39,10 +39,10 @@ router.post("/register/", upload.single("image"), async (req, res) => {
 });
 
 router.post("/login/", async (req, res) => {
-  console.log(req.body);
   try {
+    console.log(req.body);
     const user = await User.findOne({
-      $or: [{ email: req.body.username }],
+      $or: [{ phone: req.body.username }, { email: req.body.username }],
     });
     console.log(user);
     if (!user || !(await bcrypt.compare(req.body.password, user.password)))
