@@ -13,6 +13,7 @@
   ```
 */
 import React, { useEffect, useState } from "react";
+import { message } from "antd";
 import {
   Button,
   Cascader,
@@ -95,8 +96,10 @@ export default function EditProfile() {
       const uploadPhoto = new FormData();
       uploadPhoto.append("image", file);
       setAvatar(uploadPhoto);
+      message.success("Avatar changed!");
     };
     input.click();
+    
   }
 
   return (
@@ -226,9 +229,10 @@ export default function EditProfile() {
           className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           style={{ width: "50%" }}
           onClick={async () => {
-            console.log(avatar);
+            // console.log(avatar);
             await updateProfile(avatar);
-            navigate("/lobby");
+            message.success("Processing complete!");
+            // navigate("/lobby");
           }}
         >
           Modify
