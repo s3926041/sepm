@@ -10,20 +10,6 @@ function ChatBox({socketManager}) {
     const [messages, setMessages] = useState([]);
     let { chatid } = useParams();
 
-    useEffect(() => {
-        socketManager.onPrivateChatMessage((data) => {
-            const newMessage = {
-                id: Date.now(),
-                text: data.message,
-                user: data.user,
-            };
-            setMessages((prevMessages) => [...prevMessages, newMessage]);
-        });
-
-        return () => {
-            socketManager.offPrivateChatMessage();
-        };
-    }, []);
 
     const handleMessageChange = (e) => {
         setMessage(e.target.value);
@@ -36,6 +22,7 @@ function ChatBox({socketManager}) {
             setMessage("");
         }
     };
+    
 
     const div = useRef(null);
     const scrollToBottom = () => {

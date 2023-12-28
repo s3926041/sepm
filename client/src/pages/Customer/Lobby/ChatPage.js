@@ -96,7 +96,7 @@ const ChatPage = ({ socketManager }) => {
                     }}
 
                 >
-                    <ChatBox socketManager={socketManager} />
+                    <ChatBox />
                 </Content>
 
 
