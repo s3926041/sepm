@@ -84,7 +84,6 @@ router.get("/match/:matchid", verifyToken, async (req, res) => {
 //     res.status(500).json({ error: "Not Found" });
 //   }
 // })
-
 router.post("/sendMessage/:matchid", verifyToken, async (req, res) => {
   const { matchid } = req.params;
   const id = req.userId;

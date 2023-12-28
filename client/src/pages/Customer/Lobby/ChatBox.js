@@ -11,18 +11,18 @@ function ChatBox({socketManager}) {
     let { chatid } = useParams();
 
     useEffect(() => {
-        socketManager.onPrivateChatMessage((data) => {
-            const newMessage = {
-                id: Date.now(),
-                text: data.message,
-                user: data.user,
-            };
-            setMessages((prevMessages) => [...prevMessages, newMessage]);
-        });
+        // socketManager.onPrivateChatMessage((data) => {
+        //     const newMessage = {
+        //         id: Date.now(),
+        //         text: data.message,
+        //         user: data.user,
+        //     };
+        //     setMessages((prevMessages) => [...prevMessages, newMessage]);
+        // });
 
-        return () => {
-            socketManager.offPrivateChatMessage();
-        };
+        // return () => {
+        //     socketManager.offPrivateChatMessage();
+        // };
     }, []);
 
     const handleMessageChange = (e) => {

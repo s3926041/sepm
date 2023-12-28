@@ -19,9 +19,27 @@ export const updateProfile = async (data) => {
   }
 };
 
+export const sendMessage = async (message) => {
+  const data = {
+      message
+  }
+  console.log(data);
+  try {
+    const response = await fetch(API_URL + "/api/user/sendMessage/:id", {
+      //Match ID
+      method: "POST",
+      headers: headers(),
+      body: data,
+    });
 
-
-
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const getUser = async () => {
   try {
