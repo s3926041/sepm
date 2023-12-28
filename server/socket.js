@@ -15,7 +15,7 @@ const initSocketServer = (server) => {
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
-    // Global Chat
+
     socket.on("globalChatMessage", (message) => {
       console.log(message);
       io.emit("globalChatMessage", { user: socket.id, message });
@@ -25,6 +25,8 @@ const initSocketServer = (server) => {
     socket.on("privateChatMessage", ({ matchId, message }) => {
       io.to(matchId).emit("privateChatMessage", { user: socket.id, message });
     });
+
+    
 
     socket.on("connectToQueue", () => {
       queueMatch.push({ socket });

@@ -18,11 +18,10 @@ function ChatBox({socketManager}) {
     const handleSendMessage = () => {
         if (message.trim() !== "") {
             console.log(messages)
-            socketManager.sendPrivateChatMessage(chatid,message);
             setMessage("");
         }
     };
-    
+
 
     const div = useRef(null);
     const scrollToBottom = () => {
