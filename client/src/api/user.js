@@ -21,8 +21,8 @@ export const updateProfile = async (data) => {
 
 export const sendMessage = async (message) => {
   const data = {
-      message
-  }
+    message,
+  };
   console.log(data);
   try {
     const response = await fetch(API_URL + "/api/user/sendMessage/:id", {
@@ -50,7 +50,24 @@ export const getUser = async () => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
+     
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getMatch = async (matchId) => {
+  try {
+    const response = await fetch(API_URL + "/api/user/match/" + matchId, {
+      method: "GET",
+      headers: headers(),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+  
       return data;
     }
   } catch (error) {

@@ -63,7 +63,9 @@ router.get("/match/:matchid", verifyToken, async (req, res) => {
   try {
     const match = await Match.findById(matchid);
     if (match) {
-      res.status(201).json(id);
+      // if (match.participants.includes(id)) 
+      res.status(201).json(match);
+      // else res.status(400).json({ error: "Match not exist" });
       return;
     } else {
       res.status.json(400).json({ error: "Match not exist" });
