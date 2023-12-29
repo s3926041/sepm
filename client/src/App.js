@@ -13,7 +13,6 @@ import LobbyPage from "./pages/Customer/Lobby/LobbyPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AboutPage from "./pages/Customer/HomePage/AboutPage";
 import { API_URL } from "./GlobalVar";
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ChatPage from "./pages/Customer/Lobby/ChatPage";
 
 

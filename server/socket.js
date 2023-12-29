@@ -15,18 +15,32 @@ const initSocketServer = (server) => {
   io.on("connection", (socket) => {
     console.log("User connected:", socket.id);
 
+    socket.on("joinMatchRoom", (room) => {
+      console.log("joined " + room);
+      socket.join(room);
+    });
+
+    socket.on("sendMessage", async (data) => {
+      console.log(data);
+      try {
+        const matchId = data.matchId;
+        const match = await Match.findById(matchId);
+
+        if (match) {
+          const { sender, message } = data;
+          match.conversation.push({ sender, message });
+          await match.save();
+          io.to(matchId).emit("messageReceived", { sender, message });
+        }
+      } catch (error) {
+        console.error("Error sending message:", error.message);
+      }
+    });
 
     socket.on("globalChatMessage", (message) => {
       console.log(message);
       io.emit("globalChatMessage", { user: socket.id, message });
     });
-
-    // Private Chat
-    socket.on("privateChatMessage", ({ matchId, message }) => {
-      io.to(matchId).emit("privateChatMessage", { user: socket.id, message });
-    });
-
-    
 
     socket.on("connectToQueue", () => {
       queueMatch.push({ socket });
