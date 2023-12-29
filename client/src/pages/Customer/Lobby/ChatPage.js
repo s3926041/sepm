@@ -1,6 +1,6 @@
 import ChatBox from "./ChatBox";
 import ChatSideIcon from "./ChatSideIcon";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DeleteOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { Layout, Menu, message } from "antd";
 import { Modal } from "antd";
@@ -60,7 +60,15 @@ const ChatPage = () => {
 
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!socket.connected) {
+      socket.connect();
+    }
 
+    return () => {
+      socket.disconnect();
+    };
+  }, [chatid, socket]);
   return (
     <>
       <Authentication />
