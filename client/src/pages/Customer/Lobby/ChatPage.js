@@ -46,7 +46,7 @@ const ChatPage = () => {
     setOpen(true);
   };
   const handleOk = () => {
-    setModalText("Delete Completedlyt, Move to The Lobby");
+    setModalText("Delete Completedly, Move to The Lobby");
     setConfirmLoading(true);
     setTimeout(() => {
       setOpen(false);

@@ -5,18 +5,27 @@ import {  SendOutlined } from "@ant-design/icons";
 import { useRef } from 'react';
 import { getUsers } from "../../../services/authService";
 import "./breakpoint.css"
-const GlobalChat = ({ socketManager }) => {
+const GlobalChat = ({ socketManager, socketId}) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+
+
+
   useEffect(() => {
+
+    console.log(socketId);
+
+
     socketManager.onGlobalChatMessage((data) => {
       const newMessage = {
         id: Date.now(),
         text: data.message,
         user: data.user,
       };
+
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
+    // console.log();
 
     return () => {
       socketManager.offGlobalChatMessage();
@@ -69,7 +78,7 @@ const GlobalChat = ({ socketManager }) => {
           <div className="overflow-scroll p-4 pb-36" style={{ height: "55vh" }}>
             {
               messages.map(msg => {
-                if (msg.user === msg.user) {
+                if (msg.user === socketId) {
                   return (
                     <div className="flex justify-end mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
                       <div className="relative ml-3 text-sm py-2 px-4 shadow rounded-xl" style={{ backgroundColor: "#ebf4ff", marginRight: " 0.5rem" }} >
@@ -99,7 +108,7 @@ const GlobalChat = ({ socketManager }) => {
                           className="w-full h-full rounded-full"
                         />
                       </div>
-                      <div className="relative ml-3 text-lg bg-white py-2 px-4 shadow rounded-xl" style={{  }}>
+                      <div className="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl" style={{  }}>
                         <p className="font-bold text-wrap">
                           {`${msg.user}:`}
                         </p>

@@ -82,6 +82,7 @@ const socketManager = {
 const App = () => {
   const [width, setWidth] = useState(500);
 
+
   //   {
   //     name: "Hoang",
   //     status: "new",
@@ -140,7 +141,7 @@ const App = () => {
           >
             <div className="flex break">
               <FindMate socketManager={socketManager} />
-              <GlobalChat socketManager={socketManager}></GlobalChat>
+              <GlobalChat socketManager={socketManager} socketId={socket.id}></GlobalChat>
             </div>
           </Content>
         </Layout>
