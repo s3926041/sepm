@@ -5,16 +5,14 @@ import {  SendOutlined } from "@ant-design/icons";
 import { useRef } from 'react';
 import { getUsers } from "../../../services/authService";
 import "./breakpoint.css"
-const GlobalChat = ({ socketManager, socketId}) => {
+const GlobalChat = ({ socketManager, socket}) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
 
 
   useEffect(() => {
-
-    console.log(socketId);
-
+    console.log(socket);
 
     socketManager.onGlobalChatMessage((data) => {
       const newMessage = {
@@ -22,15 +20,17 @@ const GlobalChat = ({ socketManager, socketId}) => {
         text: data.message,
         user: data.user,
       };
+      console.log(data);
+
 
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
-    // console.log();
 
     return () => {
       socketManager.offGlobalChatMessage();
     };
-  }, []);
+  }, [socketManager]);
+
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
@@ -38,7 +38,7 @@ const GlobalChat = ({ socketManager, socketId}) => {
 
   const handleSendMessage = () => {
     if (message.trim() !== "") {
-      console.log(messages)
+      // console.log(messages)
       socketManager.sendGlobalChatMessage(message);
       setMessage("");
     }
@@ -77,10 +77,10 @@ const GlobalChat = ({ socketManager, socketId}) => {
         
           <div className="overflow-scroll p-4 pb-36" style={{ height: "55vh" }}>
             {
-              messages.map(msg => {
-                if (msg.user === socketId) {
+              messages.map((msg,i) => {
+                if (msg.user === socket?.id) {
                   return (
-                    <div className="flex justify-end mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
+                    <div key={i} className="flex justify-end mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
                       <div className="relative ml-3 text-sm py-2 px-4 shadow rounded-xl" style={{ backgroundColor: "#ebf4ff", marginRight: " 0.5rem" }} >
                         <p className="font-bold text-wrap">
                           {`${msg.user}:`}
@@ -131,7 +131,6 @@ const GlobalChat = ({ socketManager, socketId}) => {
             rows={1}
             className="block mx-1 ml-2 p-3 w-full text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Your message..."
-            defaultValue={""}
             value={message}
             onChange={handleMessageChange}
           />

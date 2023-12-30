@@ -49,22 +49,14 @@ export default function EditProfile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const users = await getUsers();
         const users = await getUser();
 
-
         if (users != null) {
-          setUser(users);
-
-          // Convert the Buffer data to a base64 string
-          const uint8Array = new Uint8Array(users.avatarImg.data.data);
-          const base64String = btoa(
-            String.fromCharCode.apply(null, uint8Array)
-          );
-
-          // Create a data URL
+          const uint8Array = new Uint8Array(users?.avatarImg.data.data);
+          const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
           const dataUrl = `data:${users.avatarImg.contentType};base64,${base64String}`;
           setSrc(dataUrl);
+          setUser(users); // Update the user state
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -72,7 +64,7 @@ export default function EditProfile() {
     };
 
     fetchData();
-  }, []);
+  }, []); 
 
   const [isEditable, setIsEditable] = useState(false);
 

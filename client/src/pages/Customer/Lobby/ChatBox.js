@@ -11,6 +11,8 @@ function ChatBox({ socket }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
+
   let { chatid } = useParams();
   const [match, setMatch] = useState({});
 
@@ -44,7 +46,9 @@ function ChatBox({ socket }) {
 
     const userData = await getUser();
     setUserId(userData?._id);
-    console.log(userData._id);
+    setUserName(userData?.name);
+    // console.log(userData?.name);
+    console.log(userData?._id);
   };
 
   useEffect(() => {
@@ -52,18 +56,19 @@ function ChatBox({ socket }) {
   }, [chatid]);
 
   useEffect(() => {
-    setMessages(match.conversation);
+    setMessages(match?.conversation);
   }, [match]);
+  
   useEffect(() => {
-    if (!socket.connected) {
+    if (!socket?.connected) {
       
-      socket.connect();
+      socket?.connect();
     }
-    socket.emit("joinMatchRoom", chatid);
+    socket?.emit("joinMatchRoom", chatid);
 
     // Clean up the socket connection when the component unmounts
     return () => {
-      socket.disconnect();
+      socket?.disconnect();
     };
   }, [chatid, socket]);
 
@@ -79,7 +84,7 @@ function ChatBox({ socket }) {
   return (
     <>
       {/* component */}
-      <div className="flex overflow-hidden" style={{ borderRadius: "1rem" }}>
+      <div className="flex overflow-scroll" style={{ borderRadius: "1rem" }}>
         {/* Main Chat Area */}
         <div className="h-full flex-1" style={{ borderRadius: "1rem" }}>
           {/* Chat Header */}
@@ -89,10 +94,10 @@ function ChatBox({ socket }) {
           {/* Chat Messages */}
           <div className="overflow-scroll p-4 pb-36" style={{ height: "72vh" }}>
             {messages?.map((msg) => {
-              if (msg.sender !== userId) {
-                return <IncomingChat message={msg.message} user={msg.sender} />;
+              if (msg?.sender !== userId) {
+                return <IncomingChat message={msg?.message} user={userName} />;
               } else {
-                return <OutgoingChat message={msg.message} user={msg.sender} />;
+                return <OutgoingChat message={msg?.message} user={"You"} />;
               }
             })}
             <div ref={div}></div>

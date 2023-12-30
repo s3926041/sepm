@@ -1,6 +1,6 @@
 function OutgoingChat({ message, user }) {
     return (
-    <div className="flex justify-end mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
+        <div className="flex justify-end mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
             <div className="relative ml-3 text-lg py-2 px-4 shadow rounded-xl" style={{ backgroundColor: "#ebf4ff", marginRight:" 0.5rem"}} >
             <p className="font-bold text-wrap">
                 {`${user}:`}

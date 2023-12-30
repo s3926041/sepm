@@ -141,7 +141,7 @@ const App = () => {
           >
             <div className="flex break">
               <FindMate socketManager={socketManager} />
-              <GlobalChat socketManager={socketManager} socketId={socket.id}></GlobalChat>
+              <GlobalChat socketManager={socketManager} socket={socket}></GlobalChat>
             </div>
           </Content>
         </Layout>

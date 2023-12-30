@@ -45,18 +45,7 @@ const ChatPage = () => {
   const showModal = () => {
     setOpen(true);
   };
-  const handleOk = () => {
-    setModalText("Delete Completedly, Move to The Lobby");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-  const handleCancel = () => {
-    console.log("Cancel Delete");
-    setOpen(false);
-  };
+
 
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
@@ -69,6 +58,21 @@ const ChatPage = () => {
       socket.disconnect();
     };
   }, [chatid, socket]);
+
+  const handleOk = () => {
+    setModalText("Delete Completedly, Move to The Lobby");
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+      
+    }, 2000);
+  };
+  const handleCancel = () => {
+    console.log("Cancel Delete");
+    setOpen(false);
+  };
+
   return (
     <>
       <Authentication />
@@ -106,8 +110,9 @@ const ChatPage = () => {
 
           <Content
             style={{
-              margin: "24px 16px 1rem",
+              margin: "24px 16px 0.5rem 0.5rem",
               height: "92vh",
+              width: "100%",
               marginBottom: "3rem",
             }}
           >

@@ -107,6 +107,7 @@ function FindMate({ socketManager }) {
   return (
     <>
       <Modal
+        okButtonProps={{ style: { backgroundColor: 'blue' } }} 
         title="Match Found"
         open={open}
         onOk={handleOk}
