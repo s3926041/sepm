@@ -37,6 +37,7 @@ const initSocketServer = (server) => {
       }
     });
 
+
     socket.on("globalChatMessage", (message) => {
       console.log(message);
       io.emit("globalChatMessage", { user: socket.id, message });
@@ -80,6 +81,7 @@ const initSocketServer = (server) => {
       for (const roomId in rooms) {
         if (rooms[roomId].sockets[socket.id]) {
           socket.leave(roomId);
+          
         }
       }
     });

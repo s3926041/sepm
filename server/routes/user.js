@@ -29,7 +29,7 @@ router.post(
   verifyToken,
   upload.single("image"),
   async (req, res) => {
-    console.log(req.file);
+    // console.log(req);
     const userId = req.userId;
     const avatarImg = {
       data: req.file.buffer,
