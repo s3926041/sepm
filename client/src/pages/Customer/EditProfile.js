@@ -32,6 +32,7 @@ import { useNavigate } from "react-router";
 // import { getUsers } from "../../services/authService";
 import { getUser } from "../../api/user";
 import { updateProfile } from "../../api/user";
+import { CloudUploadOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -89,7 +90,7 @@ export default function EditProfile() {
     };
 
     fetchData();
-  }, []); 
+  }, [user]); 
 
   
 
@@ -122,16 +123,16 @@ export default function EditProfile() {
   }
 
   return (
-    <>
+    <div className="mt-7">
       <div className="flex flex-col mx-auto mb-3 items-center" style={{ width: "50%" }}>
         <Avatar className="mt-5 mx-auto border-gray-300" size={145} src={src} />
         <button
           type="button"
           className="rounded-md mx-auto mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           onClick={() => importData()}
-          style={{ width: "70%" }}
+          style={{ width: "90%" }}
         >
-          Upload..
+          <CloudUploadOutlined /> Upload...
         </button>
       </div>
 
@@ -205,6 +206,6 @@ export default function EditProfile() {
       </Form>
 
 
-    </>
+    </div>
   );
 }

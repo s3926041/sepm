@@ -127,7 +127,7 @@ const App = () => {
           }}
           width={250}
         >
-          <EditProfile />
+          <EditProfile/>
         </Sider>
 
         <Layout>

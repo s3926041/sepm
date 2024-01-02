@@ -6,12 +6,12 @@ function MessageBar({ handleSendMessage, handleMessageChange, message }) {
     return (
     <div>
         <div className="flex items-center py-2 px-3 bg-white rounded-lg dark:bg-gray-700" >
-            <button
+            {/* <button
                 type="button"
                 className="inline-flex justify-center p-4 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600"
             >
                 <PaperClipOutlined className="h-full w-full"/>
-            </button>
+            </button> */}
             
             <textarea
                 id="chat"
