@@ -8,6 +8,8 @@ import Lottie from "lottie-react";
 import { Button, Input } from "antd";
 import { getUsers } from "../../../services/authService";
 import {  Modal, Space } from 'antd';
+import "./breakpoint.css"
+import ChatSideIcon from "./ChatSideIcon";
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -105,7 +107,7 @@ function FindMate({ socketManager }) {
 
 
   return (
-    <>
+    <div className="bg-white m-2 findm border-gray-300 border">
       <Modal
         okButtonProps={{ style: { backgroundColor: 'blue' } }} 
         title="Match Found"
@@ -117,11 +119,14 @@ function FindMate({ socketManager }) {
         <p>{modalText}</p>
       </Modal>
 
-      <div className="w-full h-full flex flex-col justify-center items-center">
-        <div className="w-96 h-96">
+      <div className="w-full h-full flex flex-col items-center ">
+        <header className="bg-white p-4 text-gray-700 w-full text-center border-gray-300 border-b" style={{ borderRadius: "20px 20px 0 0"}}>
+          <h1 className="text-2xl font-semibold">Find Mates</h1>
+        </header>
+        <div className="w-96 h-86 ">
           <Lottie animationData={loading} loop={finding} />
         </div>
-        <div className="h-4 text-center text-gray-600">
+        <div className="h-4 text-center mt-2 mb-6 text-gray-600">
           {timer > 0 ? (
             <Button
               onClick={() => {
@@ -138,14 +143,32 @@ function FindMate({ socketManager }) {
                 setFinding(!finding);
                 handleConnect()
               }}
+
             >
               Find
             </Button>
           )}
           {timer > 0 && <p>{formatTime(timer)}</p>}
         </div>
+        
+        <header className="bg-white p-2 m-3 text-gray-700  border-gray-300 border-b " style={{width:"90%"}}>
+          <h1 className="text-xl font-semibold">Previous Matches</h1>
+        </header>
+        <div className="w-full overflow-scroll" style={{height: "30vh"}}>
+          
+          <ChatSideIcon />
+          <ChatSideIcon />
+          <ChatSideIcon />
+          <ChatSideIcon />
+          <ChatSideIcon />
+
+        </div>
+        
       </div>
-    </>
+      
+
+
+    </div>
   );
 }
 

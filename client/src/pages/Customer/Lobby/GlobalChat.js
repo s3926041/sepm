@@ -54,7 +54,7 @@ const GlobalChat = ({ socketManager, socket}) => {
     , [messages.length]);
 
   return (
-    <div className="breakkk" style={{marginRight:"1rem"}}>
+    <div className="breakkk m-2 border-gray-300 border-l" >
       {/* <List
         header={<div>Global Chat</div>}
         itemLayout="horizontal"
@@ -70,12 +70,12 @@ const GlobalChat = ({ socketManager, socket}) => {
       /> */}
 
         {/* Main Chat Area */}
-      <div className="h-full  bg-white" style={{ borderRadius: "1rem" }} >
-        <header className="bg-white p-4 text-gray-700" style={{ borderRadius: "1rem" }}>
+      <div className="h-full  " >
+        <header className="bg-white p-4 text-gray-700 border-gray-300  border-b mb-1">
             <h1 className="text-2xl font-semibold">Global Chat</h1>
           </header>
         
-          <div className="overflow-scroll p-4 pb-36" style={{ height: "55vh" }}>
+        <div className="overflow-scroll p-4 pb-36 bg-gray-300 h-full" style={{height: "78vh"}}>
             {
               messages.map((msg,i) => {
                 if (msg.user === socket?.id) {
@@ -124,8 +124,8 @@ const GlobalChat = ({ socketManager, socket}) => {
         </div>
      
 
-      <div style={{ marginTop: 16}}>
-        <div className="flex items-center py-2 px-1 bg-white rounded-lg dark:bg-gray-700">
+      <div >
+        <div className="flex items-center py-2 px-1 mt-2 bg-white  dark:bg-gray-700 border-gray-300  border-t">
           <textarea
             id="chat"
             rows={1}

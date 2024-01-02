@@ -125,7 +125,7 @@ const App = () => {
           onCollapse={(collapsed, type) => {
             console.log(collapsed, type);
           }}
-          width={300}
+          width={250}
         >
           <EditProfile />
         </Sider>
@@ -133,15 +133,12 @@ const App = () => {
         <Layout>
           <ChatBoxHeader />
           <Content
-            style={{
-              margin: "24px 16px 1rem",
-              marginBottom: "3rem",
-            }}
             className="breakk"
           >
             <div className="flex break">
-              <FindMate socketManager={socketManager} />
               <GlobalChat socketManager={socketManager} socket={socket}></GlobalChat>
+              <FindMate socketManager={socketManager} />
+              
             </div>
           </Content>
         </Layout>

@@ -1,9 +1,9 @@
 import { DeleteOutlined} from '@ant-design/icons';
-function ChatSideIcon({user,setChatMates, deleteTalk}) {
+function ChatSideIcon() {
     return (
-        <>
-            <div className="flex flex-row items-center  cursor-pointer hover:bg-gray-100 py-6 px-3 rounded-md" onClick={() => { setChatMates(user)}}>
-                <div className="flex-col w-12  bg-gray-300 rounded-full ml-2">
+        <div className='w-full flex'>
+            <div className="flex flex-row items-center cursor-pointer hover:bg-gray-100 py-3 w-full rounded-md" onClick={() => { }}>
+                <div className=" ml-10 w-12  bg-gray-300 rounded-full mr-6">
                     <img
                         src="https://placehold.co/200x/ad922e/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
                         alt="User Avatar"
@@ -11,24 +11,11 @@ function ChatSideIcon({user,setChatMates, deleteTalk}) {
                     />
                 </div>
                 <div className="flex-row">
-                    <h2 className="text-lg font-semibold ml-2">{user.name}</h2>
-
-                    {user.talk.length === 0 && 
-                    <div
-                        class="w-1/2 flex items-center justify-center ml-2 text-xs text-white bg-green-600 h-4 rounded leading-2"
-                    style={{backgroundColor:"green", width:"50%"}}
-                    >
-                        new
-                    </div>
-                    }
+                    <h2 className="text-lg font-semibold ml-8">hoiang</h2>
                 </div>
-                <div className="flex-row ml-9" style={{marginLeft:"2.25rem"}} onClick={
-                    (e) => {deleteTalk(user); e.stopPropagation()}
-                }>
-                    <DeleteOutlined />
-                </div>
+           
             </div>
-        </>
+        </div>
 
     );
 }

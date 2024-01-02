@@ -5,18 +5,32 @@
   .breakk{
     height: 150vh !important;
   }
-    .breakkk{
-    margin: 3rem;
+  .breakkk{
+    width: 100%;
+    border-radius: 20px;
+    /* margin: 3rem; */
+  }
+
+  .findm{
+    height: 80vh;
   }
 }
 @media (max-width: 2000px) and (min-width: 1002px) {
 
   .breakk{
-    height: 95vh !important;
+    height: 100vh !important;
   }
 
   .breakkk{
-    width: 500px;
-    margin: auto;
+    width: 300%;
+    height: 84vh;
+    border-radius: 20px;
+
+    /* margin: auto; */
+  }
+
+  .findm{
+    height: 98vh;
+    border-radius: 20px;
   }
 }

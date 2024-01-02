@@ -26,7 +26,7 @@ import {
   Switch,
   TreeSelect,
 } from "antd";
-import { Avatar } from "antd";
+import { Avatar, Descriptions } from "antd";
 import Sliderr from "./Sliderr";
 import { useNavigate } from "react-router";
 // import { getUsers } from "../../services/authService";
@@ -44,6 +44,8 @@ export default function EditProfile() {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState(null);
+  const [item, setItem] = useState([]);
+
 
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -57,6 +59,29 @@ export default function EditProfile() {
           const dataUrl = `data:${users.avatarImg.contentType};base64,${base64String}`;
           setSrc(dataUrl);
           setUser(users); // Update the user state
+          const items = [
+            {
+              key: '1',
+              label: 'UserName:',
+              children: user.name,
+            },
+            {
+              key: '2',
+              label: 'Telephone:',
+              children: user.phone,
+            },
+            {
+              key: '3',
+              label: 'Email:',
+              children: user.email,
+            },
+            {
+              key: '4',
+              label: 'Gender:',
+              children: user.gender,
+            },
+          ];
+          setItem(items);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -65,6 +90,8 @@ export default function EditProfile() {
 
     fetchData();
   }, []); 
+
+  
 
   const [isEditable, setIsEditable] = useState(false);
 
@@ -96,140 +123,88 @@ export default function EditProfile() {
 
   return (
     <>
-      <div className="flex flex-col mx-auto mb-3" style={{ width: "50%" }}>
-        <Avatar className="mt-5 mx-auto" size={150} src={src} />
+      <div className="flex flex-col mx-auto mb-3 items-center" style={{ width: "50%" }}>
+        <Avatar className="mt-5 mx-auto border-gray-300" size={145} src={src} />
         <button
           type="button"
           className="rounded-md mx-auto mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           onClick={() => importData()}
-          style={{ width: "50%" }}
+          style={{ width: "70%" }}
         >
-          Change
+          Upload..
         </button>
       </div>
 
+
+      <Descriptions bordered layout={"vertical"} size={"small"} column={1} title="User Info" items={item} className="m-3 py-2 text-center border-gray-400 border rounded-l"/>
+      <button
+        type="submit"
+        className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        style={{ width: "50%" }}
+        onClick={async () => {
+          await updateProfile(avatar);
+          message.success("Processing complete!");
+
+        }}
+      >
+        Modify
+      </button>
+
       <Form
         labelCol={{
-          span: 4,
+          span: 6,
         }}
         wrapperCol={{
           span: 14,
         }}
         layout="horizontal"
         initialValues={{
-          size: componentSize,
+          size: "small",
         }}
-        // onValuesChange={onFormLayoutChange}
-        // size={componentSize}
+        bordered
         style={{
           maxWidth: "80%",
           margin: "2rem auto",
           textAlign: "!important left",
         }}
       >
-        {/* <Form.Item label="Form Size" name="size">
-                <Radio.Group>
-                    <Radio.Button value="small">Small</Radio.Button>
-                    <Radio.Button value="default">Default</Radio.Button>
-                    <Radio.Button value="large">Large</Radio.Button>
-                </Radio.Group>
-            </Form.Item> */}
+        <header className="bg-white mb-5 text-gray-700 w-full text-start border-gray-300 border-b" >
+          <h1 className="text-xl font-semibold">Preferences</h1>
+        </header>
 
-        <Form.Item label="Name">
-          <Input
-            value={user.name}
-            onChange={(data) => {
-              setName(data);
-            }}
-          />
-        </Form.Item>
-        <Form.Item label="Email">
-          <Input value={user.email} onChange={(data) => setEmail(data)} />
-        </Form.Item>
-        <Form.Item label="Sex">
+        <Form.Item label="Find">
           <Select value={user.gender} onChange={(data) => setGender(data)}>
-            <Select.Option value="demo">Male</Select.Option>
-            <Select.Option value="demo">Female</Select.Option>
-            <Select.Option value="demo">None</Select.Option>
+            <Select.Option value="male">Male</Select.Option>
+            <Select.Option value="female">Female</Select.Option>
+            <Select.Option value="none">None</Select.Option>
           </Select>
         </Form.Item>
-        {/* <Form.Item label="Game">
-                <TreeSelect
-                    treeData={[
-                        {
-                            title: 'Light',
-                            value: 'light',
-                            children: [
-                                {
-                                    title: 'Bamboo',
-                                    value: 'bamboo',
-                                },
-                            ],
-                        },
-                    ]}
-                />
-            </Form.Item>
-            <Form.Item label="Level">
-                <Cascader
-                    options={[
-                        {
-                            value: 'zhejiang',
-                            label: 'Zhejiang',
-                            children: [
-                                {
-                                    value: 'hangzhou',
-                                    label: 'Hangzhou',
-                                },
-                            ],
-                        },
-                    ]}
-                />
-            </Form.Item> */}
-        {/* <Form.Item label="Born">
-                <DatePicker className='w-full' value={user.}/>
-            </Form.Item> */}
-        <Form.Item label="Num">
-          <Input
-            className="w-full"
-            style={{ marginLeft: "0.1rem" }}
-            value={"84+ " + user.phone}
-            readOnly={!isEditable}
-            onChange={(data) => setPhone(data)}
-          />
+
+        <Form.Item label="Level">
+          <Select value={"Master"} onChange={(data) => setGender(data)}>
+            <Select.Option value="beginer">Beginner</Select.Option>
+            <Select.Option value="expert">Expert</Select.Option>
+            <Select.Option value="master">Master</Select.Option>
+          </Select>
         </Form.Item>
-        {/* <Form.Item label="With" initialValue="1"> */}
-        {/* <Select>
-                    <Select.Option value="male">Male</Select.Option>
-                    <Select.Option value="female">Female</Select.Option>
-                    <Select.Option value="none">None</Select.Option>
-                </Select> */}
 
-        {/* <Select>
-                    <Option value="1">
-                       Male
-                    </Option>
-                    <Option value="2">222</Option>
-                </Select> */}
-        {/* </Form.Item> */}
 
-        {/* <Form.Item label="Distance" initialValue="1">
-                    <Sliderr style={{ margin: "1rem auto" }} />
-                </Form.Item> */}
 
         <button
           type="submit"
           className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           style={{ width: "50%" }}
           onClick={async () => {
-            // console.log(avatar);
-            await updateProfile(avatar);
+            // await updateProfile(avatar);
             message.success("Processing complete!");
-            // navigate("/lobby");
+
           }}
         >
-          Modify
+          Change
         </button>
       </Form>
+
+
     </>
   );
 }
