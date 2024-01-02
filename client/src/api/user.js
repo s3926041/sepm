@@ -50,7 +50,7 @@ export const getUser = async () => {
 
     if (response.ok) {
       const data = await response.json();
-     
+
       return data;
     }
   } catch (error) {
@@ -67,10 +67,49 @@ export const getMatch = async (matchId) => {
 
     if (response.ok) {
       const data = await response.json();
-  
+
       return data;
     }
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getAllMatches = async () => {
+  try {
+    const response = await fetch(API_URL + "/api/user/matches/", {
+      method: "GET",
+      headers: headers(),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteMatch = async (matchId) => {
+  try {
+    const response = await fetch(API_URL + "/api/user/matches/" + matchId, {
+      method: "DELETE",
+      headers: headers(),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      // Handle non-ok response, e.g., show an error message
+      console.error(
+        "Failed to delete match:",
+        response.status,
+        response.statusText
+      );
+    }
+  } catch (error) {
+    console.error("Error during deleteMatch request:", error);
   }
 };

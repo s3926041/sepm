@@ -63,7 +63,7 @@ router.get("/match/:matchid", verifyToken, async (req, res) => {
   try {
     const match = await Match.findById(matchid);
     if (match) {
-      // if (match.participants.includes(id)) 
+      // if (match.participants.includes(id))
       res.status(201).json(match);
       // else res.status(400).json({ error: "Match not exist" });
       return;
@@ -73,6 +73,45 @@ router.get("/match/:matchid", verifyToken, async (req, res) => {
     }
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+router.get("/matches/", verifyToken, async (req, res) => {
+  const id = req.userId;
+
+  try {
+    const matches = await Match.find({ participants: { $in: [id] } });
+
+    if (matches.length > 0) {
+      res.status(200).json(matches);
+    } else {
+      res.status(404).json({ error: "No matches found for the user" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.delete("/matches/:matchid", verifyToken, async (req, res) => {
+  const { matchid } = req.params;
+  const id = req.userId;
+
+  try {
+    const match = await Match.findOneAndDelete({
+      _id: matchid,
+      participants: { $elemMatch: { $eq: id } },
+    });
+
+    if (!match) {
+      res
+        .status(404)
+        .json({ error: "Match not found or user is not a participant" });
+      return;
+    }
+
+    res.status(200).json({ message: "Match deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
