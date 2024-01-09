@@ -14,10 +14,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AboutPage from "./pages/Customer/HomePage/AboutPage";
 import { API_URL } from "./GlobalVar";
 import ChatPage from "./pages/Customer/Lobby/ChatPage";
-import ChatP from "./pages/Customer/Lobby/FixLobby/ChatP";
-import QuickChat from "./pages/Customer/Lobby/FixLobby/QuickChat";
-import LobbyPageFix from "./pages/Customer/Lobby/FixLobby/LobbyPage";
-import Profile from "./pages/Customer/Lobby/FixLobby/Profile";
 
 
 
