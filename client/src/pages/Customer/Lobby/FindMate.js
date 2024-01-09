@@ -1,4 +1,4 @@
-import { CloseOutlined, HeartOutlined } from "@ant-design/icons";
+import { CloseOutlined, HeartOutlined, SearchOutlined, TeamOutlined } from "@ant-design/icons";
 import "../../../material-tailwind.css";
 import gamer from "../../../Assest/gamer1.png";
 import { loading } from "../../../Assest/loading";
@@ -10,6 +10,7 @@ import { getUsers } from "../../../services/authService";
 import {  Modal, Space } from 'antd';
 import "./breakpoint.css"
 import ChatSideIcon from "./ChatSideIcon";
+import EditProfile from "../EditProfile";
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -54,6 +55,12 @@ function FindMate({ socketManager }) {
       console.log("Match found!", data.matchId);
       socketManager.disconnect();
       showModal();
+      setTimeout(() => {
+        setOpen(false);
+        setConfirmLoading(false);
+        navigate("chat/" + matchId);
+        setFinding(false);
+      }, 10000);
       setMatchId(data.matchId);
     };
 
@@ -107,7 +114,7 @@ function FindMate({ socketManager }) {
 
 
   return (
-    <div className="bg-white m-2 findm border-gray-300 border">
+    <div className="bg-white findm border-gray-200 border-l">
       <Modal
         okButtonProps={{ style: { backgroundColor: 'blue' } }} 
         title="Match Found"
@@ -120,13 +127,34 @@ function FindMate({ socketManager }) {
       </Modal>
 
       <div className="w-full h-full flex flex-col items-center ">
-        <header className="bg-white p-4 text-gray-700 w-full text-center border-gray-300 border-b" style={{ borderRadius: "20px 20px 0 0"}}>
-          <h1 className="text-2xl font-semibold">Find Mates</h1>
+        <header className="p-2 mt-1 flex justify-between" style={{ width: "90%" }}>
+          <h1 className="font-semibold text-xl font-sans ">Matches</h1>
+          <TeamOutlined style={{ fontSize: '1.2rem' }} />
+          
         </header>
-        <div className="w-96 h-86 ">
-          <Lottie animationData={loading} loop={finding} />
+        <div className="py-2 flex border-gray-300 border-b pb-3" style={{ width: "90%" }}>
+          <SearchOutlined style={{ fontSize: '0.7rem' }} />
+          <h3 className="font-semibold text-sm text-blue-600/75 font-sans ml-3">Find</h3>
         </div>
-        <div className="h-4 text-center mt-2 mb-6 text-gray-600">
+        <div className="pt-2 flex" style={{ width: "90%" }}>
+          <h1 className="text-gray-700 font-semibold text-sm font-sans">Look Up!</h1>
+        </div>
+        
+        <div className=" w-70 h-48" onClick={(e) => {
+          if(timer > 0){
+            setFinding(!finding);
+            handleStop();
+          }else{
+            setFinding(!finding);
+            handleConnect()
+          }
+        }}>
+          {timer > 0 && <p className="h-1 text-center text-sm">{formatTime(timer)}</p>}
+          <Lottie animationData={loading} loop={finding} style={{width: "16rem", height: "13rem"}}/>
+        </div>
+
+
+        {/* <div className="h-4 text-center mt-2 mb-6 text-gray-600">
           {timer > 0 ? (
             <Button
               onClick={() => {
@@ -149,12 +177,13 @@ function FindMate({ socketManager }) {
             </Button>
           )}
           {timer > 0 && <p>{formatTime(timer)}</p>}
-        </div>
+        </div> */}
+
         
-        <header className="bg-white p-2 m-3 text-gray-700  border-gray-300 border-b " style={{width:"90%"}}>
-          <h1 className="text-xl font-semibold">Previous Matches</h1>
+        <header className="py-2" style={{width:"90%"}}>
+          <h1 className=" text-gray-700 text-sm font-semibold">All Matches</h1>
         </header>
-        <div className="w-full overflow-scroll" style={{height: "30vh"}}>
+        <div className="w-full overflow-scroll flex flex-col items-center " style={{height: "50vh"}}>
           
           <ChatSideIcon />
           <ChatSideIcon />

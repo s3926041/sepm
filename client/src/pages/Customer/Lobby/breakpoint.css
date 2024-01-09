@@ -22,15 +22,16 @@
   }
 
   .breakkk{
-    width: 300%;
-    height: 84vh;
-    border-radius: 20px;
+    width: 450%;
+    height: 90vh;
+    /* border-radius: 20px; */
 
     /* margin: auto; */
   }
 
   .findm{
-    height: 98vh;
-    border-radius: 20px;
+    width: 50%;
+    height: 100vh;
+    /* border-radius: 20px; */
   }
 }
