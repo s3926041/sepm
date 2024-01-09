@@ -94,7 +94,8 @@ const App = () => {
   return (
     <>
       <Authentication />
-      <Layout>
+      <Layout className="rounded-2xl" 
+      >
         <Sider
           collapsible
           collapsed={collapsed}
@@ -103,6 +104,7 @@ const App = () => {
           style={{
             backgroundColor: "#edf3fb",
           }}
+          className="rounded-2xl"
         >
           {/* <div className="demo-logo-vertical" 
             /> */}
@@ -117,9 +119,15 @@ const App = () => {
 
         <Layout>
           {/* <ChatBoxHeader /> */}
-          <Content className="breakk">
-            <div className="flex break">
-              <Outlet ></Outlet>
+          <Content className="breakk" 
+          style={{
+            backgroundColor: "#002047",
+          }}>
+            <div className="flex break" 
+            
+            >
+
+              <Outlet></Outlet>
             </div>
           </Content>
         </Layout>

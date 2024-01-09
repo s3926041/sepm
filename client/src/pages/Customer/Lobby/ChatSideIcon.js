@@ -1,7 +1,7 @@
 import { DeleteOutlined} from '@ant-design/icons';
 function ChatSideIcon() {
     return (
-        <div className=' flex bg-white mb-1' style={{borderRadius: "10px", width: "90%"}}>
+        <div className=' flex bg-white mb-1' style={{borderRadius: "10px", width: "100%"}}>
             <div className="flex flex-row items-center cursor-pointer hover:bg-gray-100 py-2 w-full rounded-md" onClick={() => { }}>
                 {/* <div className=" ml-5 w-12  bg-gray-300 rounded-full mr-2">
                     <img

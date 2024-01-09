@@ -123,7 +123,7 @@ export default function EditProfile() {
   }
 
   return (
-    <div className="mt-7">
+    <div className="mt-7" >
       <div className="flex flex-col mx-auto mb-3 items-center" style={{ width: "50%" }}>
         <Avatar className="mt-5 mx-auto border-gray-300" size={145} src={src} />
         <button
@@ -138,7 +138,7 @@ export default function EditProfile() {
 
 
       <Descriptions bordered layout={"vertical"} size={"small"} column={1} title="User Info" items={item} className="m-3 py-2 text-center border-gray-400 border rounded-l"/>
-      <button
+<button
         type="submit"
         className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         style={{ width: "50%" }}
@@ -149,9 +149,9 @@ export default function EditProfile() {
         }}
       >
         Modify
-      </button>
+      </button> 
 
-      <Form
+<Form
         labelCol={{
           span: 6,
         }}

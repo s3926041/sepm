@@ -81,17 +81,34 @@ function ChatBox({ socket,chatid }) {
   useEffect(scrollToBottom, [messages?.length]);
   //   console.log(userId);
   return (
-    <>
+    <div className="w-3/5">
       {/* component */}
-      <div className="flex overflow-scroll" style={{ borderRadius: "1rem" }}>
+      <div className="flex overflow-scroll">
         {/* Main Chat Area */}
-        <div className="h-full flex-1" style={{ borderRadius: "1rem" }}>
+        <div className="h-full flex-1">
+
           {/* Chat Header */}
-          <header className="bg-white p-4 text-gray-700">
-            <h1 className="text-2xl font-semibold">{chatid}</h1>
+          <header className="bg-white p-4 py-6 text-white mb-3 rounded-2xl" style={{ backgroundColor: "#001329" }}>
+            {/* <h1 className="text-2xl font-semibold">{chatid}</h1> */}
+            <div className="flex flex-row items-center  w-full">
+                <div
+                  className="ml-2 flex items-center justify-center h-10 w-10 bg-amber-500 rounded-full"
+                >
+                  H
+                </div>
+             
+              <div className="font-semibold flex flex-col text-start text-sm w-full">
+                <div className="ml-4 flex justify-between text-white" style={{ fontSize: ".9rem" }}><span>Henry Boyd</span></div>
+                <div className="text-white/50 ml-4" style={{ fontSize: ".68rem" }}>Hi, I need...</div>
+
+              </div>
+
+            </div> 
           </header>
+
+
           {/* Chat Messages */}
-          <div className="overflow-scroll p-4 pb-36" style={{ height: "72vh" }}>
+          <div className="overflow-scroll p-4 pb-36 bg-white relative rounded-2xl" style={{ height: "82vh", backgroundColor: "#001329" }}>
             {messages?.map((msg) => {
               if (msg?.sender !== userId) {
                 return <IncomingChat message={msg?.message} user={userName} />;
@@ -100,18 +117,24 @@ function ChatBox({ socket,chatid }) {
               }
             })}
             <div ref={div}></div>
+            <MessageBar
+              handleSendMessage={handleSendMessage}
+              handleMessageChange={handleMessageChange}
+              message={message}
+              
+            />
           </div>
           {/* Chat Input */}
-          <div className="bg-white border-t border-gray-300 p-4 bottom-0 w-full">
+          {/* <div className="bg-white  bottom-0 w-full">
             <MessageBar
               handleSendMessage={handleSendMessage}
               handleMessageChange={handleMessageChange}
               message={message}
             />
-          </div>
+          </div> */}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

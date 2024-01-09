@@ -1,15 +1,15 @@
 function OutgoingChat({ message, user }) {
     return (
         <div className="flex justify-end mb-4 cursor-pointer" style={{ marginBottom: "1.5rem" }}>
-            <div className="relative ml-3 text-lg py-2 px-4 shadow rounded-xl" style={{ backgroundColor: "#ebf4ff", marginRight:" 0.5rem"}} >
+            <div className="relative ml-3 text-base py-2 px-4 shadow rounded-xl text-white" style={{ backgroundColor: "#002047", marginRight:" 0.5rem"}} >
             <p className="font-bold text-wrap">
                 {`${user}:`}
             </p>
-            <p>
+                <p className="text-white/75">
                 {message}
             </p>
         </div>
-            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0" style={{ height: "3rem", width: "3rem" }}>
+            <div className="flex items-center justify-center rounded-full bg-indigo-500 flex-shrink-0" style={{ height: "2.5rem", width: "2.5rem" }}>
             <img
                 src="https://placehold.co/200x/b7a8ff/ffffff.svg?text=ʕ•́ᴥ•̀ʔ&font=Lato"
                 alt="My Avatar"
