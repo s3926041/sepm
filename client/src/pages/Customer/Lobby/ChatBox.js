@@ -7,13 +7,13 @@ import { getMatch, getUser } from "../../../api/user";
 
 // ... (other imports)
 
-function ChatBox({ socket }) {
+function ChatBox({ socket,chatid }) {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
 
-  let { chatid } = useParams();
+
   const [match, setMatch] = useState({});
 
   const handleMessageChange = (e) => {
@@ -32,7 +32,6 @@ function ChatBox({ socket }) {
       message,
     });
 
-    // Clear the input field
     setMessage("");
   };
 
@@ -47,7 +46,7 @@ function ChatBox({ socket }) {
     const userData = await getUser();
     setUserId(userData?._id);
     setUserName(userData?.name);
-    // console.log(userData?.name);
+    console.log(userData?.name);
     console.log(userData?._id);
   };
 

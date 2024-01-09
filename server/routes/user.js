@@ -76,22 +76,39 @@ router.get("/match/:matchid", verifyToken, async (req, res) => {
   }
 });
 
-router.get("/matches/", verifyToken, async (req, res) => {
+router.get("/matches", verifyToken, async (req, res) => {
   const id = req.userId;
-
+  console.log(id);
   try {
-    const matches = await Match.find({ participants: { $in: [id] } });
-
+    const matches = await Match.find({ participants: id });
+    console.log(matches);
     if (matches.length > 0) {
       res.status(200).json(matches);
     } else {
-      res.status(404).json({ error: "No matches found for the user" });
+      res.status(200).json([]);
     }
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+router.get("/getother/:id", verifyToken, async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
 
+  try {
+    const user = await User.findById(id);
+
+    if (user) {
+      console.log("Hung");
+      res.status(200).json(user);
+    } else {
+      console.log("no user");
+      res.status(401).json({ error: "No user" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 router.delete("/matches/:matchid", verifyToken, async (req, res) => {
   const { matchid } = req.params;
   const id = req.userId;

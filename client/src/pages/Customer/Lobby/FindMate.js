@@ -20,17 +20,13 @@ function formatTime(seconds) {
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-function FindMate({ socketManager }) {
+function FindMate({ socketManager,socket }) {
   const [finding, setFinding] = useState(false);
   const [timer, setTimer] = useState(0);
   const [user, setUser] = useState({});
   const [matchId, setMatchId] = useState('');
 
-  const [matchPreferences, setMatchPreferences] = useState({
-    userId: user._id,
-    skillLevel: "",
-    gameMode: "",
-  });
+
 
 
   const navigate = useNavigate();
@@ -43,7 +39,7 @@ function FindMate({ socketManager }) {
 
   const handleConnect = () => {
     setFinding(!finding);
-    socketManager.connectToQueue(matchPreferences);
+    socketManager.connectToQueue(user._id);
   };
 
   const handleStop = () => {
@@ -58,9 +54,9 @@ function FindMate({ socketManager }) {
       setTimeout(() => {
         setOpen(false);
         setConfirmLoading(false);
-        navigate("chat/" + matchId);
+        navigate("chat/");
         setFinding(false);
-      }, 10000);
+      }, 5000);
       setMatchId(data.matchId);
     };
 
@@ -97,16 +93,7 @@ function FindMate({ socketManager }) {
   const showModal = () => {
     setOpen(true);
   };
-  const handleOk = () => {
-    setModalText('Move to The Chat Page after two seconds');
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-      navigate("chat/" + matchId);
-      setFinding(false);
-    }, 2000);
-  };
+
   const handleCancel = () => {
     console.log('You Just Canceled The Conversation: ' + matchId);
     setOpen(false);
@@ -119,7 +106,7 @@ function FindMate({ socketManager }) {
         okButtonProps={{ style: { backgroundColor: 'blue' } }} 
         title="Match Found"
         open={open}
-        onOk={handleOk}
+        // onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >

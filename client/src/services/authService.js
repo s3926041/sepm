@@ -12,7 +12,7 @@ export const getUsers = () => {
   }else{
     // alert()
     let user = JSON.parse(data);
-    console.log(user);
+
     return user;
   }
 };
@@ -22,7 +22,7 @@ export const setToken = (data) => {
 };
 
 export const setUser = (data) => {
-  // console.log(data);
+
   localStorage.setItem("user", JSON.stringify(data));
 };
 
@@ -32,7 +32,6 @@ export const logout = () => {
 
 export const headers = () => {
   let token = JSON.parse(localStorage.getItem("user")).token;
-  console.log(token)
   return {
     "Authorization": `Bearer ${token}`,
     // "Content-Type": "application/json",

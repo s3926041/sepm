@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   AuditOutlined,
   DeleteOutlined,
@@ -30,64 +30,7 @@ import {
   isLoggedIn,
 } from "../../../services/authService";
 import { API_URL } from "../../../GlobalVar";
-import io from "socket.io-client";
 const { Content, Sider } = Layout;
-const socket = io(API_URL, {
-  withCredentials: true,
-});
-
-const socketManager = {
-  connectToQueue: (matchPreferences) => {
-    if (!socket.connected) {
-      socket.connect();
-    }
-    socket.emit("connectToQueue", matchPreferences);
-  },
-
-  disconnect: () => {
-    if (socket.connected) {
-      socket.disconnect();
-    }
-  },
-
-  onMatchFound: (callback) => {
-    socket.on("matchFound", callback);
-  },
-
-  offMatchFound: (callback) => {
-    socket.off("matchFound", callback);
-  },
-
-  sendGlobalChatMessage: (message) => {
-    socket.emit("globalChatMessage", { message });
-  },
-
-  sendPrivateChatMessage: (chatid, message) => {
-    if (socket.connected) {
-      socket.emit("privateChatMessage", { matchId: chatid, message: message });
-    }
-  },
-
-  // Function to receive global chat messages
-  onPrivateChatMessage: (callback) => {
-    socket.on("privateChatMessage", callback);
-  },
-
-  // Function to stop listening to global chat messages
-  offPrivateChatMessage: (callback) => {
-    socket.off("privateChatMessage", callback);
-  },
-
-  // Function to receive global chat messages
-  onGlobalChatMessage: (callback) => {
-    socket.on("globalChatMessage", callback);
-  },
-
-  // Function to stop listening to global chat messages
-  offGlobalChatMessage: (callback) => {
-    socket.off("globalChatMessage", callback);
-  },
-};
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -98,11 +41,11 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem('Find', '0', <SearchOutlined />),
-  getItem('Preferences', '1', <SettingOutlined />),
-  getItem('Profile', '2', <AuditOutlined />),
-  getItem("User", 'sub1', <UserOutlined />, [
-    getItem('Log Out', '3', <PoweroffOutlined />),
+  getItem("Find", "0", <SearchOutlined />),
+  getItem("Preferences", "1", <SettingOutlined />),
+  getItem("Profile", "2", <AuditOutlined />),
+  getItem("User", "sub1", <UserOutlined />, [
+    getItem("Log Out", "3", <PoweroffOutlined />),
     // getItem('Bill', '4'),
     // getItem('Alex', '5'),
   ]),
@@ -119,7 +62,7 @@ const App = () => {
     if (user != null) {
       setUser(user.user);
     }
-  }, [])
+  }, []);
 
   //   {
   //     name: "Hoang",
@@ -142,50 +85,41 @@ const App = () => {
   //   },
   // ]);
 
-
   const [collapsed, setCollapsed] = useState(false);
 
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
-  
-
   return (
     <>
       <Authentication />
       <Layout>
-        {/* <Sider
-          breakpoint="lg"
-          collapsedWidth="0"
-          theme="light"
-          onBreakpoint={(broken) => {
-            console.log(broken);
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+          theme="dark"
+          style={{
+            backgroundColor: "#edf3fb",
           }}
-          onCollapse={(collapsed, type) => {
-            console.log(collapsed, type);
-          }}
-          width={250}
         >
-          <EditProfile/>
-        </Sider> */}
-
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} theme="dark"  style={{
-          backgroundColor: "#edf3fb" }}>
           {/* <div className="demo-logo-vertical" 
             /> */}
-          <Menu theme="light" defaultSelectedKeys={['0']} mode="inline" items={items} style={{ backgroundColor: "#edf3fb"}} />
+          <Menu
+            theme="light"
+            defaultSelectedKeys={["0"]}
+            mode="inline"
+            items={items}
+            style={{ backgroundColor: "#edf3fb" }}
+          />
         </Sider>
 
         <Layout>
           {/* <ChatBoxHeader /> */}
-          <Content
-            className="breakk"
-          >
+          <Content className="breakk">
             <div className="flex break">
-              <FindMate socketManager={socketManager} />
-              <GlobalChat socketManager={socketManager} socket={socket}></GlobalChat>
-              
+              <Outlet ></Outlet>
             </div>
           </Content>
         </Layout>

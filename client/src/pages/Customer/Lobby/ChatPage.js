@@ -2,12 +2,14 @@ import ChatBox from "./ChatBox";
 import ChatSideIcon from "./ChatSideIcon";
 import React, { useState, useEffect } from "react";
 import { DeleteOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+
 import { Layout, Menu, message } from "antd";
-import { Modal } from "antd";
+import { Modal, Button } from "antd";
 import { useNavigate, useParams } from "react-router";
 import Authentication from "../../../components/Authentication";
 import { io } from "socket.io-client";
 import { API_URL } from "../../../GlobalVar";
+import { getAllMatches, getOtherUser, getUser } from "../../../api/user";
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -17,38 +19,19 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const items = [
-  getItem("Lobby", "1", <UsergroupAddOutlined />),
-  getItem("Delete", "2", <DeleteOutlined />),
-];
-
-const confirm = (e) => {
-  console.log(e);
-  message.success("Click on Yes");
-};
-const cancel = (e) => {
-  console.log(e);
-  message.error("Click on No");
-};
 
 const socket = io(API_URL, {
   withCredentials: true,
 });
 
 const ChatPage = () => {
-  let { chatid } = useParams();
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState(
-    "Delete A Match with ID: " + chatid
-  );
-  const showModal = () => {
-    setOpen(true);
-  };
-
-
+  const [userId, setUserId] = useState([]);
+  const [matches, setMatches] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
+  const [items, setItems] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
+
   useEffect(() => {
     if (!socket.connected) {
       socket.connect();
@@ -57,22 +40,33 @@ const ChatPage = () => {
     return () => {
       socket.disconnect();
     };
-  }, [chatid, socket]);
+  }, [socket]);
 
-  const handleOk = () => {
-    setModalText("Delete Completedly, Move to The Lobby");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-      
-    }, 2000);
-  };
-  const handleCancel = () => {
-    console.log("Cancel Delete");
-    setOpen(false);
-  };
+  const fetchData = async () => {
+    const req = await getAllMatches();
+    const itemss = await Promise.all(
+      req.map(async (match) => {
+        const otherParticipant =
+          match.participants[0] == userId
+            ? await getOtherUser(match.participants[1])
+            : await getOtherUser(match.participants[0]);
 
+        const otherParticipantName = otherParticipant?.name;
+        return getItem(
+          otherParticipantName,
+          match._id,
+          <UsergroupAddOutlined />
+        );
+      })
+    );
+    setMatches(req);
+    setItems(itemss);
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(items);
   return (
     <>
       <Authentication />
@@ -89,25 +83,12 @@ const ChatPage = () => {
             mode="inline"
             items={items}
             onClick={(e) => {
-              if (e.key === "1") {
-                navigate("/lobby");
-              } else {
-                showModal();
-              }
+              console.log(e.key);
+              setCurrentChat(e.key);
             }}
           />
         </Sider>
         <Layout>
-          <Modal
-            title="Delete Match"
-            open={open}
-            onOk={handleOk}
-            confirmLoading={confirmLoading}
-            onCancel={handleCancel}
-          >
-            <p>{modalText}</p>
-          </Modal>
-
           <Content
             style={{
               margin: "24px 16px 0.5rem 0.5rem",
@@ -116,7 +97,9 @@ const ChatPage = () => {
               marginBottom: "3rem",
             }}
           >
-            <ChatBox socket={socket} />
+            {currentChat && (
+              <ChatBox socket={socket} chatid={currentChat} />
+            )}
           </Content>
         </Layout>
       </Layout>

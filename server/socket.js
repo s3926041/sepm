@@ -37,20 +37,19 @@ const initSocketServer = (server) => {
       }
     });
 
-
     socket.on("globalChatMessage", (message) => {
       console.log(message);
       io.emit("globalChatMessage", { user: socket.id, message });
     });
 
-    socket.on("connectToQueue", () => {
-      queueMatch.push({ socket });
+    socket.on("connectToQueue", (userid) => {
+      queueMatch.push({ socket, userid });
       if (queueMatch.length >= 2) {
         const user1 = queueMatch.shift();
         const user2 = queueMatch.shift();
 
         const match = new Match({
-          participants: [user1.socket.id, user2.socket.id],
+          participants: [user1.userid, user2.userid],
           status: "available",
           conversation: [],
         });
@@ -81,7 +80,6 @@ const initSocketServer = (server) => {
       for (const roomId in rooms) {
         if (rooms[roomId].sockets[socket.id]) {
           socket.leave(roomId);
-          
         }
       }
     });

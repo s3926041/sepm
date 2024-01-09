@@ -58,6 +58,23 @@ export const getUser = async () => {
   }
 };
 
+export const getOtherUser = async (id) => {
+  try {
+    const response = await fetch(API_URL + "/api/user/getother/" +id, {
+      method: "GET",
+      headers: headers(),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+
+      return data;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getMatch = async (matchId) => {
   try {
     const response = await fetch(API_URL + "/api/user/match/" + matchId, {
@@ -76,6 +93,7 @@ export const getMatch = async (matchId) => {
 };
 
 export const getAllMatches = async () => {
+
   try {
     const response = await fetch(API_URL + "/api/user/matches/", {
       method: "GET",

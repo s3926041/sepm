@@ -14,9 +14,65 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AboutPage from "./pages/Customer/HomePage/AboutPage";
 import { API_URL } from "./GlobalVar";
 import ChatPage from "./pages/Customer/Lobby/ChatPage";
+import GlobalChat from "./pages/Customer/Lobby/GlobalChat";
+import FindMate from "./pages/Customer/Lobby/FindMate";
+import io from "socket.io-client";
+const socket = io(API_URL, {
+  withCredentials: true,
+});
 
+const socketManager = {
+  connectToQueue: (userid) => {
+    if (!socket.connected) {
+      socket.connect();
+    }
+    socket.emit("connectToQueue", userid);
+  },
 
+  disconnect: () => {
+    if (socket.connected) {
+      socket.disconnect();
+    }
+  },
 
+  onMatchFound: (callback) => {
+    socket.on("matchFound", callback);
+  },
+
+  offMatchFound: (callback) => {
+    socket.off("matchFound", callback);
+  },
+
+  sendGlobalChatMessage: (message) => {
+    socket.emit("globalChatMessage", { message });
+  },
+
+  sendPrivateChatMessage: (chatid, message) => {
+    if (socket.connected) {
+      socket.emit("privateChatMessage", { matchId: chatid, message: message });
+    }
+  },
+
+  // Function to receive global chat messages
+  onPrivateChatMessage: (callback) => {
+    socket.on("privateChatMessage", callback);
+  },
+
+  // Function to stop listening to global chat messages
+  offPrivateChatMessage: (callback) => {
+    socket.off("privateChatMessage", callback);
+  },
+
+  // Function to receive global chat messages
+  onGlobalChatMessage: (callback) => {
+    socket.on("globalChatMessage", callback);
+  },
+
+  // Function to stop listening to global chat messages
+  offGlobalChatMessage: (callback) => {
+    socket.off("globalChatMessage", callback);
+  },
+};
 function App() {
   const router = createBrowserRouter([
     {
@@ -51,17 +107,29 @@ function App() {
     },
     {
       path: "/lobby",
-      element: <LobbyPage  />,
-    },
-    {
-      path: "/lobby/chat/:chatid",
-      element: <ChatPage  />,
+      element: <LobbyPage />,
+      children: [
+        {
+          path: "",
+          element: (
+            <>
+              <FindMate socketManager={socketManager} socket={socket} />
+              <GlobalChat socketManager={socketManager} socket={socket} />
+            </>
+          ),
+        },
+        {
+          path: "chat",
+          element: <ChatPage socketManager={socketManager} socket={socket} />,
+        },
+      ],
     },
     {
       path: "/aboutus",
       element: <AboutPage />,
     },
   ]);
+
   return <RouterProvider router={router}></RouterProvider>;
 }
 

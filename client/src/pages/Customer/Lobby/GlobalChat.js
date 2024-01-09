@@ -12,7 +12,6 @@ const GlobalChat = ({ socketManager, socket}) => {
 
 
   useEffect(() => {
-    console.log(socket);
 
     socketManager.onGlobalChatMessage((data) => {
       const newMessage = {
