@@ -1,4 +1,4 @@
-import { DeleteOutlined} from '@ant-design/icons';
+
 function ChatSideIcon() {
     return (
         <div className=' flex bg-white mb-1' style={{borderRadius: "10px", width: "100%"}}>

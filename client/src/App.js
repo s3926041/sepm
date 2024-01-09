@@ -17,6 +17,7 @@ import ChatPage from "./pages/Customer/Lobby/ChatPage";
 import GlobalChat from "./pages/Customer/Lobby/GlobalChat";
 import FindMate from "./pages/Customer/Lobby/FindMate";
 import io from "socket.io-client";
+import EditProfile from "./pages/Customer/EditProfile";
 const socket = io(API_URL, {
   withCredentials: true,
 });
@@ -114,7 +115,18 @@ function App() {
           element: (
             <>
               <FindMate socketManager={socketManager} socket={socket} />
+              {/* <EditProfile /> */}
               <GlobalChat socketManager={socketManager} socket={socket} />
+            </>
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <>
+
+              <EditProfile />
+              {/* <GlobalChat socketManager={socketManager} socket={socket} /> */}
             </>
           ),
         },

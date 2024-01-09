@@ -1,4 +1,4 @@
-import { PaperClipOutlined, SendOutlined, SmileOutlined } from "@ant-design/icons";
+import {  SendOutlined, SmileOutlined } from "@ant-design/icons";
 
 function MessageBar({ handleSendMessage, handleMessageChange, message }) {
 

@@ -8,7 +8,7 @@ import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import DataTable from './datatable';
 import Dashboard from './dashboard';
 import { useNavigate } from 'react-router';
-const { Header, Content, Footer, Sider } = Layout;
+const {  Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
     return {
         key,

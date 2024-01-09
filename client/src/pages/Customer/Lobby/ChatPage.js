@@ -1,19 +1,16 @@
 import ChatBox from "./ChatBox";
-import ChatSideIcon from "./ChatSideIcon";
 import React, { useState, useEffect } from "react";
-import { DeleteOutlined, SettingOutlined, UsergroupAddOutlined } from "@ant-design/icons";
+import {  SettingOutlined } from "@ant-design/icons";
 
-import { Avatar, Badge, Layout, Menu, message } from "antd";
-import { Modal, Button } from "antd";
-import { useNavigate, useParams } from "react-router";
+import {  Badge, Layout } from "antd";
+import { useNavigate,  } from "react-router";
 import Authentication from "../../../components/Authentication";
 import { io } from "socket.io-client";
 import { API_URL } from "../../../GlobalVar";
 import { getAllMatches, getOtherUser, getUser } from "../../../api/user";
-import { Link } from "react-router-dom";
-import EditProfile from "../EditProfile";
+
 import { getUsers } from "../../../services/authService";
-const { Header, Content, Footer, Sider } = Layout;
+const {  Content,  Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
     key,

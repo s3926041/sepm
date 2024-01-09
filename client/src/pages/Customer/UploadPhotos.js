@@ -1,4 +1,4 @@
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+
 import React, { useState } from "react";
 import { Avatar } from "antd";
 const reader = new FileReader();

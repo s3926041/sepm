@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
-  Cascader,
+
   DatePicker,
   Form,
   Input,
   InputNumber,
   Select,
   Switch,
-  TreeSelect,
+
 } from "antd";
 const Preferences = ({
   setAge,

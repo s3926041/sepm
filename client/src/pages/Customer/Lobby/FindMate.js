@@ -1,16 +1,15 @@
-import { CloseOutlined, HeartOutlined, SearchOutlined, TeamOutlined } from "@ant-design/icons";
+import {  TeamOutlined } from "@ant-design/icons";
 import "../../../material-tailwind.css";
-import gamer from "../../../Assest/gamer1.png";
+
 import { loading } from "../../../Assest/loading";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Lottie from "lottie-react";
-import { Button, Input } from "antd";
+import { Select } from "antd";
 import { getUsers } from "../../../services/authService";
-import {  Modal, Space } from 'antd';
+import {  Modal, Form } from 'antd';
 import "./breakpoint.css"
-import ChatSideIcon from "./ChatSideIcon";
-import EditProfile from "../EditProfile";
+
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -113,21 +112,53 @@ function FindMate({ socketManager,socket }) {
         <p>{modalText}</p>
       </Modal>
 
-      <div className="w-full h-full flex flex-col items-center ">
+      <div className="w-full h-full flex flex-col items-center">
         <header className="p-2 mt-1 flex justify-between" style={{ width: "90%" }}>
           <h1 className="font-semibold text-xl font-sans ">Matches</h1>
           <TeamOutlined style={{ fontSize: '1.2rem' }} />
-          
         </header>
-        <div className="py-2 flex border-gray-300 border-b pb-3" style={{ width: "90%" }}>
+        {/* <div className="py-2 flex border-gray-300 border-b pb-3" style={{ width: "90%" }}>
           <SearchOutlined style={{ fontSize: '0.7rem' }} />
           <h3 className="font-semibold text-sm text-blue-600/75 font-sans ml-3">Find</h3>
+        </div> */}
+        <div className="relative rounded-full flex justify-center mt-2" style={{ backgroundColor: "#001329", width: "90%" }}>
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none" >
+            <svg
+              className="w-4 h-4 text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="search"
+            id="default-search"
+            className="rounded-full block w-full p-3 ps-10 text-sm text-white"
+            style={{
+              backgroundColor: "#001329",
+              width: "97%"
+            }}
+            placeholder="Search..."
+            required=""
+
+          />
+
         </div>
-        <div className="pt-2 flex" style={{ width: "90%" }}>
+
+        <div className="pt-2 mt-2 ml-3 flex" style={{ width: "90%" }}>
           <h1 className="text-gray-700 font-semibold text-sm font-sans">Look Up!</h1>
         </div>
         
-        <div className=" w-70 h-48" onClick={(e) => {
+        <div className=" w-80 h-80" onClick={(e) => {
           if(timer > 0){
             setFinding(!finding);
             handleStop();
@@ -136,8 +167,8 @@ function FindMate({ socketManager,socket }) {
             handleConnect()
           }
         }}>
-          {timer > 0 && <p className="h-1 text-center text-sm">{formatTime(timer)}</p>}
-          <Lottie animationData={loading} loop={finding} style={{width: "16rem", height: "13rem"}}/>
+          {timer > 0 && <p className="h-1 text-center text-lg">{formatTime(timer)}</p>}
+          <Lottie animationData={loading} loop={finding} />
         </div>
 
 
@@ -167,16 +198,62 @@ function FindMate({ socketManager,socket }) {
         </div> */}
 
         
-        <header className="py-2" style={{width:"90%"}}>
-          <h1 className=" text-gray-700 text-sm font-semibold">All Matches</h1>
+        <header className="py-2 mt-1" style={{width:"90%"}}>
+          <h1 className=" text-gray-700 text-sm font-semibold">Preferences</h1>
         </header>
         <div className="w-full overflow-scroll flex flex-col items-center " style={{height: "50vh"}}>
           
-          <ChatSideIcon />
-          <ChatSideIcon />
-          <ChatSideIcon />
-          <ChatSideIcon />
-          <ChatSideIcon />
+
+          <Form
+            labelCol={{
+              span: 4,
+            }}
+            wrapperCol={{
+              span: 18,
+            }}
+            layout="horizontal"
+            initialValues={{
+              size: "small",
+            }}
+            bordered
+            style={{
+              width: "90%",
+              margin: "1rem auto",
+              textAlign: "!important left",
+            }}
+          >
+
+
+            <Form.Item label="Find">
+              <Select  >
+                <Select.Option value="male">Male</Select.Option>
+                <Select.Option value="female">Female</Select.Option>
+                <Select.Option value="none">None</Select.Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item label="Level">
+              <Select value={"Master"} >
+                <Select.Option value="beginer">Beginner</Select.Option>
+                <Select.Option value="expert">Expert</Select.Option>
+                <Select.Option value="master">Master</Select.Option>
+              </Select>
+            </Form.Item>
+
+
+
+            <button
+              type="submit"
+              className=" mt-2 flex mx-auto justify-center rounded-full bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              style={{ width: "50%" }}
+              onClick={async () => {
+               
+
+              }}
+            >
+              Change
+            </button>
+          </Form>
 
         </div>
         

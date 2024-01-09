@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import { Input, List, Avatar, Button } from "antd";
-// import ChatBox from "./ChatBox";
+
 import {  SendOutlined, SmileOutlined, WechatOutlined } from "@ant-design/icons";
 import { useRef } from 'react';
 import { getUsers } from "../../../services/authService";
 import "./breakpoint.css"
+import { Badge } from "antd";
 const GlobalChat = ({ socketManager, socket}) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
@@ -69,17 +69,17 @@ const GlobalChat = ({ socketManager, socket}) => {
       /> */}
 
         {/* Main Chat Area */}
-      <div className="h-full  " >
-        <header className="bg-white py-3 px-4 flex  border-gray-200  border-l">
+      <div className="h-full  "  >
+        <header className="bg-white py-3 px-4 flex rounded-xl mb-3  border-gray-200  border-l">
           <WechatOutlined style={{ fontSize: '1.5rem' }} />
           <div className="ml-3 flex flex-col">
             <h1 className="text-xl font-semibold">Global Chat</h1>
-            <h5 className="text-gray-500 text-sm">Online</h5>
+            <h5 className="text-gray-500 text-sm">Online <Badge status="success" /></h5> 
           </div>
             
           </header>
         
-        <div className="overflow-scroll p-4 pb-36 bg-white h-full" style={{ height: "82vh", backgroundColor: "#edf3fb" }} >
+        <div className="overflow-scroll p-4 pb-36 bg-white h-full" style={{ height: "82vh", backgroundColor: "#edf3fb", borderTopRightRadius: "20px", borderTopLeftRadius: "20px" }}  >
             {
               messages.map((msg,i) => {
                 if (msg.user === socket?.id) {
@@ -147,7 +147,7 @@ const GlobalChat = ({ socketManager, socket}) => {
           </button>
         </div> */}
 
-        <div className="flex flex-row items-center h-16 mt-2 bg-white w-full px-4 border-gray-200  border-l">
+        <div className="flex flex-row items-center h-16 mt-2 bg-white w-full px-4 border-gray-200  border-l rounded-xl" >
           
           <div className="flex-grow ml-1">
             <div className="relative w-full">

@@ -13,27 +13,20 @@
   ```
 */
 import React, { useEffect, useState } from "react";
-import { message } from "antd";
+import { List, message } from "antd";
 import {
-  Button,
-  Cascader,
-  DatePicker,
   Form,
-  Input,
-  InputNumber,
-  Radio,
   Select,
-  Switch,
-  TreeSelect,
+
 } from "antd";
 import { Avatar, Descriptions } from "antd";
-import Sliderr from "./Sliderr";
+
 import { useNavigate } from "react-router";
-// import { getUsers } from "../../services/authService";
+
 import { getUser } from "../../api/user";
 import { updateProfile } from "../../api/user";
-import { CloudUploadOutlined } from "@ant-design/icons";
-
+import { CloudUploadOutlined, MailOutlined, MobileOutlined, SmileOutlined, TeamOutlined } from "@ant-design/icons";
+import "../Customer/Lobby/breakpoint.css"
 const { Option } = Select;
 
 export default function EditProfile() {
@@ -122,25 +115,67 @@ export default function EditProfile() {
     
   }
 
+  const data = [
+    {
+      title: 'User Name:',
+      icon: <SmileOutlined />,
+      value: user.name,
+    },
+    {
+      title: 'Phone:',
+      icon: <MobileOutlined />,
+      value: user.phone,
+    },
+    {
+      title: 'Gender:',
+      icon: <TeamOutlined />,
+      value: user.gender,
+    },
+    {
+      title: 'Email:',
+      icon: <MailOutlined />,
+      value: user.email,
+    },
+  ];
+
   return (
-    <div className="mt-7" >
+    <div className="rounded-xl bg-white findm flex flex-col items-center" >
+      {/* <h1 className="text-center font-bold text-2xl mt-3"> User's Profile</h1> */}
       <div className="flex flex-col mx-auto mb-3 items-center" style={{ width: "50%" }}>
-        <Avatar className="mt-5 mx-auto border-gray-300" size={145} src={src} />
+        <Avatar className="mt-9 mx-auto border-gray-300" size={155} src={src} />
         <button
           type="button"
           className="rounded-md mx-auto mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           onClick={() => importData()}
-          style={{ width: "90%" }}
+          style={{ width: "50%" }}
         >
           <CloudUploadOutlined /> Upload...
         </button>
       </div>
 
-
-      <Descriptions bordered layout={"vertical"} size={"small"} column={1} title="User Info" items={item} className="m-3 py-2 text-center border-gray-400 border rounded-l"/>
+      <div className="mt-2" style={{width: "50%"}}>
+        <h3 className="text-lg font-semibold ">Bio:</h3>
+        <p className=" mt-2 text-justify overflow-scroll" style={{ height: "40vh" }}>
+          <List
+          
+            itemLayout="horizontal"
+            dataSource={data}
+            renderItem={(item, index) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
+                  title={item.title}
+                  description={item.value}
+                />
+              </List.Item>
+            )}
+          />
+        </p>
+      </div>
+      {/* <Descriptions bordered layout={"vertical"} size={"small"} column={1} title="User Info" items={item} className="m-3 py-2 text-center border-gray-400 border rounded-l"/> */}
 <button
         type="submit"
-        className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        className=" mt-10 flex mx-auto justify-center rounded-full bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         style={{ width: "50%" }}
         onClick={async () => {
           await updateProfile(avatar);
@@ -151,59 +186,6 @@ export default function EditProfile() {
         Modify
       </button> 
 
-<Form
-        labelCol={{
-          span: 6,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout="horizontal"
-        initialValues={{
-          size: "small",
-        }}
-        bordered
-        style={{
-          maxWidth: "80%",
-          margin: "2rem auto",
-          textAlign: "!important left",
-        }}
-      >
-        <header className="bg-white mb-5 text-gray-700 w-full text-start border-gray-300 border-b" >
-          <h1 className="text-xl font-semibold">Preferences</h1>
-        </header>
-
-        <Form.Item label="Find">
-          <Select value={user.gender} onChange={(data) => setGender(data)}>
-            <Select.Option value="male">Male</Select.Option>
-            <Select.Option value="female">Female</Select.Option>
-            <Select.Option value="none">None</Select.Option>
-          </Select>
-        </Form.Item>
-
-        <Form.Item label="Level">
-          <Select value={"Master"} onChange={(data) => setGender(data)}>
-            <Select.Option value="beginer">Beginner</Select.Option>
-            <Select.Option value="expert">Expert</Select.Option>
-            <Select.Option value="master">Master</Select.Option>
-          </Select>
-        </Form.Item>
-
-
-
-        <button
-          type="submit"
-          className=" mt-2 flex mx-auto justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          style={{ width: "50%" }}
-          onClick={async () => {
-            // await updateProfile(avatar);
-            message.success("Processing complete!");
-
-          }}
-        >
-          Change
-        </button>
-      </Form>
 
 
     </div>

@@ -1,31 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import {
   AuditOutlined,
-  DeleteOutlined,
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
+
+  HomeOutlined,
+
   PoweroffOutlined,
-  ScissorOutlined,
-  SearchOutlined,
-  SettingOutlined,
-  SmileOutlined,
-  TeamOutlined,
+
   UserOutlined,
+
+  WhatsAppOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu, theme } from "antd";
-import Footer from "../../../components/footer";
-import ChatBox from "./ChatBox";
-import FindMate from "./FindMate";
-import ChatSideBar from "./ChatSideIcon";
-import ChatBoxHeader from "../../../components/ChatBoxHeader";
-import ChatSideIcon from "./ChatSideIcon";
-import GlobalChat from "./GlobalChat";
-import EditProfile from "../EditProfile";
+import {  Layout, Menu, theme } from "antd";
+
 import Authentication from "../../../components/Authentication";
 import {
-  checkTokenExpiration,
   getUsers,
   isLoggedIn,
 } from "../../../services/authService";
@@ -41,8 +30,8 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem("Find", "0", <SearchOutlined />),
-  getItem("Preferences", "1", <SettingOutlined />),
+  getItem("Home", "0", <HomeOutlined />),
+  getItem("Chat", "1", <WhatsAppOutlined />),
   getItem("Profile", "2", <AuditOutlined />),
   getItem("User", "sub1", <UserOutlined />, [
     getItem("Log Out", "3", <PoweroffOutlined />),

@@ -18,20 +18,21 @@
 @media (max-width: 2000px) and (min-width: 1002px) {
 
   .breakk{
-    height: 100vh !important;
+    height: 105vh !important;
   }
 
   .breakkk{
-    width: 450%;
+    width: 100%;
     height: 90vh;
-    /* border-radius: 20px; */
-
+    border-radius: 20px;
+    margin: 0.5rem;
     /* margin: auto; */
   }
 
   .findm{
-    width: 50%;
+    width: 220%;
     height: 100vh;
-    /* border-radius: 20px; */
+    margin: 0.5rem 1rem;
+    border-radius: 20px;
   }
 }
