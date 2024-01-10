@@ -3,7 +3,7 @@
     flex-direction: column;
   }
   .breakk{
-    height: 150vh !important;
+    /* height: 150vh !important; */
   }
   .breakkk{
     width: 100%;
@@ -12,27 +12,21 @@
   }
 
   .findm{
-    height: 80vh;
+   
   }
 }
 @media (max-width: 2000px) and (min-width: 1002px) {
 
   .breakk{
-    height: 105vh !important;
+    /* height: 105vh !important; */
   }
 
   .breakkk{
     width: 100%;
-    height: 90vh;
+    /* height: 90vh; */
     border-radius: 20px;
-    margin: 0.5rem;
     /* margin: auto; */
   }
 
-  .findm{
-    width: 220%;
-    height: 100vh;
-    margin: 0.5rem 1rem;
-    border-radius: 20px;
-  }
+
 }

@@ -61,10 +61,16 @@ const initSocketServer = (server) => {
             io.to(user1.socket.id).emit("matchFound", { matchId: match._id });
             io.to(user2.socket.id).emit("matchFound", { matchId: match._id });
 
-            // Join private chat room
             io.in(match._id).socketsJoin(match._id);
           }
         });
+      }
+    });
+    socket.on("disconnectFromQueue", () => {
+      console.log("disconnectFromQueue")
+      const index = queueMatch.findIndex((entry) => entry.socket === socket);
+      if (index !== -1) {
+        queueMatch.splice(index, 1);
       }
     });
 

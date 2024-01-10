@@ -18,6 +18,7 @@ import GlobalChat from "./pages/Customer/Lobby/GlobalChat";
 import FindMate from "./pages/Customer/Lobby/FindMate";
 import io from "socket.io-client";
 import EditProfile from "./pages/Customer/EditProfile";
+import Test from "./pages/Test";
 const socket = io(API_URL, {
   withCredentials: true,
 });
@@ -28,6 +29,9 @@ const socketManager = {
       socket.connect();
     }
     socket.emit("connectToQueue", userid);
+  },
+  disconnectFromQueue: (userid) => {
+    socket.emit("disconnectFromQueue", userid);
   },
 
   disconnect: () => {
@@ -115,7 +119,7 @@ function App() {
           element: (
             <>
               <FindMate socketManager={socketManager} socket={socket} />
-              {/* <EditProfile /> */}
+
               <GlobalChat socketManager={socketManager} socket={socket} />
             </>
           ),
@@ -124,7 +128,6 @@ function App() {
           path: "profile",
           element: (
             <>
-
               <EditProfile />
               {/* <GlobalChat socketManager={socketManager} socket={socket} /> */}
             </>
@@ -139,6 +142,10 @@ function App() {
     {
       path: "/aboutus",
       element: <AboutPage />,
+    },
+    {
+      path: "/test",
+      element: <Test />,
     },
   ]);
 

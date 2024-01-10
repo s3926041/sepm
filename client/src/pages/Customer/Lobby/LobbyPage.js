@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   AuditOutlined,
-
   HomeOutlined,
-
   PoweroffOutlined,
-
   UserOutlined,
-
   WhatsAppOutlined,
 } from "@ant-design/icons";
-import {  Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 
 import Authentication from "../../../components/Authentication";
-import {
-  getUsers,
-  isLoggedIn,
-} from "../../../services/authService";
+import { getUsers, isLoggedIn } from "../../../services/authService";
 import { API_URL } from "../../../GlobalVar";
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -30,16 +23,12 @@ function getItem(label, key, icon, children) {
 }
 
 const items = [
-  getItem("Home", "0", <HomeOutlined />),
-  getItem("Chat", "1", <WhatsAppOutlined />),
-  getItem("Profile", "2", <AuditOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
+  getItem("Home", "/lobby", <HomeOutlined />),
+  getItem("Chat", "/lobby/chat", <WhatsAppOutlined />),
+  getItem("Profile", "/lobby/profile", <AuditOutlined />),
+  getItem("User", "user", <UserOutlined />, [
     getItem("Log Out", "3", <PoweroffOutlined />),
-    // getItem('Bill', '4'),
-    // getItem('Alex', '5'),
   ]),
-  // getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-  // getItem('Files', '9', <FileOutlined />),
 ];
 
 const App = () => {
@@ -52,27 +41,7 @@ const App = () => {
       setUser(user.user);
     }
   }, []);
-
-  //   {
-  //     name: "Hoang",
-  //     status: "new",
-  //     talk: [],
-  //   },
-  //   {
-  //     name: "Hung",
-  //     status: "talked",
-  //     talk: [
-  //       {
-  //         from: "Hung",
-  //         message: "Hi",
-  //       },
-  //       {
-  //         from: "Me",
-  //         message: "Hi, Hung",
-  //       },
-  //     ],
-  //   },
-  // ]);
+  const navigate = useNavigate();
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -83,44 +52,37 @@ const App = () => {
   return (
     <>
       <Authentication />
-      <Layout className="rounded-2xl" 
+      <div
+        className="h-full w-full p-5"
+        style={{
+          background: "#002047",
+        }}
       >
-        <Sider
-          collapsible
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-          theme="dark"
-          style={{
-            backgroundColor: "#edf3fb",
-          }}
-          className="rounded-2xl"
-        >
-          {/* <div className="demo-logo-vertical" 
-            /> */}
-          <Menu
-            theme="light"
-            defaultSelectedKeys={["0"]}
-            mode="inline"
-            items={items}
-            style={{ backgroundColor: "#edf3fb" }}
-          />
-        </Sider>
+        <div className="flex h-full w-full">
+          <div
+            style={{
+              backgroundColor: "#001329",
+              borderRadius: "20px 20px"
+            }}
+            className="h-full w-48"
+          >
+            <Menu
+              theme="light"
+              defaultSelectedKeys={["0"]}
+              mode="inline"
+              items={items}
+              style={{ backgroundColor: "#001329", marginTop: "20px",color:"white" }}
+              onClick={(e) => {
+                navigate(e.key);
+              }}
+            />
+          </div>
 
-        <Layout>
-          {/* <ChatBoxHeader /> */}
-          <Content className="breakk" 
-          style={{
-            backgroundColor: "#002047",
-          }}>
-            <div className="flex break" 
-            
-            >
-
-              <Outlet></Outlet>
-            </div>
-          </Content>
-        </Layout>
-      </Layout>
+          <div className="w-full flex break">
+            <Outlet></Outlet>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
