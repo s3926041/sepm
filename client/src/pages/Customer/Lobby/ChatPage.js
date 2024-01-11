@@ -91,12 +91,13 @@ const ChatPage = ({ socketManager, socket }) => {
     <>
       <Authentication />
 
-      <div className="w-full rounded-[20px]  ml-10 flex ">
-        <Sider
-          width={"18rem"}
-          className="rounded-2xl "
+      <div className="w-full h-full rounded-[20px]  ml-10 flex ">
+        <div
+          
+          className="rounded-2xl h-full"
           style={{
             backgroundColor: "#002047",
+            width: "18rem"
           }}
         >
           <div className="demo-logo-vertical" />
@@ -144,13 +145,13 @@ const ChatPage = ({ socketManager, socket }) => {
           </div>
 
           <div
-            className=" overflow-y-scroll rounded-2xl flex flex-col items-center ml-1"
-            style={{ height: "75vh", backgroundColor: "#001329" }}
+            className="overflow-y-auto rounded-2xl flex flex-col items-center"
+            style={{ height: "83%", backgroundColor: "#001329" }}
           >
             {matches.map((match) => (
               <div
                 key={match._id}
-                style={{ height: "6.5rem" }}
+                style={{ height: "6.5rem", width: "90%" }}
                 className=""
                 onClick={() => {
                   setCurrentChat(match._id);
@@ -194,7 +195,7 @@ const ChatPage = ({ socketManager, socket }) => {
             ))}
           </div>
           {/* </Menu> */}
-        </Sider>
+        </div>
 
         {currentChat && (
           <>

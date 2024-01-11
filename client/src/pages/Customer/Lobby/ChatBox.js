@@ -4,6 +4,7 @@ import MessageBar from "./MessageBar";
 import React, { useRef, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getMatch, getOtherUser, getUser } from "../../../api/user";
+import { Avatar } from "antd";
 
 // ... (other imports)
 
@@ -13,7 +14,7 @@ function ChatBox({ socket, chatid }) {
   const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
   const [otherUser, setOtherUser] = useState({});
-
+  const [src, setSrc] = useState(null);
   const [match, setMatch] = useState({});
 
   const handleMessageChange = (e) => {
@@ -51,6 +52,8 @@ function ChatBox({ socket, chatid }) {
     );
     setUserName(userData?.name);
     setOtherUser(otherParticipant);
+   
+    console.log(otherParticipant);
   };
 
   useEffect(() => {
@@ -60,6 +63,39 @@ function ChatBox({ socket, chatid }) {
   useEffect(() => {
     setMessages(match?.conversation);
   }, [match]);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (otherUser != null) {
+          const uint8Array = new Uint8Array(otherUser?.avatarImg.data.data);
+          // const base64String = btoa(String.fromCharCode.apply(null, uint8Array));
+          const dataUrl = `data:${otherUser.avatarImg.contentType};base64,${uint8ArrayToBase64(uint8Array)}`;
+          setSrc(dataUrl);
+          console.log(otherUser);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [otherUser]); 
+
+  // Function to convert Uint8Array to base64 in chunks
+  function uint8ArrayToBase64(uint8Array) {
+    const CHUNK_SIZE = 0x8000;
+    const length = uint8Array.length;
+    let base64String = '';
+
+    for (let i = 0; i < length; i += CHUNK_SIZE) {
+      const chunk = uint8Array.subarray(i, i + CHUNK_SIZE);
+      base64String += String.fromCharCode.apply(null, chunk);
+    }
+
+    return btoa(base64String);
+  }
 
   // useEffect(() => {
   //   if (!socket?.connected) {
@@ -82,9 +118,9 @@ function ChatBox({ socket, chatid }) {
   //   console.log(userId);
   return (
     <>
-      <div className="w-full mx-10">
+      <div className="w-3/6 h-full mx-10">
         {/* component */}
-        <div className="flex">
+        <div className="flex h-full">
           {/* Main Chat Area */}
           <div className="h-full flex-1">
             {/* Chat Header */}
@@ -111,9 +147,10 @@ function ChatBox({ socket, chatid }) {
 
             {/* Chat Messages */}
             <div
-              className="overflow-y-scroll p-4 pb-36 bg-white relative rounded-2xl"
-              style={{ height: "auto", backgroundColor: "#001329" }}
+              className="  relative rounded-2xl"
+              style={{ height: "88%", backgroundColor: "#001329" }}
             >
+              <div className="absolute top-0 p-4 w-full overflow-y-auto"  style={{height: "90%"}}>
               {messages?.map((msg) => {
                 if (msg?.sender !== userId) {
                   return (
@@ -124,25 +161,31 @@ function ChatBox({ socket, chatid }) {
                 }
               })}
               <div ref={div}></div>
+            </div>
+            
+            <div className="absolute bottom-0 w-full pt-4 pb-2 px-4 flex justify-center">
               <MessageBar
                 handleSendMessage={handleSendMessage}
                 handleMessageChange={handleMessageChange}
                 message={message}
               />
             </div>
+
+            </div>
           </div>
         </div>
       </div>
-      <div className="w-3/5 " style={{ height: "100%" }}>
+      <div className="w-2/6 " style={{ height: "100%" }}>
         <div
           className="max-w-lg bg-white rounded-2xl shadow-md p-5"
-          style={{ height: "103.5%", backgroundColor: "#001329" }}
+          style={{ height: "100%", backgroundColor: "#001329" }}
         >
           <img
-            className="w-32 h-32 rounded-full mt-4 mx-auto"
-            src={"https://picsum.photos/200"}
+            className="w-40 h-40 rounded-full mt-4 mx-auto object-cover"
+            src={src}
             alt="Profile picture"
           />
+          {/* <Avatar className="w-32 h-32 rounded-full mt-4 mx-auto"  src={src} /> */}
 
           <h2 className="text-center text-xl font-semibold mt-3 text-white">
             {otherUser?.name}
@@ -154,7 +197,7 @@ function ChatBox({ socket, chatid }) {
           <div className="mt-14">
             <h3 className="text-lg font-semibold text-white">Bio</h3>
             <p className="text-white/75 mt-2 text-justify">
-              John is a software engineer with over 10 years of experience in
+              {otherUser?.name} is a software engineer with over 10 years of experience in
               developing web and mobile applications. He is skilled in
               JavaScript, React, and Node.js.
             </p>

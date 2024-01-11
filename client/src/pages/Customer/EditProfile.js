@@ -93,7 +93,7 @@ export default function EditProfile() {
     let input = document.createElement("input");
     input.type = "file";
 
-    input.onchange = (_) => {
+    input.onchange = () => {
       let files = Array.from(input.files);
       let file = files[0];
       if (file.size > 1024 * 1024) {
@@ -139,7 +139,7 @@ export default function EditProfile() {
   ];
 
   return (
-    <div className="rounded-xl bg-white findm flex flex-col items-center" >
+    <div className="rounded-xl  findm flex flex-col items-center w-full h-full m-1 text-white" style={{ backgroundColor: "#001329" }}>
       {/* <h1 className="text-center font-bold text-2xl mt-3"> User's Profile</h1> */}
       <div className="flex flex-col mx-auto mb-3 items-center" style={{ width: "50%" }}>
         <Avatar className="mt-9 mx-auto border-gray-300" size={155} src={src} />
@@ -155,14 +155,15 @@ export default function EditProfile() {
 
       <div className="mt-2" style={{width: "50%"}}>
         <h3 className="text-lg font-semibold ">Bio:</h3>
-        <p className=" mt-2 text-justify overflow-scroll" style={{ height: "40vh" }}>
+        <p className=" mt-2 text-justify overflow-scroll text-white" style={{ height: "40vh" }}>
           <List
-          
+            
             itemLayout="horizontal"
             dataSource={data}
             renderItem={(item, index) => (
-              <List.Item>
+              <List.Item className="text-white">
                 <List.Item.Meta
+                  className="text-white"
                   avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
                   title={item.title}
                   description={item.value}

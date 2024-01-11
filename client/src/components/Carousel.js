@@ -9,7 +9,7 @@ import gamer3 from "../Assest/4.png";
 const contentStyle = {
     margin: 0,
     width:"100%",
-    height: '560px',
+    height: '100%',
     color: '#fff',
     lineHeight: '560px',
     textAlign: 'center',
@@ -28,18 +28,14 @@ background: "#ffff",
    
 }
 
-const style = {
-    '@media (max-width: 100px)': {
-        display: 'none',
-    },
-}
+
 const CarouselBar = ({user}) => {
     // const onChange = (currentSlide) => {
     //     console.log(currentSlide);
     // };
     return (
-        <div style={{width: "100%", height:"560px"}}>
-        <Carousel  autoplay>
+        <div style={{width: "100%", height:"100%"}}>
+        <Carousel autoplay style={{ width: "100%", height: "100%" }}>
             <div>
                 <img alt="gamer1" src={gamer} style={contentStyle} />
             </div>

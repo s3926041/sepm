@@ -9,13 +9,13 @@ import CheckLogin from "../../../components/CheckLogin";
 function HomePage() {
     const [user, setUser] = useState(false);
     return (
-        <>
+        <div style={{height: "100%"}}>
             <CheckLogin />
-            <Header user={user}/>
+            {/* <Header user={user}/> */}
             <Banner />
             <CarouselBar user={user} />
-            <Footer />
-        </>
+            {/* <Footer /> */}
+        </div>
     );
 }
 

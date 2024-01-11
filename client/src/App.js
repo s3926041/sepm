@@ -18,7 +18,8 @@ import GlobalChat from "./pages/Customer/Lobby/GlobalChat";
 import FindMate from "./pages/Customer/Lobby/FindMate";
 import io from "socket.io-client";
 import EditProfile from "./pages/Customer/EditProfile";
-import Test from "./pages/Test";
+import EditProfile2 from "./pages/Customer/EditProfile2";
+// import Test from "./pages/Test";
 const socket = io(API_URL, {
   withCredentials: true,
 });
@@ -134,7 +135,7 @@ function App() {
           path: "profile",
           element: (
             <>
-              <EditProfile />
+              <EditProfile2 />
               {/* <GlobalChat socketManager={socketManager} socket={socket} /> */}
             </>
           ),
@@ -149,10 +150,10 @@ function App() {
       path: "/aboutus",
       element: <AboutPage />,
     },
-    {
-      path: "/test",
-      element: <Test />,
-    },
+    // {
+    //   path: "/test",
+    //   element: <Test />,
+    // },
   ]);
 
   return <RouterProvider router={router}></RouterProvider>;

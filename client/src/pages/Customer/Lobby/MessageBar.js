@@ -4,7 +4,7 @@ function MessageBar({ handleSendMessage, handleMessageChange, message }) {
 
 
     return (
-    <div className="absolute bottom-0" style={{width: "95%", backgroundColor: "#001329"}}>
+    <div className="" style={{width: "95%", }}>
         {/* <div className="flex items-center py-2 px-3 bg-white rounded-lg dark:bg-gray-700" >
            
             <textarea
@@ -35,7 +35,7 @@ function MessageBar({ handleSendMessage, handleMessageChange, message }) {
                             placeholder="Write a message..."
                             value={message}
                             onChange={handleMessageChange}
-                            className="flex w-full border focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                            className="flex w-full border focus:outline-none focus:border-indigo-300 pl-4 h-10 text-white"
                             style={{ backgroundColor: "transparent" }}
                         />
                         <button className="absolute flex items-center justify-center h-full w-12 right-10 top-0 text-gray-400 hover:text-gray-600">

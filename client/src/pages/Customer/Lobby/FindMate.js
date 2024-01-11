@@ -189,7 +189,7 @@ function FindMate({ socketManager, socket }) {
           }}
         >
           {timer > 0 && (
-            <p className="h-1 text-center text-lg">{formatTime(timer)}</p>
+            <p className="h-1 text-center text-lg text-white">{formatTime(timer)}</p>
           )}
           <Lottie animationData={loading} loop={finding} />
         </div>

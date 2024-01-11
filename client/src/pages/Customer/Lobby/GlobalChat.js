@@ -66,12 +66,14 @@ const GlobalChat = ({ socketManager, socket }) => {
         </header>
 
         <div
-          className="relative p-4  h-full my-5 overflow-y-auto "
+          className="relative  my-5 h-full"
           style={{
             backgroundColor: "#001329",
             borderRadius: "20px 20px",
+            height: "!imprtant 100%",
           }}
         >
+          <div className="absolute top-0 p-4 w-full overflow-y-auto" style={{ height: "90%", }}>
           {messages.map((msg, i) => {
             if (msg.user === socket?.id) {
               return (
@@ -129,13 +131,17 @@ const GlobalChat = ({ socketManager, socket }) => {
               );
             }
           })}
-          <div>
-            <div
+            <div ref={div}></div>
+          </div>
+          
+          
+          <div
               style={{
                 backgroundColor: "#001329",
                 borderRadius: "20px 20px",
+                height: "10%",
               }}
-              className="absolute bottom-0 flex flex-row items-center h-16 mt-2  w-full px-4   border-l rounded-xl"
+              className="absolute bottom-0 flex flex-row items-center h-16 mt-2  w-full px-4  rounded-xl"
             >
               <div className="flex-grow ml-1">
                 <div className="relative w-full">
@@ -165,8 +171,7 @@ const GlobalChat = ({ socketManager, socket }) => {
                 </button>
               </div>
             </div>
-          </div>
-          <div ref={div}></div>
+          
         </div>
       </div>
     </div>

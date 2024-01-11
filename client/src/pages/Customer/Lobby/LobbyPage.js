@@ -10,7 +10,7 @@ import {
 import { Layout, Menu, theme } from "antd";
 
 import Authentication from "../../../components/Authentication";
-import { getUsers, isLoggedIn } from "../../../services/authService";
+import { getUsers, isLoggedIn, logout } from "../../../services/authService";
 import { API_URL } from "../../../GlobalVar";
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -27,7 +27,7 @@ const items = [
   getItem("Chat", "/lobby/chat", <WhatsAppOutlined />),
   getItem("Profile", "/lobby/profile", <AuditOutlined />),
   getItem("User", "user", <UserOutlined />, [
-    getItem("Log Out", "3", <PoweroffOutlined />),
+    getItem("Log Out", "/", <PoweroffOutlined />),
   ]),
 ];
 
@@ -74,11 +74,14 @@ const App = () => {
               style={{ backgroundColor: "#001329", marginTop: "20px",color:"white" }}
               onClick={(e) => {
                 navigate(e.key);
+                if(e.key === "/"){
+                  logout();
+                }
               }}
             />
           </div>
 
-          <div className="w-full flex break">
+          <div className="w-full h-full flex break">
             <Outlet></Outlet>
           </div>
         </div>
