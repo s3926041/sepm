@@ -57,7 +57,6 @@ function EditProfile2() {
                 return;
             }
             const imagePath = URL.createObjectURL(file);
-
             setSrc(imagePath);
             const uploadPhoto = new FormData();
             uploadPhoto.append("image", file);
@@ -65,6 +64,7 @@ function EditProfile2() {
             message.success("Avatar changed!");
         };
         input.click();
+     
 
     }
     
@@ -82,7 +82,7 @@ function EditProfile2() {
 
     return (
         <div className="w-full h-full ml-5 rounded-3xl" style={{ backgroundColor: "#001329", }}>
-    <div className="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0" >
+    <div className="max-w-4xl flex items-center h-auto flex-wrap mx-auto my-16 lg:my-0" >
         {/*Main Col*/}
         <div
             id="profile"
