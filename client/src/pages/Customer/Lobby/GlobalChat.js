@@ -8,6 +8,34 @@ import { Badge } from "antd";
 const GlobalChat = ({ socketManager, socket }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [on, setOn] = useState(false);
+
+  const [icons, setIcons] = useState([
+    "😅",
+    "😁",
+    "😂",
+    "😍",
+    "😔",
+    "😡",
+    "😤",
+    "😨",
+    "😭",
+    "😬",
+    "😫",
+    "😱",
+    "😴",
+    "😷",
+    "😵",
+    "🙁",
+    "🤔",
+    "🤢",
+    "🤣",
+    "🤤",
+    "🤨",
+
+  ]);
+
+  
 
   useEffect(() => {
     socketManager.onGlobalChatMessage((data) => {
@@ -134,14 +162,40 @@ const GlobalChat = ({ socketManager, socket }) => {
             <div ref={div}></div>
           </div>
           
-          
+          {
+            on &&
+          <div style={{
+            height: "10%",
+            
+          }}
+            className="absolute bottom-20  flex flex-row items-center  w-full px-10  rounded-xl"
+            
+            >
+            
+            <div style={{
+              backgroundColor: "#333333",
+              borderRadius: "20px 20px",
+              height: "100%",
+              fontSize: "2rem"
+            }}
+              className="flex flex-row items-center overflow-x-auto justify-center w-full  rounded-xl">
+                  {icons.map(ic => {
+                  return(
+                    <div className="mx-3" onClick={() => {setMessage(message + " " + ic)}}>{ic}</div>
+                  );
+                  })}
+            </div>
+          </div>
+          }
+
+
           <div
               style={{
                 backgroundColor: "#001329",
                 borderRadius: "20px 20px",
                 height: "10%",
               }}
-              className="absolute bottom-0 flex flex-row items-center h-16 mt-2  w-full px-4  rounded-xl"
+            className="absolute bottom-0 flex flex-row items-center h-16 mt-2  w-full px-4  rounded-xl"
             >
               <div className="flex-grow ml-1">
                 <div className="relative w-full">
@@ -154,7 +208,12 @@ const GlobalChat = ({ socketManager, socket }) => {
                     className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
                     style={{ backgroundColor: "#edf3fb" }}
                   />
-                  <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600">
+                  <button className="absolute flex items-center justify-center h-full w-12 right-0 top-0 text-gray-400 hover:text-gray-600"
+                    onClick={() => 
+                    {
+                      setOn(!on);
+                    }}
+                  >
                     <SmileOutlined />
                   </button>
                 </div>

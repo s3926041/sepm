@@ -27,6 +27,8 @@ const ChatPage = ({ socketManager, socket }) => {
   const [items, setItems] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
 
+  
+
   useEffect(() => {
     userId && socketManager.addUser(userId);
     return () => {

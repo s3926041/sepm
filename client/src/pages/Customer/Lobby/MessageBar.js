@@ -1,6 +1,6 @@
 import {  SendOutlined, SmileOutlined } from "@ant-design/icons";
 
-function MessageBar({ handleSendMessage, handleMessageChange, message }) {
+function MessageBar({ handleSendMessage, handleMessageChange, message, setOn, on }) {
 
 
     return (
@@ -38,7 +38,11 @@ function MessageBar({ handleSendMessage, handleMessageChange, message }) {
                             className="flex w-full border focus:outline-none focus:border-indigo-300 pl-4 h-10 text-white"
                             style={{ backgroundColor: "transparent" }}
                         />
-                        <button className="absolute flex items-center justify-center h-full w-12 right-10 top-0 text-gray-400 hover:text-gray-600">
+                        <button className="absolute flex items-center justify-center h-full w-12 right-10 top-0 text-gray-400 hover:text-gray-600"
+                            onClick={() => {
+                                setOn(!on);
+                            }}
+                        >
                             <SmileOutlined />
                         </button>
 

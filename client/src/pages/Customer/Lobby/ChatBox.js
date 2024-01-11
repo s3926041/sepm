@@ -16,6 +16,33 @@ function ChatBox({ socket, chatid }) {
   const [otherUser, setOtherUser] = useState({});
   const [src, setSrc] = useState(null);
   const [match, setMatch] = useState({});
+  const [on, setOn] = useState(false);
+
+  const [icons, setIcons] = useState([
+    "😅",
+    "😁",
+    "😂",
+    "😍",
+    "😔",
+    "😡",
+    "😤",
+    "😨",
+    "😭",
+    "😬",
+    "😫",
+    "😱",
+    "😴",
+    "😷",
+    "😵",
+    "🙁",
+    "🤔",
+    "🤢",
+    "🤣",
+    "🤤",
+    "🤨",
+
+  ]);
+
 
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
@@ -162,12 +189,40 @@ function ChatBox({ socket, chatid }) {
               })}
               <div ref={div}></div>
             </div>
+
+              {
+                on &&
+                <div style={{
+                  height: "10%",
+
+                }}
+                  className="absolute bottom-20  flex flex-row items-center  w-full px-10  rounded-xl"
+
+                >
+
+                  <div style={{
+                    backgroundColor: "#333333",
+                    borderRadius: "20px 20px",
+                    height: "100%",
+                    fontSize: "2rem"
+                  }}
+                    className="flex flex-row items-center overflow-x-auto justify-center w-full  rounded-xl">
+                    {icons.map(ic => {
+                      return (
+                        <div className="mx-3" onClick={() => { setMessage(message + " " + ic) }}>{ic}</div>
+                      );
+                    })}
+                  </div>
+                </div>
+              }
             
             <div className="absolute bottom-0 w-full pt-4 pb-2 px-4 flex justify-center">
               <MessageBar
                 handleSendMessage={handleSendMessage}
                 handleMessageChange={handleMessageChange}
                 message={message}
+                setOn={setOn}
+                on={on}
               />
             </div>
 
