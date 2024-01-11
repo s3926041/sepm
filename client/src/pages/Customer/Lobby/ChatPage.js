@@ -9,7 +9,6 @@ import { io } from "socket.io-client";
 import { API_URL } from "../../../GlobalVar";
 import { getAllMatches, getOtherUser, getUser } from "../../../api/user";
 
-import { getUsers } from "../../../services/authService";
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -20,34 +19,32 @@ function getItem(label, key, icon, children) {
   };
 }
 
-const socket = io(API_URL, {
-  withCredentials: true,
-});
-
-const ChatPage = () => {
+const ChatPage = ({ socketManager, socket }) => {
   const [userId, setUserId] = useState([]);
   const [matches, setMatches] = useState([]);
-  const [collapsed, setCollapsed] = useState(false);
+
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
 
   useEffect(() => {
-    if (!socket.connected) {
-      socket.connect();
-    }
-
+    userId && socketManager.addUser(userId);
     return () => {
       socket.disconnect();
     };
-  }, [socket]);
+  }, [userId, socket]);
+
+  useEffect(() => {
+    setUserId(getUser()._id);
+  }, []);
 
   const fetchData = async () => {
+    const reqUser = await getUser();
     const req = await getAllMatches();
     const items = await Promise.all(
       req?.map(async (match) => {
         const otherParticipantId =
-          match.participants[0] === userId
+          match.participants[0] === reqUser._id
             ? match.participants[1]
             : match.participants[0];
 
@@ -63,49 +60,33 @@ const ChatPage = () => {
       obj[item.matchId] = item.otherParticipantName;
       return obj;
     }, {});
-
+    req.sort(compareChats);
     setMatches(req);
     setItems(itemsObject);
+    setUserId(reqUser._id);
   };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  const [src, setSrc] = useState(null);
-  const [user, setUser] = useState({});
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const users = await getUsers();
-
-        if (users != null) {
-          const uint8Array = new Uint8Array(users?.avatarImg.data.data);
-          const base64String = btoa(
-            String.fromCharCode.apply(null, uint8Array)
-          );
-          const dataUrl = `data:${users.avatarImg.contentType};base64,${base64String}`;
-          setSrc(dataUrl);
-          setUser(users); // Update the user state
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [user]);
-
-  console.log(items);
+    socket.on("messageReceived", () => {
+      fetchData();
+    });
+  }, [socket]);
   const inputStyle = {
     backgroundColor: "#001329",
     width: "97%",
   };
-  const getLatestMessage = (match) => {
-    if (match && match.conversation && match.conversation.length > 0) {
-      return match.conversation[match.conversation.length - 1];
-    }
-    return null;
-  };
+  console.log(matches);
+  function compareChats(chatA, chatB) {
+    const lastMessageA = chatA?.conversation[chatA?.conversation?.length - 1];
+    const lastMessageB = chatB?.conversation[chatB?.conversation?.length - 1];
+    return (
+      new Date(lastMessageB?.timestamp) - new Date(lastMessageA?.timestamp)
+    );
+  }
   return (
     <>
       <Authentication />
@@ -183,7 +164,6 @@ const ChatPage = () => {
                     <div className="flex flex-row items-center  w-full">
                       <Badge
                         size="small"
-                        count={5}
                         style={{ backgroundColor: "#52c41a" }}
                       >
                         <div className="ml-3 flex items-center justify-center h-10 w-10 bg-gray-100 rounded-full">
@@ -196,7 +176,6 @@ const ChatPage = () => {
                           style={{ fontSize: ".9rem" }}
                         >
                           <span>{items[match._id]}</span>{" "}
-                          <span style={{ fontSize: "0.6rem" }}>5m</span>
                         </div>
                         <div
                           className="text-white/50  ml-4"

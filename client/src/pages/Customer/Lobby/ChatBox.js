@@ -61,17 +61,15 @@ function ChatBox({ socket, chatid }) {
     setMessages(match?.conversation);
   }, [match]);
 
-  useEffect(() => {
-    if (!socket?.connected) {
-      socket?.connect();
-    }
-    socket?.emit("joinMatchRoom", chatid);
-
-    // Clean up the socket connection when the component unmounts
-    return () => {
-      socket?.disconnect();
-    };
-  }, [chatid, socket]);
+  // useEffect(() => {
+  //   if (!socket?.connected) {
+  //     socket?.connect();
+  //   }
+  //   socket?.emit("joinMatchRoom", chatid);
+  //   return () => {
+  //     socket?.disconnect();
+  //   };
+  // }, [chatid, socket]);
 
   useEffect(() => {
     socket.on("messageReceived", (data) => {

@@ -22,8 +22,8 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      enum: ["male", "female", "none"],
-      default: "none",
+      enum: ["male", "female"],
+      required: true,
     },
     avatarImg: {
       data: Buffer,

@@ -24,11 +24,18 @@ const socket = io(API_URL, {
 });
 
 const socketManager = {
-  connectToQueue: (userid) => {
+  addUser: (userId) => {
+    console.log("adding" +userId)
     if (!socket.connected) {
       socket.connect();
     }
-    socket.emit("connectToQueue", userid);
+    socket.emit("addUser", userId);
+  },
+  connectToQueue: (userData) => {
+    if (!socket.connected) {
+      socket.connect();
+    }
+    socket.emit("connectToQueue", userData);
   },
   disconnectFromQueue: (userid) => {
     socket.emit("disconnectFromQueue", userid);
@@ -119,7 +126,6 @@ function App() {
           element: (
             <>
               <FindMate socketManager={socketManager} socket={socket} />
-
               <GlobalChat socketManager={socketManager} socket={socket} />
             </>
           ),

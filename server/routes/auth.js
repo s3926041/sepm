@@ -27,6 +27,7 @@ router.post("/register/", upload.single("image"), async (req, res) => {
         data: req.file.buffer,
         contentType: req.file.mimetype,
       },
+      gender: req.body.gender,
     });
 
     await newUser.save();
@@ -37,7 +38,6 @@ router.post("/register/", upload.single("image"), async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 router.post("/login/", async (req, res) => {
   try {

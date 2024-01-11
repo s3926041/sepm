@@ -22,7 +22,6 @@ export const setToken = (data) => {
 };
 
 export const setUser = (data) => {
-
   localStorage.setItem("user", JSON.stringify(data));
 };
 
@@ -39,18 +38,15 @@ export const headers = () => {
 };
 
 export const checkTokenExpiration = () => {
-  const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
-  if (!token || !user) {
-    localStorage.removeItem("token");
+  if ( !user) {
     localStorage.removeItem("user");
     return false;
   }
-  const decodedToken = jwtDecode(token);
+  const decodedToken = jwtDecode(user?.token);
   const currentTime = Date.now() / 1000;
 
   if (decodedToken.exp < currentTime) {
-    localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.reload();
     return false;

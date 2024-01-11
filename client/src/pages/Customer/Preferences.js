@@ -67,7 +67,7 @@ const Preferences = ({
         <Select onChange={(data) => setGender(data)} required>
           <Select.Option value="male">Male</Select.Option>
           <Select.Option value="female">Female</Select.Option>
-          <Select.Option value="none">None</Select.Option>
+
         </Select>
         {!preferences.gender && (
           <span style={{ color: "red" }}>

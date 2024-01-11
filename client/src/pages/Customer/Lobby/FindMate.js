@@ -9,6 +9,7 @@ import { Select } from "antd";
 import { getUsers } from "../../../services/authService";
 import { Modal, Form } from "antd";
 import "./breakpoint.css";
+import { getUser } from "../../../api/user";
 
 function formatTime(seconds) {
   const minutes = Math.floor(seconds / 60);
@@ -23,7 +24,8 @@ function FindMate({ socketManager, socket }) {
   const [timer, setTimer] = useState(0);
   const [user, setUser] = useState({});
   const [matchId, setMatchId] = useState("");
-
+  const [genderPreference, setGenderPreference] = useState("male");
+  const [levelPreference, setLevelPreference] = useState("beginner");
   const navigate = useNavigate();
   useEffect(() => {
     const user = getUsers();
@@ -32,9 +34,16 @@ function FindMate({ socketManager, socket }) {
     }
   }, []);
 
-  const handleConnect = () => {
+  const handleConnect = async () => {
     setFinding(!finding);
-    socketManager.connectToQueue(user._id);
+    socketManager.connectToQueue({
+      userid: user._id,
+      preferences: {
+        ownGender: user.gender,
+        gender: genderPreference,
+        level: levelPreference,
+      },
+    });
   };
 
   const handleStop = () => {
@@ -236,16 +245,21 @@ function FindMate({ socketManager, socket }) {
             }}
           >
             <Form.Item label="Find">
-              <Select>
+              <Select
+                value={genderPreference}
+                onChange={(value) => setGenderPreference(value)}
+              >
                 <Select.Option value="male">Male</Select.Option>
                 <Select.Option value="female">Female</Select.Option>
-                <Select.Option value="none">None</Select.Option>
               </Select>
             </Form.Item>
 
             <Form.Item label="Level">
-              <Select value={"Master"}>
-                <Select.Option value="beginer">Beginner</Select.Option>
+              <Select
+                value={levelPreference}
+                onChange={(value) => setLevelPreference(value)}
+              >
+                <Select.Option value="beginner">Beginner</Select.Option>
                 <Select.Option value="expert">Expert</Select.Option>
                 <Select.Option value="master">Master</Select.Option>
               </Select>
@@ -253,9 +267,9 @@ function FindMate({ socketManager, socket }) {
 
             <button
               type="submit"
-              className=" mt-2 flex mx-auto justify-center rounded-full bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="mt-2 flex mx-auto justify-center rounded-full bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               style={{ width: "50%" }}
-              onClick={async () => {}}
+              onClick={handleStop}
             >
               Change
             </button>
