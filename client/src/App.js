@@ -26,7 +26,6 @@ const socket = io(API_URL, {
 
 const socketManager = {
   addUser: (userId) => {
-    console.log("adding" +userId)
     if (!socket.connected) {
       socket.connect();
     }
@@ -56,8 +55,8 @@ const socketManager = {
     socket.off("matchFound", callback);
   },
 
-  sendGlobalChatMessage: (message) => {
-    socket.emit("globalChatMessage", { message });
+  sendGlobalChatMessage: (data) => {
+    socket.emit("globalChatMessage", data);
   },
 
   sendPrivateChatMessage: (chatid, message) => {
@@ -66,7 +65,6 @@ const socketManager = {
     }
   },
 
-  // Function to receive global chat messages
   onPrivateChatMessage: (callback) => {
     socket.on("privateChatMessage", callback);
   },

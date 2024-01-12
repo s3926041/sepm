@@ -22,12 +22,28 @@ function getItem(label, key, icon, children) {
 const ChatPage = ({ socketManager, socket }) => {
   const [userId, setUserId] = useState([]);
   const [matches, setMatches] = useState([]);
-
+  const [inputValue, setInputValue] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputValue(value);
 
-  
+    if (value.trim() === "") {
+      setFilteredData(matches);
+      return;
+    }
+
+    const filteredResults = matches.filter((match) => {
+      const otherParticipantName = items[match._id];
+      console.log(items[match._id]);
+      return otherParticipantName?.toLowerCase().includes(value.toLowerCase());
+    });
+
+    setFilteredData(filteredResults);
+  };
 
   useEffect(() => {
     userId && socketManager.addUser(userId);
@@ -66,6 +82,7 @@ const ChatPage = ({ socketManager, socket }) => {
     setMatches(req);
     setItems(itemsObject);
     setUserId(reqUser._id);
+    setFilteredData(req);
   };
 
   useEffect(() => {
@@ -81,7 +98,7 @@ const ChatPage = ({ socketManager, socket }) => {
     backgroundColor: "#001329",
     width: "97%",
   };
-  console.log(matches);
+
   function compareChats(chatA, chatB) {
     const lastMessageA = chatA?.conversation[chatA?.conversation?.length - 1];
     const lastMessageB = chatB?.conversation[chatB?.conversation?.length - 1];
@@ -95,19 +112,18 @@ const ChatPage = ({ socketManager, socket }) => {
 
       <div className="w-full h-full rounded-[20px]  ml-10 flex ">
         <div
-          
           className="rounded-2xl h-full"
           style={{
             backgroundColor: "#002047",
-            width: "18rem"
+            width: "18rem",
           }}
         >
           <div className="demo-logo-vertical" />
           <div className="py-5">
             <div className="ml-4 flex text-white text-base">
               <div>
-                Inbox
-                <Badge size="small" count={109} style={{}} className="ml-1" />
+                Matches
+                <Badge size="small" count={0} style={{}} className="ml-5" />
               </div>
               <span style={{ marginLeft: "9.4rem" }}>
                 <SettingOutlined />
@@ -142,6 +158,7 @@ const ChatPage = ({ socketManager, socket }) => {
                 style={inputStyle}
                 placeholder="Search..."
                 required=""
+                onChange={handleInputChange}
               />
             </div>
           </div>
@@ -150,7 +167,7 @@ const ChatPage = ({ socketManager, socket }) => {
             className="overflow-y-auto rounded-2xl flex flex-col items-center"
             style={{ height: "83%", backgroundColor: "#001329" }}
           >
-            {matches.map((match) => (
+            {filteredData.map((match) => (
               <div
                 key={match._id}
                 style={{ height: "6.5rem", width: "90%" }}

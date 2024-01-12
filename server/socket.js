@@ -49,7 +49,7 @@ const initSocketServer = (server) => {
             io.to(user?.socketId).emit("messageReceived", {
               sender,
               message,
-              matchId
+              matchId,
             });
           });
 
@@ -57,7 +57,7 @@ const initSocketServer = (server) => {
             io.to(user?.socketId).emit("messageReceived", {
               sender,
               message,
-              matchId
+              matchId,
             });
           });
         }
@@ -66,9 +66,13 @@ const initSocketServer = (server) => {
       }
     });
 
-    socket.on("globalChatMessage", (message) => {
-      console.log(message);
-      io.emit("globalChatMessage", { user: socket.id, message });
+    socket.on("globalChatMessage", (data) => {
+      console.log(data)
+      io.emit("globalChatMessage", {
+        message: data.message,
+        user: data.user,
+        id: data.id,
+      });
     });
 
     socket.on("connectToQueue", (userData) => {

@@ -93,13 +93,10 @@ router.get("/matches", verifyToken, async (req, res) => {
 });
 router.get("/getother/:id", verifyToken, async (req, res) => {
   const id = req.params.id;
-  console.log(id);
-
   try {
     const user = await User.findById(id);
 
     if (user) {
-      console.log("Hung");
       res.status(200).json(user);
     } else {
       console.log("no user");
