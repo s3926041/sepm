@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getUser, updateProfile } from "../../api/user";
 import { CloudUploadOutlined } from "@ant-design/icons";
 import { message } from "antd";
@@ -8,6 +8,8 @@ function EditProfile2() {
     const [avatar, setAvatar] = useState(null);
     const [src, setSrc] = useState(null);
     const [user, setUser] = useState({});
+    const fileInputRef = useRef(null);
+    // const [isFileInputVisible, setFileInputVisible] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,13 +44,82 @@ function EditProfile2() {
         return btoa(base64String);
     }
 
-    function importData() {
-        let input = document.createElement("input");
-        input.type = "file";
-        input.onchange = (_) => {
-            console.log(input)
-            let files = Array.from(input.files);
-            let file = files[0];
+    // function importData() {
+    //     // let input = document.createElement("input");
+    //     // input.type = "file";
+    //     // input.onchange = (_) => {
+    //         // console.log(input)
+    //         let files = Array.from(input.files);
+    //         let file = files[0];
+    //         if (file.size > 1024 * 1024) {
+    //             alert("File is too large! Max size is 1MB.");
+    //             return;
+    //         } else if (!/\.(jpg|png)$/.test(file.name)) {
+    //             alert("Only JPG and PNG files are allowed!");
+    //             return;
+    //         }
+    //         const imagePath = URL.createObjectURL(file);
+    //         setSrc(imagePath);
+    //         const uploadPhoto = new FormData();
+    //         uploadPhoto.append("image", file);
+    //         setAvatar(uploadPhoto);
+    //         message.success("Avatar changed!");
+    //     // };
+    //     // input.click();
+    //     // alert();
+     
+
+    // }
+
+
+
+    // function importData(event) {
+    //     let input = event.target; // Use the event target to get the input element
+    //     let files = Array.from(input.files);
+    //     let file = files[0];
+
+    //     if (!file) {
+    //         console.error("No file selected!");
+    //         return;
+    //     }
+
+    //     if (file.size > 1024 * 1024) {
+    //         alert("File is too large! Max size is 1MB.");
+    //         return;
+    //     } else if (!/\.(jpg|png)$/.test(file.name)) {
+    //         alert("Only JPG and PNG files are allowed!");
+    //         return;
+    //     }
+        
+
+    //     const imagePath = URL.createObjectURL(file);
+    //     alert(src)
+
+    //     // Assuming setSrc, setAvatar, and message.success are functions that you have defined
+    //     setSrc(imagePath);
+
+    //     const uploadPhoto = new FormData();
+    //     uploadPhoto.append("image", file);
+    //     setAvatar(uploadPhoto);
+
+    //     message.success("Avatar changed!");
+    // }
+
+    function importData(event) {
+        let input = event.target;
+        let files = input.files;
+
+        if (!files || files.length === 0) {
+            console.error("No file selected!");
+            return;
+        }
+
+        let file = files[0];
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+            let base64String = e.target.result;
+
             if (file.size > 1024 * 1024) {
                 alert("File is too large! Max size is 1MB.");
                 return;
@@ -56,29 +127,44 @@ function EditProfile2() {
                 alert("Only JPG and PNG files are allowed!");
                 return;
             }
-            const imagePath = URL.createObjectURL(file);
+
+            const imagePath = base64String;
+
+            // Assuming setSrc, setAvatar, and message.success are functions that you have defined
             setSrc(imagePath);
+            // alert(src)
+
             const uploadPhoto = new FormData();
             uploadPhoto.append("image", file);
             setAvatar(uploadPhoto);
+            
+
             message.success("Avatar changed!");
         };
-        input.click();
-     
 
+        reader.readAsDataURL(file);
     }
+
     
 
-        
+    const triggerHiddenInput = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    // function triggerHiddenInput() {
+    //     const hiddenInput = document.getElementsById('hiddenInput');
+    //     hiddenInput.click();
+    // }
 
 
+    // const triggerHiddenInput = () => {
+    //     setFileInputVisible(true);
+    // };
 
 
-
-
-
-
-
+    
 
     return (
         <div className="w-full h-full ml-5 rounded-3xl" style={{ backgroundColor: "#001329", }}>
@@ -94,12 +180,21 @@ function EditProfile2() {
                     className="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center"
                     src={src}
                 />
+                        <input
+                            ref={fileInputRef}
+                            id="hiddenInput"
+                            name="myInput"
+                            type="file"
+                            style={{ display: 'none' }}
+                            onChange={importData}
+                        />
                 <button
                         type="button"
                         className="rounded-md mx-auto mt-6 bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                        onClick={() => importData()}
+                        onClick={triggerHiddenInput}
                         style={{ width: "50%" }}
                     >
+                        {/* <input name="myInput" type="file" onClick={importData} /> */}
                         <CloudUploadOutlined /> Upload...
                 </button>
 

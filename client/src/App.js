@@ -20,6 +20,7 @@ import io from "socket.io-client";
 import EditProfile from "./pages/Customer/EditProfile";
 import EditProfile2 from "./pages/Customer/EditProfile2";
 // import Test from "./pages/Test";
+
 const socket = io(API_URL, {
   withCredentials: true,
 });
@@ -84,6 +85,8 @@ const socketManager = {
     socket.off("globalChatMessage", callback);
   },
 };
+
+
 function App() {
   const router = createBrowserRouter([
     {
