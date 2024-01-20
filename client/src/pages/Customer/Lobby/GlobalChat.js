@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 
 import { SendOutlined, SmileOutlined, WechatOutlined } from "@ant-design/icons";
 import { useRef } from "react";
-import { getUsers } from "../../../services/authService";
 import "./breakpoint.css";
 import { Badge } from "antd";
-import { getOtherUser, getUser } from "../../../api/user";
-const GlobalChat = ({ socketManager, socket }) => {
+import { getUser } from "../../../api/user";
+const GlobalChat = ({ socketManager }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [on, setOn] = useState(false);
@@ -84,7 +83,6 @@ const GlobalChat = ({ socketManager, socket }) => {
 
   return (
     <div className="breakkk ">
-      {/* Main Chat Area */}
       <div className="h-full flex flex-col">
         <header
           className="bg-white py-3 px-4 flex rounded-xl  border-gray-200"
@@ -165,7 +163,7 @@ const GlobalChat = ({ socketManager, socket }) => {
                       style={{}}
                     >
                       <p className="font-bold text-wrap">{`${msg.user}:`}</p>
-                      <p className="text-gray-700 break-word">{`${msg.text.message}`}</p>
+                      <p className="text-gray-700 break-word">{`${msg.text}`}</p>
                     </div>
                   </div>
                 );

@@ -67,7 +67,7 @@ const initSocketServer = (server) => {
     });
 
     socket.on("globalChatMessage", (data) => {
-      console.log(data)
+      console.log(data);
       io.emit("globalChatMessage", {
         message: data.message,
         user: data.user,

@@ -14,7 +14,7 @@ const server = http.createServer(app);
 app.use(bodyParser.json());
 
 app.use(cors());
-// QUEUING and MESSAGING SOCKET
+// Real-time QUEUING and MESSAGING SOCKET 
 initSocketServer(server);
 
 mongoose

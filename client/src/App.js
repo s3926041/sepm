@@ -109,14 +109,6 @@ function App() {
       element: <RegisterPage />,
     },
     {
-      path: "/pricing",
-      element: <PricePage />,
-    },
-    {
-      path: "/pricing/payment",
-      element: <PaymentPage />,
-    },
-    {
       path: "/lobby",
       element: <LobbyPage />,
       children: [
@@ -148,10 +140,10 @@ function App() {
       path: "/aboutus",
       element: <AboutPage />,
     },
-    // {
-    //   path: "/test",
-    //   element: <Test />,
-    // },
+    {
+      path: "/test",
+      // element: <Test />,
+    },
   ]);
 
   return <RouterProvider router={router}></RouterProvider>;

@@ -5,8 +5,6 @@ import { SettingOutlined } from "@ant-design/icons";
 import { Badge, Layout } from "antd";
 import { useNavigate } from "react-router";
 import Authentication from "../../../components/Authentication";
-import { io } from "socket.io-client";
-import { API_URL } from "../../../GlobalVar";
 import { getAllMatches, getOtherUser, getUser } from "../../../api/user";
 
 const { Content, Sider } = Layout;
@@ -24,7 +22,6 @@ const ChatPage = ({ socketManager, socket }) => {
   const [matches, setMatches] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [filteredData, setFilteredData] = useState([]);
-  const navigate = useNavigate();
   const [items, setItems] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const handleInputChange = (e) => {
@@ -157,6 +154,7 @@ const ChatPage = ({ socketManager, socket }) => {
                 className="rounded-full block w-full p-3 ps-10 text-sm text-white"
                 style={inputStyle}
                 placeholder="Search..."
+                value={inputValue}
                 required=""
                 onChange={handleInputChange}
               />
